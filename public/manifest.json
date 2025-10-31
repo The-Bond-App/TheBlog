@@ -1,0 +1,23 @@
+{
+  "name": "The Bond Blog",
+  "short_name": "BondBlog",
+  "description": "Sticky Notes for Your Soul’s Refrigerator — honest words for your late-night thoughts or Tuesday blues.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#faf7f5",
+  "theme_color": "#faf7f5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/assets/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
