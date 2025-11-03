@@ -86,7 +86,6 @@ export const metadata: Metadata = {
   authors: [{ name: "The Bond Blog Team", url: "https://blog.thebond.company" }],
   creator: "The Bond Blog",
   publisher: "The Bond Blog",
-  themeColor: "#faf7f5",
   manifest: "/manifest.json",
 };
 
