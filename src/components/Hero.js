@@ -1,14 +1,17 @@
 'use client';
 
 import { ArrowRight, Heart, Brain, Sparkles } from 'lucide-react';
+import Navigation from '../components/Navigation'
 
 export default function Hero() {
   return (
-    <div className="relative z-10 pt-6 pb-6 px-6 lg:px-8 w-full mx-auto">
-      <div className="grid lg:grid-cols-[1.2fr_0.3fr] gap-16 min-h-[calc(100vh-8rem)] items-center">
+    <div className="relative z-10 pt-8 w-full mx-auto" >
+      <Navigation />
+      
+      <div className="grid lg:grid-cols-[1.0fr_0.3fr] gap-2 items-center min-h-[calc(100vh-5rem)]">
         
         {/* Left: Title */}
-        <div className="space-y-8">
+        <div className="space-y-10">
           <h1 className="text-7xl lg:text-8xl xl:text-8xl font-light leading-[0.92] tracking-tight">
             <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">
               Sticky Notes
@@ -19,13 +22,13 @@ export default function Hero() {
             <span className="text-white/40">Refrigerator</span>
           </h1>
           
-          <p className="text-xl lg:text-2xl font-light text-white/60 tracking-wide max-w-2xl leading-relaxed">
+          <p className="text-xl lg:text-2xl !font-extralight text-white/60 tracking-wide max-w-2xl leading-snug">
             The stuff you need to hear when you&apos;re spiraling at 2am. <br />Or just existing on a Tuesday afternoon. We don&apos;t judge.
           </p>
 
           <div className="flex gap-4">
             <a
-              href="/subscribe"
+              href="#featuredreadings"
               className="px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white rounded-full text-lg font-normal hover:shadow-sm hover:shadow-white/20 transition-all inline-flex items-center gap-2 shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
               style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}
             >
@@ -34,16 +37,16 @@ export default function Hero() {
             </a>
 
             <a
-              href="/about"
+               href="#subscribe"
               className="px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full text-lg font-light hover:bg-white/20 transition-all"
             >
-              Explore
+              Subscribe
             </a>
           </div>
         </div>
 
         {/* Right: Vertical Orb Stack */}
-        <div className="flex flex-col gap-8 items-center justify-center">
+        <div className="flex flex-col gap-6 items-center justify-center">
           <div
             className="w-28 h-28 rounded-full bg-amber-500/30 backdrop-blur-xl border-2 border-amber-400/50 flex items-center justify-center animate-pulse shadow-2xl shadow-amber-500/50"
             style={{ animationDuration: '3s' }}

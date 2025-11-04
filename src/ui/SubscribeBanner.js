@@ -24,10 +24,10 @@ export default function SubscribeBanner() {
           {/* Left text section */}
           <div className="flex-1 text-center lg:text-left">
             <h3 className="text-xl lg:text-2xl font-light mb-1">
-              Weekly reminders that you're doing better than you think.
+              Posts that get you, weekly.
             </h3>
             <p className="text-base font-light text-white/50">
-              Retention rate: suspiciously high.
+               Side effects may include feeling seen.
             </p>
           </div>
 
@@ -45,12 +45,12 @@ export default function SubscribeBanner() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="flex-grow lg:w-80 px-5 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-all"
+                  className="flex-grow lg:w-80 px-5 py-3 rounded-md bg-white/10 backdrop-blur-xl border border-white/20 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-all"
                 />
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="px-6 py-3 bg-white text-slate-900 rounded-full text-sm font-medium hover:bg-white/90 transition-all disabled:opacity-50 whitespace-nowrap"
+                  className="px-6 py-3 bg-white text-slate-900 rounded-sm text-sm font-medium hover:bg-white/90 transition-all disabled:opacity-50 whitespace-nowrap"
                 >
                   {status === 'loading' ? '...' : 'Subscribe'}
                 </button>
