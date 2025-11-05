@@ -18,45 +18,23 @@ export default function SubscribeBanner() {
   };
 
   return (
-    <div id="subscribe" className="relative z-10 px-6 lg:px-8 w-full mx-auto py-12">
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-900/30 via-pink-900/30 to-orange-900/30 backdrop-blur-xl border border-white/10 px-8 py-6">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Left text section */}
-          <div className="flex-1 text-center lg:text-left">
-            <h3 className="text-xl lg:text-2xl font-light mb-1">
-              Posts that get you, weekly.
-            </h3>
-            <p className="text-base font-light text-white/50">
-               Side effects may include feeling seen.
-            </p>
-          </div>
-
-          {/* Right: form or success message */}
-          {status === 'success' ? (
-            <div className="text-green-400 font-light text-sm text-center lg:text-left">
-              ✓ You're in. Check your email.
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex-shrink-0 w-full lg:w-auto">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  required
-                  className="flex-grow lg:w-80 px-5 py-3 rounded-md bg-white/10 backdrop-blur-xl border border-white/20 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-all"
-                />
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="px-6 py-3 bg-white text-slate-900 rounded-sm text-sm font-medium hover:bg-white/90 transition-all disabled:opacity-50 whitespace-nowrap"
-                >
-                  {status === 'loading' ? '...' : 'Subscribe'}
-                </button>
-              </div>
-            </form>
-          )}
+   <div id="subscribe" className="mt-32 mb-20">
+      <div className="max-w-4xl mx-auto text-center p-16 rounded-3xl bg-gradient-to-br from-amber-900/20 via-orange-900/20 to-rose-900/20 border border-orange-500/20">
+        <h2 className="text-5xl font-light mb-6 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 bg-clip-text text-transparent">
+          Stay Connected
+        </h2>
+        <p className="text-xl text-white/60 !font-extralight tracking-wide mb-10 max-w-2xl mx-auto leading-relaxed">
+          Posts that get you, weekly.  Side effects may include feeling seen.
+        </p>
+        <div className="flex gap-4 max-w-xl mx-auto">
+          <input
+            type="email"
+            placeholder="your@email.com"
+            className="flex-1 px-6 py-4 text-lg rounded-full bg-white/5 border border-white/10 focus:border-orange-500/50 focus:outline-none text-white placeholder:text-white/30"
+          />
+          <button className="px-8 py-4 rounded-full bg-gradient-to-r from-amber-500 to-rose-500 text-white text-lg font-medium hover:shadow-lg hover:shadow-orange-500/30 transition-all whitespace-nowrap">
+            Subscribe
+          </button>
         </div>
       </div>
     </div>

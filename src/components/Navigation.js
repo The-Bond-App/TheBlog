@@ -3,7 +3,7 @@ import { Home, X, Menu, ShoppingBag, MicVocal, Send } from 'lucide-react';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isStoryModalOpen, setIsStoryModalOpen] = useState(true);
+  const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
 
 
   return (
@@ -48,7 +48,7 @@ export default function Navigation() {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden mt-4 backdrop-blur-xl rounded-2xl border overflow-hidden bg-white/5 border-white/10">
+          <div className="md:hidden mt-4 rounded-2xl border overflow-hidden bg-white/5 border-white/10">
             {[
               { icon: Home, label: 'Home', href: '/' },
               { icon: null, img: '/assets/logo.png', label: 'The Bond Company', href: 'https://thebond.company' },
@@ -86,11 +86,11 @@ export default function Navigation() {
 {/* Story Modal */}
       {isStoryModalOpen && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-xl animate-in fade-in duration-300" 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 animate-in fade-in duration-300" 
           onClick={() => setIsStoryModalOpen(false)}
         >
           <div 
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl animate-in zoom-in-95 duration-300" 
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white/95 rounded-3xl shadow-2xl animate-in zoom-in-95 duration-300" 
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}

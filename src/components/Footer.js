@@ -25,7 +25,7 @@ const footerLinks = {
 
 export default function Footer({ isMenuOpen, setIsMenuOpen }) {
   return (
-    <footer className="bg-black text-white relative">
+    <footer className="text-white relative">
       <div className="border-t border-white/10">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-8 md:gap-x-8">
