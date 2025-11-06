@@ -18,7 +18,7 @@ export default function Hero() {
                 <br />
                 <span className="text-white">for Your Soul's</span>
                 <br />
-                <span className="text-white/40">Refrigerator</span>
+                <span className="text-white/50">Refrigerator</span>
               </h1>
               
               <p className="text-xl lg:text-2xl !font-extralight text-white/60 tracking-wide max-w-2xl leading-snug">
@@ -63,7 +63,7 @@ export default function Hero() {
                 className="w-28 h-28 rounded-full bg-rose-500/30 border-2 border-rose-400/50 flex items-center justify-center animate-pulse shadow-2xl shadow-rose-500/50"
                 style={{ animationDuration: '3.5s', animationDelay: '1s' }}
               >
-                <Sparkles className="w-14 h-14 text-rose-400" strokeWidth={1.5} />
+                <img src="/assets/logo.png" className="w-14 h-14 text-rose-400" strokeWidth={1.5} />
               </div>
             </div>
           </div>

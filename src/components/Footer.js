@@ -12,10 +12,9 @@ const footerLinks = {
     { label: 'Partner With Us', url: '/partners' },
   ],
   popular: [
-    { label: "Feelings I Didn't Ask For", url: '' },
-    { label: 'Tiny Habits', url: '' },
-    { label: "When It's Hard", url: '' },
-    { label: 'Boundaries & Burnout', url: '' },
+    { label: "Habits in Action", url: '' },
+    { label: 'Life, Unfiltered', url: '' },
+    { label: "We're All Struggling", url: '' },
   ],
   bottom: [
     { label: 'Privacy', url: '/privacy' },
@@ -23,15 +22,15 @@ const footerLinks = {
   ],
 };
 
-export default function Footer({ isMenuOpen, setIsMenuOpen }) {
+export default function Footer() {
   return (
-    <footer className="text-white relative">
+    <footer className="text-amber-50 relative bg-[#3d3238]">
       <div className="border-t border-white/10">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 py-12">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-8 md:gap-x-8">
             
             {/* Brand */}
-            <div className="space-y-5">
+            <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <img src="/assets/logo.png" className="w-8 h-8" alt="Logo" />
                 <span className="font-light text-xl tracking-tight">
@@ -43,7 +42,7 @@ export default function Footer({ isMenuOpen, setIsMenuOpen }) {
               </p>
               
               {/* Social Media */}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 pt-1">
                 <a
                   href="https://www.instagram.com/thebondcompany/"
                   target="_blank"
@@ -97,17 +96,17 @@ export default function Footer({ isMenuOpen, setIsMenuOpen }) {
             {/* Footer sections */}
             {['explore', 'getInvolved', 'popular'].map((section) => (
               <div key={section}>
-                <h3 className="text-xs font-medium uppercase tracking-wider mb-6 opacity-30">
+                <h3 className="text-sm font-medium uppercase tracking-wide mb-4 opacity-30">
                   {section === 'getInvolved'
                     ? 'Get Involved'
                     : section.charAt(0).toUpperCase() + section.slice(1)}
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-2">
                   {footerLinks[section].map((item) => (
                     <li key={item.label}>
                       <a
                         href={item.url}
-                        className="text-sm font-light opacity-60 hover:opacity-100 transition-opacity"
+                        className="text-base font-light opacity-60 hover:opacity-100 transition-opacity"
                       >
                         {item.label}
                       </a>
@@ -128,15 +127,13 @@ export default function Footer({ isMenuOpen, setIsMenuOpen }) {
               .
             </p>
             <div className="flex items-center gap-8">
-              {footerLinks.bottom.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.url}
-                  className="text-sm font-light opacity-30 hover:opacity-100 transition-opacity"
-                >
-                  {item.label}
-                </a>
-              ))}
+              <a
+                key="sayhello"
+                href="https://support.thebond.company/?section=general"
+                className="text-sm font-light opacity-40 hover:opacity-100 transition-opacity"
+              >
+                Contact
+              </a>
             </div>
           </div>
         </div>
