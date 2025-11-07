@@ -7,18 +7,17 @@ const footerLinks = {
     { label: 'Gift Wellbeing', url: 'https://shop.thebond.company' },
   ],
   getInvolved: [
-    { label: 'The Bond Company', url: '/about' },
-    { label: 'Get in Touch', url: '/contact' },
-    { label: 'Partner With Us', url: '/partners' },
+    { label: 'The Bond Company', url: 'https://thebond.company' },
+    { label: 'Let\'s Talk', url: 'https://support.thebond.company/?section=general' },
+    { label: 'Build With Us', url: 'https://support.thebond.company/?section=business' },
   ],
   popular: [
-    { label: "Habits in Action", url: '' },
-    { label: 'Life, Unfiltered', url: '' },
-    { label: "We're All Struggling", url: '' },
+    { label: "Habits in Action", url: '/category/habits' },
+    { label: 'Life, Unfiltered', url: '/category/lifeunfiltered' },
+    { label: "We're All Struggling", url: '/category/notyoueveryone' },
   ],
   bottom: [
-    { label: 'Privacy', url: '/privacy' },
-    { label: 'Contact', url: '/contact' },
+    { label: 'Contact', url: 'https://support.thebond.company/?section=general' },
   ],
 };
 

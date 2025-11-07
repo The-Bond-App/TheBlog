@@ -37,19 +37,28 @@ export const fetchCurrentPosts = async () => {
 
 // Fetch single post by slug (your existing function)
 export const fetchSinglePostBySlug = async (slug) => {
-  const q = query(
-    collection(db, "posts"),
-    where("slug", "==", slug)
-  );
+  // ADD STRICT VALIDATION
+  if (!slug || slug === 'undefined' || slug === 'null') {
+    console.log('❌ Invalid slug detected:', slug);
+    return null;
+  }
 
-  const snapshot = await getDocs(q);
-  return snapshot.docs.length > 0 
-    ? transformPost({
-        id: snapshot.docs[0].id,
-        ...snapshot.docs[0].data()
-      })
-    : null;
+  try {
+    const snapshot = await getDocs(
+      query(
+        collection(db, "posts"), 
+        where("slug", "==", slug)
+      )
+    );
+    
+    const doc = snapshot.docs[0];
+    return doc ? { id: doc.id, ...doc.data() } : null;
+  } catch (error) {
+    console.error('Error fetching post:', error, 'Slug:', slug);
+    return null;
+  }
 };
+
 
 // NEW: Fetch all posts (for blog list page with ISR)
 export const fetchAllPosts = async () => {
@@ -90,4 +99,49 @@ export const fetchAllPostSlugs = async () => {
   return snapshot.docs
     .map(doc => doc.data().slug)
     .filter(Boolean);
+};
+
+// In your fetchPosts.js - ADD THIS TEMPORARY FUNCTION
+export const debugAllPosts = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "posts"));
+    const posts = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    
+    console.log('=== DEBUG ALL POSTS ===');
+    posts.forEach(post => {
+      console.log('ID:', post.id, 'Slug:', post.slug, 'Title:', post.title);
+    });
+    console.log('=== END DEBUG ===');
+    
+    return posts;
+  } catch (error) {
+    console.error('Debug error:', error);
+    return [];
+  }
+};
+
+// ADD THIS to your fetchPosts.js to find the problematic post
+export const findPostsWithBadSlugs = async () => {
+  const snapshot = await getDocs(collection(db, "posts"));
+  const badPosts = [];
+  
+  snapshot.docs.forEach(doc => {
+    const data = doc.data();
+    if (!data.slug || data.slug === 'undefined' || data.slug === 'null') {
+      badPosts.push({
+        id: doc.id,
+        title: data.title,
+        slug: data.slug
+      });
+    }
+  });
+  
+  if (badPosts.length > 0) {
+    console.log('🚨 POSTS WITH BAD SLUGS:', badPosts);
+  }
+  
+  return badPosts;
 };

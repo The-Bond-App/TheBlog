@@ -1,6 +1,6 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: {
@@ -8,23 +8,7 @@ export const metadata: Metadata = {
     template: "%s | The Bond Blog",
   },
   description:
-    "The Bond Blog is a cozy corner of the internet for your late-night thoughts and Tuesday blues. Sticky Notes for your soul’s refrigerator — honest words for when you’re spiraling at 2am or just existing. We don’t judge, we just get it.",
-  keywords: [
-    "emotional wellbeing",
-    "enjoyable mental health",
-    "emotions learning",
-    "feelings learning",
-    "mental health blog",
-    "self-care",
-    "mindfulness",
-    "personal growth",
-    "healing",
-    "emotional resilience",
-    "anxiety relief",
-    "self-compassion",
-    "the bond blog",
-    "sticky notes for your soul",
-  ],
+    "The Bond Blog is a cozy corner of the internet for your late-night thoughts and Tuesday blues. Sticky Notes for your soul’s refrigerator — honest words for when you're spiraling at 2am or just existing. We don't judge, we just get it.",
 
   // 🌐 Your site info
   alternates: {
@@ -39,26 +23,27 @@ export const metadata: Metadata = {
     apple: "/assets/apple-touch-icon.png",
   },
 
-  // 🧭 SEO and crawler settings
+  // 🧭 SEO and crawler settings - FIXED!
   robots: {
     index: true,
     follow: true,
+    // Remove the googleBot object or use correct syntax:
     googleBot: {
       index: true,
       follow: true,
-      maxSnippet: -1,
-      maxImagePreview: "large",
-      maxVideoPreview: -1,
+      'max-snippet': -1,        // Note the hyphen
+      'max-image-preview': 'large', // Note the hyphen
+      'max-video-preview': -1,  // Note the hyphen
     },
   },
 
-  // 🖼️ Open Graph — for social media and chat preview cards
+  // 🖼️ Open Graph
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://blog.thebond.company",
     siteName: "The Bond Blog",
-    title: "The Bond Blog | Sticky Notes for Your Soul’s Refrigerator",
+    title: "The Bond Blog | Sticky Notes for Your Soul's Refrigerator",
     description:
       "The stuff you need to hear when you're spiraling at 2am — or just existing on a Tuesday afternoon. Honest notes for your soul, from ours.",
     images: [
@@ -76,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thebondco",
     creator: "@thebondco",
-    title: "The Bond Blog | Sticky Notes for Your Soul’s Refrigerator",
+    title: "The Bond Blog | Sticky Notes for Your Soul's Refrigerator",
     description:
       "Gentle reminders and honest words for your late-night thoughts. The Bond Blog — we get it.",
     images: ["/assets/logo.png"],
@@ -88,7 +73,6 @@ export const metadata: Metadata = {
   publisher: "The Bond Blog",
   manifest: "/manifest.json",
 };
-
 
 export default function RootLayout({
   children,

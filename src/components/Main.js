@@ -113,7 +113,7 @@ function PostsError({ error }) {
   );
 }
 
-export default function Blog() {
+export default function Main({posts}) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [minLoadingTime, setMinLoadingTime] = useState(true);
   const { blogPosts, loading, error } = usePosts(selectedCategory);
