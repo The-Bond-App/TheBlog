@@ -1,18 +1,22 @@
-// app/debug/page.js
-'use client'
-import { debugAllPosts, fetchAllPostSlugs } from '../../src/services/fetchPosts';
+// app/debug/connection-test/page.js
+import { fetchAllPosts } from '../../../src/services/fetchPosts';
 
-export default async function DebugPage() {
-  const allPosts = await debugAllPosts();
-  const slugs = await fetchAllPostSlugs();
+export default async function ConnectionTest() {
+  const posts = await fetchAllPosts();
   
   return (
     <div>
-      <h1>Debug Posts</h1>
-      <h2>All Posts:</h2>
-      <pre>{JSON.stringify(allPosts, null, 2)}</pre>
-      <h2>Slugs:</h2>
-      <pre>{JSON.stringify(slugs, null, 2)}</pre>
+      <h1>Connection Test</h1>
+      <h2>Environment Variables:</h2>
+      <ul>
+        <li>Project ID: {process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}</li>
+        <li>API Key Set: {process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? '✅ YES' : '❌ NO'}</li>
+        <li>Node Environment: {process.env.NODE_ENV}</li>
+      </ul>
+      
+      <h2>Firebase Results:</h2>
+      <p>Posts found: {posts.length}</p>
+      <pre>{JSON.stringify(posts, null, 2)}</pre>
     </div>
   );
 }
