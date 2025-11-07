@@ -135,7 +135,7 @@ export default function Main({ posts: initialPosts }) {
                         </a>
                       </div>
                     </div>
-                  </div>
+                  </div> 
                 </article>
               )}
 
