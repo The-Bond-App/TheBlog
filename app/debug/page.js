@@ -1,5 +1,5 @@
 // app/debug/connection-test/page.js
-import { fetchAllPosts } from '../../../src/services/fetchPosts';
+import { fetchAllPosts } from '../../src/services/fetchPosts';
 
 export default async function ConnectionTest() {
   const posts = await fetchAllPosts();
