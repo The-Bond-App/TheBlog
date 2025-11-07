@@ -6,6 +6,24 @@ import { fetchSinglePostBySlug, fetchAllPostSlugs } from '../../../src/services/
 export const revalidate = false;
 
 // Generate metadata for SEO
+export async function generateMetadata({ params }) {
+  // Await the params promise
+  const { slug } = await params;
+  
+  const post = await fetchSinglePostBySlug(slug);
+  
+  return {
+    title: post?.title || 'Post Not Found',
+    description: post?.description || 'Read this post on The Bond Blog',
+    openGraph: {
+      title: post?.title,
+      description: post?.description,
+      images: [post?.image || '/assets/logo.png'],
+    },
+  };
+}
+
+// Generate all post paths at build time
 export async function generateStaticParams() {
   try {
     const slugs = await fetchAllPostSlugs();
@@ -33,15 +51,18 @@ export async function generateStaticParams() {
 }
 
 export default async function PostPage({ params }) {
+  // Await the params promise first!
+  const { slug } = await params;
+  
   // Add validation
-  if (!params.slug || params.slug === 'undefined') {
+  if (!slug || slug === 'undefined') {
     return <div>Invalid post</div>;
   }
 
-  const post = await fetchSinglePostBySlug(params.slug);
+  const post = await fetchSinglePostBySlug(slug);
   
   if (!post) {
-    return <div>Post not found</div>;
+    return <div>Post not found for slug: {slug}</div>;
   }
   
   return <MinimalLayout post={post} />;
