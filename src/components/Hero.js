@@ -18,7 +18,7 @@ export default function Hero() {
                 <br />
                 <span className="text-white">for Your Soul's</span>
                 <br />
-                <span className="text-white/50">Refrigerator</span>
+                <span className="text-white/50">Refrig222erator</span>
               </h1>
               
               <p className="text-xl lg:text-2xl !font-extralight text-white/60 tracking-wide max-w-2xl leading-snug">
