@@ -3,7 +3,7 @@ import MinimalLayout from '../../../src/components/articles/MinimalLayout';
 import { fetchSinglePostBySlug, fetchAllPostSlugs } from '../../../src/services/fetchPosts';
 
 // ISR - wont revalidate, single post content wont change
-export const revalidate = false;
+{/*export const revalidate = false;
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -21,10 +21,10 @@ export async function generateMetadata({ params }) {
       images: [post?.image || '/assets/logo.png'],
     },
   };
-}
+}*/}
 
 // Generate all post paths at build time
-export async function generateStaticParams() {
+{/*export async function generateStaticParams() {
   try {
     const slugs = await fetchAllPostSlugs();
     
@@ -48,11 +48,11 @@ export async function generateStaticParams() {
     console.error('Error generating static params:', error);
     return [];
   }
-}
+}*/}
 
 export default async function PostPage({ params }) {
   // Await the params promise first!
-  const { slug } = await params;
+  {/*const { slug } = await params;
   
   // Add validation
   if (!slug || slug === 'undefined') {
@@ -64,6 +64,8 @@ export default async function PostPage({ params }) {
   if (!post) {
     return <div>Post not found for slug: {slug}</div>;
   }
+  return <MinimalLayout post={post} />;  
+  */}
   
-  return <MinimalLayout post={post} />;
+  return <MinimalLayout />;
 }

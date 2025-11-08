@@ -1,5 +1,10 @@
 import { 
-  collection, getDocs, query, where, orderBy 
+  collection, 
+  query, 
+  orderBy, 
+  startAfter, 
+  limit, 
+  getDocs 
 } from "firebase/firestore";
 import { db } from "../firebaseConfig"
 import formatPostDate from "./dateHandler";
@@ -46,25 +51,117 @@ const transformPost = (post) => {
   };
 };
 
-// Fetch highlighted posts
-export const fetchCurrentPosts = async () => {
+
+export const fetchInitialPosts = async (limitCount = 6) => {
+  console.log('🚀 Starting fetchInitialPosts...');
+  
   try {
+    // Try without ordering first to see if we get any posts
     const q = query(
       collection(db, "posts"),
-      where("highlight", "==", true),
-      orderBy("date", "desc")
+      limit(limitCount)  // Use limitCount to avoid naming conflict
     );
 
+    console.log('📡 Executing Firestore query...');
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => transformPost({
-      id: doc.id,
-      ...doc.data()
-    }));
+    console.log('✅ Query completed, documents:', snapshot.size);
+
+    const posts = snapshot.docs.map(doc => {
+      const data = doc.data();
+      console.log('📄 Document data:', data);
+      
+      let dateValue = data.date;
+      
+      // Handle different date formats
+      if (dateValue && typeof dateValue.toDate === 'function') {
+        // It's a Firestore Timestamp
+        dateValue = dateValue.toDate().toISOString();
+      } else if (typeof dateValue === 'string') {
+        // It's already a string - keep it as is
+      } else {
+        // Fallback to current date
+        dateValue = new Date().toISOString();
+      }
+      
+      return {
+        id: doc.id,
+        title: data.title || 'Untitled',
+        author: data.author || 'Unknown',
+        slug: data.slug || doc.id,
+        description: data.description || 'No description',
+        content: data.content || '',
+        date: dateValue,
+        dateFormatted: formatDateForDisplay(dateValue),
+        category: data.category || 'general',
+        highlight: data.highlight || false,
+        image: data.image || 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&q=80',
+        readTime: '5 min'
+      };
+    });
+    
+    console.log('🎉 Final posts array:', posts.length);
+    return posts;
   } catch (error) {
-    console.error('Error fetching current posts:', error);
+    console.error('💥 CRITICAL ERROR in fetchInitialPosts:', error);
+    console.error('Error details:', error.message);
     return [];
   }
 };
+
+// Simple date formatter
+const formatDateForDisplay = (dateString) => {
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  } catch {
+    return 'Recent';
+  }
+};
+
+
+// Fetch latest 12 posts
+export const fetchPosts = async (lastDoc = null, limitCount = 12) => {
+  try {
+    let q;
+    
+    if (lastDoc) {
+      // Get posts AFTER the last document
+      q = query(
+        collection(db, "posts"),
+        orderBy("date", "desc"),
+        startAfter(lastDoc), // Pass the document snapshot, not just date
+        limit(limitCount)
+      );
+    } else {
+      // First page
+      q = query(
+        collection(db, "posts"),
+        orderBy("date", "desc"),
+        limit(limitCount)
+      );
+    }
+
+    const snapshot = await getDocs(q);
+    const posts = snapshot.docs.map(doc => transformPost({
+      id: doc.id,
+      ...doc.data()
+    }));
+    
+    return {
+      posts,
+      lastDoc: snapshot.docs[snapshot.docs.length - 1], // Return the last document for pagination
+      hasMore: posts.length === limitCount
+    };
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return { posts: [], lastDoc: null, hasMore: false };
+  }
+};
+
 
 // Fetch single post by slug
 export const fetchSinglePostBySlug = async (slug) => {

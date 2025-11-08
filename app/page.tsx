@@ -1,11 +1,10 @@
-// app/page.js
+// Keep this as your final page.js
 import Main from '../src/components/Main'
-import { fetchCurrentPosts } from '../src/services/fetchPosts'
+import { fetchInitialPosts } from '../src/services/fetchPosts'
 
-export const revalidate = 3600 // 1 hour
+export const revalidate = 43200
 
 export default async function Home() {
-  const posts = await fetchCurrentPosts();
-  
-  return <Main posts={posts} />; // Pass server-fetched posts
+  const posts = await fetchInitialPosts(6);
+  return <Main posts={posts} />;
 }

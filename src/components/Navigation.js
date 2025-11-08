@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Home, X, Menu, ShoppingBag, MicVocal, Send } from 'lucide-react';
 
+
+
+
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
@@ -26,7 +29,7 @@ export default function Navigation() {
                     item.onClick();
                   }
                 }}
-                className="px-4 py-2 text-white opacity-70 hover:opacity-100 hover:bg-white/10 rounded-lg transition-all flex items-center gap-2 text-lg !tracking-normal font-light"
+                className={`font-geist px-4 py-2 text-white opacity-70 hover:opacity-100 hover:bg-white/10 rounded-lg transition-all flex items-center gap-2 text-lg !tracking-normal font-light`}
               >
                 {item.img ? (
                   <img src={item.img} alt={item.label} className="w-5 h-5 object-contain" />
@@ -83,7 +86,7 @@ export default function Navigation() {
       </div>
 
     
-{/* Story Modal */}
+      {/* Story Modal */}
       {isStoryModalOpen && (
         <div 
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 animate-in fade-in duration-300" 

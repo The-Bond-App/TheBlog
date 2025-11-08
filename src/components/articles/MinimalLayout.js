@@ -1,186 +1,417 @@
-'use client';
-import { ArrowLeft, Twitter, Facebook, Linkedin, Link as LinkIcon, Mail } from 'lucide-react';
+"use client"
 import { useState } from 'react';
+import { Heart, ArrowLeft, Clock, Share2, Bookmark, ChevronRight } from 'lucide-react';
 
 const categoryMap = {
-  feelings: { name: 'Feelings I Didn\'t Ask For', icon: '😵‍💫' },
-  identitycrisis: { name: 'Identity in Crisis', icon: '🫠' },
-  science: { name: 'The Science of Feeling', icon: '🧠' },
-  questionsthatstick: { name: 'Questions That Stick', icon: '🌀' },
-  habits: { name: 'Habits in Action', icon: '🌱' },
-  whenitshard: { name: 'When It\'s Hard', icon: '😤' },
-  lifeunfiltered: { name: 'Life, Unfiltered', icon: '🌅' },
-  virtualyou: { name: 'Performing Online', icon: '🧑‍💻' },
-  notyoueveryone: { name: 'We\'re All Struggling', icon: '🌍' },
-  boundaries: { name: 'Boundaries & Burnout', icon: '✋' }
+  feelings: { 
+    name: 'Feelings I Didn\'t Ask For', 
+    emoji: '😵‍💫',
+    description: 'Emotional surprises, internal chaos'
+  },
+  identitycrisis: { 
+    name: 'Identity in Crisis', 
+    emoji: '🫠',
+    description: 'Life purpose, identity loss'
+  },
+  science: { 
+    name: 'The Science of Feeling', 
+    emoji: '🧠',
+    description: 'Psychology & neuroscience'
+  },
+  questionsthatstick: { 
+    name: 'Questions That Stick', 
+    emoji: '🌀',
+    description: 'question, idea, or provocation'
+  },
+  habits: { 
+    name: 'Habits in Action', 
+    emoji: '🌱',
+    description: 'Practical rituals, grounding actions'
+  },
+  whenitshard: { 
+    name: 'When It\'s Hard', 
+    emoji: '😤',
+    description: 'Deeper support, bridge between blog and nudge'
+  },
+  lifeunfiltered: { 
+    name: 'Life, Unfiltered', 
+    emoji: '🌅',
+    description: 'Late epiphanies, emotional clarity'
+  },
+  virtualyou: { 
+    name: 'Performing Online', 
+    emoji: '🧑‍💻',
+    description: 'Digital overwhelm, online identity'
+  },
+  notyoueveryone: { 
+    name: 'We\'re All Struggling', 
+    emoji: '🌍',
+    description: 'Human connection, relational chaos'
+  },
+  boundaries: { 
+    name: 'Boundaries & Burnout', 
+    emoji: '✋',
+    description: 'Emotional labor, people-pleasing'
+  }
 };
 
-function ShareButtons({ post }) {
-  const [copied, setCopied] = useState(false);
-  const url = typeof window !== 'undefined' ? window.location.href : '';
-  const text = post.title;
+// Mock post data
+const post = {
+  id: 1,
+  title: "You're Not Falling Behind, You're Just On Your Own Timeline",
+  excerpt: "Every Instagram post makes it seem like everyone's got it together except you. Here's why that's complete bullshit.",
+  category: 'notyoueveryone',
+  image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
+  readTime: '8 min read',
+  publishedDate: 'November 5, 2025',
+  content: `
+It's 2am and you're scrolling. Again.
 
-  const handleCopyLink = async () => {
-    await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+Your college roommate just got promoted. Your high school friend bought a house. Someone you barely remember from freshman orientation is getting married. And you? You're eating cereal in bed wondering if you'll ever figure out what you're doing with your life.
 
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-sm text-slate-600 font-light">Share:</span>
-      <a
-        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-2 hover:bg-amber-100 rounded-full transition-colors"
-      >
-        <Twitter className="w-5 h-5 text-slate-600" />
-      </a>
-      <a
-        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-2 hover:bg-amber-100 rounded-full transition-colors"
-      >
-        <Facebook className="w-5 h-5 text-slate-600" />
-      </a>
-      <a
-        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="p-2 hover:bg-amber-100 rounded-full transition-colors"
-      >
-        <Linkedin className="w-5 h-5 text-slate-600" />
-      </a>
-      <a
-        href={`mailto:?subject=${encodeURIComponent(text)}&body=${encodeURIComponent(url)}`}
-        className="p-2 hover:bg-amber-100 rounded-full transition-colors"
-      >
-        <Mail className="w-5 h-5 text-slate-600" />
-      </a>
-      <button
-        onClick={handleCopyLink}
-        className="p-2 hover:bg-amber-100 rounded-full transition-colors relative"
-      >
-        <LinkIcon className="w-5 h-5 text-slate-600" />
-        {copied && (
-          <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
-            Copied!
-          </span>
-        )}
-      </button>
+## The Comparison Trap is Real
+
+Here's what nobody tells you: everyone is on a different timeline, and that's not just okay—it's the whole point.
+
+Your brain wasn't designed for this. For all of human history, we compared ourselves to maybe 150 people in our immediate vicinity. Now we're comparing ourselves to millions of carefully curated highlight reels. No wonder you feel behind.
+
+### The Science of "Falling Behind"
+
+Research from Stanford shows that we consistently overestimate others' happiness and underestimate their struggles. We see their wins. We don't see:
+
+- The rejection emails they don't post about
+- The therapy appointments between the vacation photos
+- The credit card debt behind the new car
+- The anxiety attacks that nobody mentions
+
+You're not seeing the full picture. You're never seeing the full picture.
+
+## What "On Time" Even Means
+
+Society has this weird checklist:
+- Graduate by 22
+- Career by 25
+- Partner by 28
+- House by 30
+- Kids by 32
+
+But walk into any room of successful, happy people and ask them if they followed that timeline. Spoiler: most didn't.
+
+Some people:
+- Started their dream career at 40
+- Found their person at 45
+- Had kids at 25 or never
+- Bought a house at 50 or decided not to
+
+All of them are living full, meaningful lives.
+
+## Your Timeline is Yours
+
+What if instead of "falling behind," you're just:
+- Taking time to figure out what you actually want
+- Healing from things that needed healing
+- Building foundations that will matter later
+- Learning lessons that required this exact timing
+
+The race you think you're losing? It doesn't exist. There's no finish line where everyone collectively wins at life.
+
+## What To Do With This Information
+
+1. **Unfollow ruthlessly.** If someone's posts consistently make you feel like shit, unfollow. It's not personal. It's self-preservation.
+
+2. **Remember the iceberg principle.** You see 10% of someone's reality. That's it. The other 90% is underwater, messy, complicated, and very human.
+
+3. **Define your own metrics.** What does "success" mean to you? Not your parents. Not Instagram. You.
+
+4. **Zoom out.** Five years from now, will it matter that you hit some arbitrary milestone at 27 instead of 25? Ten years from now?
+
+## The Real Truth
+
+You're not falling behind. You're exactly where you need to be to become who you're meant to be.
+
+And that person? They're going to be pretty fucking amazing.
+
+*Take your time. There's no rush. The only timeline that matters is yours.*
+  `
+};
+
+// Related posts
+const relatedPosts = [
+  {
+    id: 2,
+    title: "The Science Behind Why You Feel Like Shit for No Reason",
+    category: 'science',
+    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80'
+  },
+  {
+    id: 3,
+    title: "When 'Self-Care' Feels Like Another Chore",
+    category: 'boundaries',
+    image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&q=80'
+  },
+  {
+    id: 4,
+    title: "Your Online Self vs. Your Real Self",
+    category: 'virtualyou',
+    image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=80'
+  }
+];
+
+const Navigation = () => (
+  <nav className="flex justify-between items-center mb-8 py-4">
+    <a href="/" className="text-2xl font-light text-white hover:opacity-80 transition-opacity">
+      <span className="bg-gradient-to-r from-amber-400 to-rose-400 bg-clip-text text-transparent">
+        Soul Notes
+      </span>
+    </a>
+    <div className="flex gap-6 text-white/60 text-sm font-light">
+      <a href="/about" className="hover:text-white transition-colors">About</a>
+      <a href="/archive" className="hover:text-white transition-colors">Archive</a>
     </div>
-  );
-}
+  </nav>
+);
 
-export default function MinimalLayout({ post }) {
-  const category = categoryMap[post.category] || { name: 'Uncategorized', icon: '📝' };
+export default function SinglePost() {
+  const [saved, setSaved] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-700">
+    <div className="min-h-screen bg-slate-700 text-white relative overflow-hidden">
       {/* Background */}
-      <div className="fixed inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-500/25 via-orange-500/30 to-rose-500/28" />
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-500/20 via-orange-500/25 to-rose-500/23" />
       </div>
 
-      <div className="relative z-10">
-        {/* Minimal Header */}
-        <header className="border-b border-amber-400/20 backdrop-blur-sm sticky top-0 bg-slate-700/80">
-          <div className="max-w-4xl mx-auto px-6 py-6 flex justify-between items-center">
-            <a href="/" className="flex items-center gap-2 text-amber-200 hover:text-amber-100 transition-colors group">
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-              <span className="text-sm tracking-wide">Blog</span>
-            </a>
-            <span className="text-amber-200/60 text-sm">{post.readTime}</span>
-          </div>
-        </header>
+      <style>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fade-in 0.6s ease-out; }
+        
+        /* Custom prose styles */
+        .prose h2 {
+          font-size: 2rem;
+          font-weight: 300;
+          margin-top: 3rem;
+          margin-bottom: 1.5rem;
+          line-height: 1.2;
+        }
+        .prose h3 {
+          font-size: 1.5rem;
+          font-weight: 300;
+          margin-top: 2.5rem;
+          margin-bottom: 1rem;
+        }
+        .prose p {
+          margin-bottom: 1.5rem;
+          line-height: 1.8;
+          font-weight: 300;
+        }
+        .prose ul, .prose ol {
+          margin: 1.5rem 0;
+          padding-left: 1.5rem;
+        }
+        .prose li {
+          margin-bottom: 0.75rem;
+          line-height: 1.7;
+          font-weight: 300;
+        }
+        .prose strong {
+          font-weight: 400;
+        }
+        .prose em {
+          font-style: italic;
+          color: rgba(255, 255, 255, 0.7);
+        }
+      `}</style>
 
-        {/* Hero Image - Full Width */}
-        <div className="w-full h-[60vh] relative">
-          <img 
-            src={post.image} 
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-700 via-slate-700/50 to-transparent" />
+      <div className="relative z-10">
+        {/* Header */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+          <Navigation />
+          
+          {/* Back button */}
+          <a 
+            href="/"
+            className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors font-light text-sm mb-8 group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to all stories
+          </a>
         </div>
 
-        {/* Content - Ultra Minimal */}
-        <article className="max-w-2xl mx-auto px-6 -mt-32 relative">
-          {/* Category Badge */}
-          <div className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full text-sm font-medium text-slate-900 shadow-lg">
-              <span className="text-lg">{category.icon}</span>
-              {category.name}
-            </span>
-          </div>
-
-          {/* Title */}
-          <h1 className="text-5xl md:text-6xl font-extralight leading-[1.1] mb-8 text-white tracking-tight">
-            {post.title}
-          </h1>
-
-          {/* Meta */}
-          <div className="flex items-center gap-4 mb-16 text-amber-200/80 text-sm">
-            <time>{post.date}</time>
-            <span className="w-1 h-1 rounded-full bg-amber-400/60" />
-            <span>{post.readTime}</span>
-          </div>
-
-          {/* Content Box */}
-          <div className="bg-white/98 backdrop-blur-sm rounded-3xl p-12 md:p-16 shadow-2xl mb-16">
-            {/* Article Content -極簡 Typography */}
-            <div 
-              className="prose prose-lg max-w-none
-                prose-headings:font-light prose-headings:text-slate-900 prose-headings:tracking-tight
-                prose-h2:text-4xl prose-h2:mt-16 prose-h2:mb-6
-                prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-4
-                prose-p:text-slate-700 prose-p:leading-[1.8] prose-p:mb-8 prose-p:text-lg
-                prose-a:text-amber-700 prose-a:no-underline hover:prose-a:text-amber-900
-                prose-strong:text-slate-900 prose-strong:font-medium
-                prose-blockquote:border-l-4 prose-blockquote:border-amber-400 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-slate-600
-                prose-ul:my-8 prose-li:my-2"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+        {/* Hero Image */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+          <div className="relative aspect-[21/9] rounded-3xl overflow-hidden animate-fade-in">
+            <img 
+              src={post.image}
+              alt=""
+              className="w-full h-full object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+          </div>
+        </div>
 
-            {/* Share Buttons */}
-            <div className="mt-16 pt-8 border-t border-slate-200">
-              <ShareButtons post={post} />
-            </div>
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+          <div className="grid lg:grid-cols-[1fr_380px] gap-12">
+            {/* Article */}
+            <article className="animate-fade-in">
+              {/* Meta */}
+              <div className="flex items-center gap-3 text-white/60 mb-6 font-light text-sm">
+                <span className="text-2xl">{categoryMap[post.category]?.emoji}</span>
+                <span>{categoryMap[post.category]?.name}</span>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-4 h-4" />
+                  {post.readTime}
+                </span>
+              </div>
 
-            {/* Author Bio */}
-            <div className="mt-12 pt-12 border-t border-slate-200">
-              <div className="flex items-start gap-6">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-400 to-rose-400 flex-shrink-0" />
-                <div>
-                  <h3 className="text-xl font-light text-slate-900 mb-2">The Bond Company</h3>
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    We create tools and content for humans navigating the messy, beautiful experience of being alive. 
-                    From daily nudges to deeper dives, we're here to help you feel less alone in it all.
-                  </p>
-                  <a 
-                    href="https://thebond.company" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-amber-700 hover:text-amber-900 text-sm font-medium"
-                  >
-                    Learn more about us →
-                  </a>
+              {/* Title */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight mb-6 leading-[1.1] tracking-tight">
+                {post.title}
+              </h1>
+
+              {/* Excerpt */}
+              <p className="text-xl md:text-2xl text-white/70 font-light leading-relaxed mb-8 border-l-2 border-white/20 pl-6">
+                {post.excerpt}
+              </p>
+
+              {/* Actions */}
+              <div className="flex items-center gap-4 mb-12 pb-8 border-b border-white/10">
+                <button 
+                  onClick={() => setSaved(!saved)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-light transition-all ${
+                    saved 
+                      ? 'bg-white text-slate-900' 
+                      : 'bg-white/10 text-white/70 hover:bg-white/20'
+                  }`}
+                >
+                  <Bookmark className="w-4 h-4" fill={saved ? "currentColor" : "none"} />
+                  {saved ? 'Saved' : 'Save'}
+                </button>
+                <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/70 hover:bg-white/20 text-sm font-light transition-all">
+                  <Share2 className="w-4 h-4" />
+                  Share
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="prose prose-lg prose-invert max-w-none text-white/90">
+                {post.content.split('\n').map((paragraph, i) => {
+                  if (paragraph.startsWith('## ')) {
+                    return <h2 key={i}>{paragraph.replace('## ', '')}</h2>;
+                  } else if (paragraph.startsWith('### ')) {
+                    return <h3 key={i}>{paragraph.replace('### ', '')}</h3>;
+                  } else if (paragraph.startsWith('- ')) {
+                    return <li key={i}>{paragraph.replace('- ', '')}</li>;
+                  } else if (paragraph.trim()) {
+                    return <p key={i}>{paragraph}</p>;
+                  }
+                  return null;
+                })}
+              </div>
+
+              {/* End of Article CTA */}
+              <div className="mt-16 pt-12 border-t border-white/10">
+                <div className="bg-gradient-to-br from-rose-600/20 to-pink-600/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10">
+                  <div className="text-center max-w-2xl mx-auto">
+                    <div className="mb-6">
+                      <Heart className="w-12 h-12 mx-auto text-rose-400/80" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-extralight mb-4 text-white">
+                      This resonated with you?
+                    </h3>
+                    <p className="text-white/70 font-light mb-8 leading-relaxed">
+                      Get stories like this in your inbox every week. No fluff, no toxic positivity, just real talk about being human.
+                    </p>
+                    <button className="px-8 py-4 bg-white text-slate-900 rounded-full hover:scale-105 transition-all duration-300 font-light shadow-xl">
+                      Subscribe to Soul Notes
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </article>
+            </article>
 
-        {/* Footer */}
-        <footer className="border-t border-amber-400/20 mt-20">
-          <div className="max-w-4xl mx-auto px-6 py-12 text-center">
-            <a href="/" className="text-amber-200 hover:text-amber-100 transition-colors text-sm">
-              ← Back to all posts
-            </a>
+            {/* Sidebar */}
+            <aside className="space-y-8">
+              {/* Sticky container */}
+              <div className="lg:sticky lg:top-8 space-y-8">
+                {/* Native Ad - Course */}
+                <div className="bg-gradient-to-br from-violet-600 to-purple-600 rounded-3xl p-8 text-center animate-fade-in">
+                  <div className="mb-4">
+                    <span className="text-4xl">📚</span>
+                  </div>
+                  <p className="text-white/70 text-xs font-light mb-2 uppercase tracking-wider">
+                    For when you're ready
+                  </p>
+                  <h3 className="text-xl font-light mb-3 text-white">
+                    Emotional Literacy Course
+                  </h3>
+                  <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
+                    5 weeks. No bullshit. Just practical tools for understanding your feelings.
+                  </p>
+                  <button className="w-full px-6 py-3 bg-white text-purple-900 rounded-full hover:bg-white/90 transition-all font-light text-sm shadow-lg">
+                    Learn more
+                  </button>
+                </div>
+
+                {/* Native Ad - Product */}
+                <div className="bg-gradient-to-br from-amber-600 to-orange-600 rounded-3xl p-8 text-center">
+                  <div className="mb-4">
+                    <span className="text-4xl">🧘</span>
+                  </div>
+                  <p className="text-white/70 text-xs font-light mb-2 uppercase tracking-wider">
+                    Self-care that works
+                  </p>
+                  <h3 className="text-xl font-light mb-3 text-white">
+                    The Grounding Kit
+                  </h3>
+                  <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
+                    Physical tools for when your brain won't shut up. Weighted stones, breathing guide, journal prompts.
+                  </p>
+                  <button className="w-full px-6 py-3 bg-white text-orange-900 rounded-full hover:bg-white/90 transition-all font-light text-sm shadow-lg">
+                    Shop now
+                  </button>
+                </div>
+
+                {/* Related Posts */}
+                <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10">
+                  <h3 className="text-lg font-light mb-6 text-white">Keep reading</h3>
+                  <div className="space-y-4">
+                    {relatedPosts.map((related) => (
+                      <a 
+                        key={related.id}
+                        href={`/post/${related.id}`}
+                        className="group block"
+                      >
+                        <div className="flex gap-4 items-start">
+                          <div className="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden">
+                            <img 
+                              src={related.image}
+                              alt=""
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs text-white/50 mb-1 flex items-center gap-1">
+                              <span>{categoryMap[related.category]?.emoji}</span>
+                              <span className="truncate">{categoryMap[related.category]?.name}</span>
+                            </div>
+                            <h4 className="text-sm font-light text-white/90 group-hover:text-white transition-colors leading-snug line-clamp-2">
+                              {related.title}
+                            </h4>
+                          </div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </aside>
           </div>
-        </footer>
+        </div>
       </div>
     </div>
   );
