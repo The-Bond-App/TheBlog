@@ -143,13 +143,14 @@ export default function SitemapPage() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-amber-400/20 mt-20">
-          <div className="max-w-7xl mx-auto px-6 py-8 text-center">
-            <p className="text-amber-200/60 text-sm font-light">
-              © 2024 The Bond Company. Made with care for humans navigating life.
-            </p>
-          </div>
-        </footer>
+       <footer className="border-t border-amber-400/20 mt-20">
+        <div className="max-w-7xl mx-auto px-6 py-8 text-center">
+          <p className="text-amber-200/60 text-base font-light">
+            © {new Date().getFullYear()} The Bond Company. Made with care for humans navigating life.
+          </p>
+        </div>
+      </footer>
+
       </div>
 
       <style jsx>{`

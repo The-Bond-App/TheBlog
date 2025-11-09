@@ -1,484 +1,428 @@
-
-
-
 "use client"
 import { useState, useEffect } from 'react';
-import { Heart, ArrowRight, X } from 'lucide-react';
+import { ArrowRight, ChevronRight, ChevronLeft, Heart, Sparkles, Coffee } from 'lucide-react';
 
-// Import these from your actual files
-import { categories, categoryMap } from '../constants/categories';
-import usePosts from '../hooks/usePosts';
-import Hero from './Hero';
+import Hero from './Hero'
+
+const categories = [
+  { uuid: 'growth', name: 'Growth', color: 'bg-emerald-500' },
+  { uuid: 'reflection', name: 'Reflection', color: 'bg-blue-500' },
+  { uuid: 'connection', name: 'Connection', color: 'bg-rose-500' },
+  { uuid: 'healing', name: 'Healing', color: 'bg-amber-500' },
+  { uuid: 'creativity', name: 'Creativity', color: 'bg-purple-500' },
+  { uuid: 'mindfulness', name: 'Mindfulness', color: 'bg-teal-500' },
+  { uuid: 'journey', name: 'Journey', color: 'bg-indigo-500' },
+  { uuid: 'courage', name: 'Courage', color: 'bg-orange-500' },
+];
+
+const categoryMap = categories.reduce((acc, cat) => {
+  acc[cat.uuid] = { name: cat.name, color: cat.color };
+  return acc;
+}, {});
+
+const mockPosts = [
+  {
+    id: 1,
+    title: "The Art of Letting Go",
+    description: "Sometimes the hardest thing and the right thing are the same. Learning to release what no longer serves us.",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+    category: 'healing',
+    readTime: '8 min',
+    date: 'Nov 5, 2025',
+    author: {
+      name: 'Sarah Chen',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
+      bio: 'Writer and therapist exploring the intersection of psychology and everyday life.'
+    },
+  },
+  {
+    id: 2,
+    title: "Finding Your Voice",
+    description: "Your story matters. Here's how to start telling it with confidence and authenticity.",
+    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800",
+    category: 'growth',
+    readTime: '6 min',
+    date: 'Nov 4, 2025',
+    author: {
+      name: 'Marcus Webb',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+    },
+  },
+  {
+    id: 3,
+    title: "The Power of Pause",
+    description: "In a world that glorifies hustle, rest becomes a radical act of self-care.",
+    image: "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=800",
+    category: 'mindfulness',
+    readTime: '5 min',
+    date: 'Nov 3, 2025',
+    author: {
+      name: 'Emma Rodriguez',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+    },
+  },
+  {
+    id: 4,
+    title: "Building Deeper Connections",
+    description: "Moving beyond small talk to create relationships that truly nourish the soul.",
+    image: "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=800",
+    category: 'connection',
+    readTime: '7 min',
+    date: 'Nov 2, 2025',
+    author: {
+      name: 'Sarah Chen',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
+    },
+  },
+  {
+    id: 5,
+    title: "Creative Courage",
+    description: "What happens when you give yourself permission to create without judgment.",
+    image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800",
+    category: 'creativity',
+    readTime: '9 min',
+    date: 'Nov 1, 2025',
+    author: {
+      name: 'Marcus Webb',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
+    },
+  },
+  {
+    id: 6,
+    title: "The Long Road Home",
+    description: "Sometimes the journey to yourself takes a lifetime. And that's okay.",
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800",
+    category: 'journey',
+    readTime: '10 min',
+    date: 'Oct 31, 2025',
+    author: {
+      name: 'Emma Rodriguez',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+    },
+  }
+];
 
 
 
-// Loading component
-function PostsLoader() {
-  return (
-    <div className="py-10">
-      <div className="max-w-3xl w-full mx-auto px-4 sm:px-6 min-h-[60vh] flex items-center justify-center">
-        <div className="w-full">
-          <div className="relative h-2 bg-gradient-to-r from-amber-950/40 via-orange-950/40 to-rose-950/40 rounded-full overflow-hidden backdrop-blur-sm">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500 via-orange-400 to-rose-500 rounded-full" 
-                 style={{
-                   width: '45%',
-                   animation: 'shimmer 2s ease-in-out infinite',
-                 }} />
-          </div>
-          <p className="text-center text-amber-200/80 mt-4 text-sm">Loading posts...</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Error Component
-function PostsError({ error }) {
-  return (
-    <div className="py-20 text-center">
-      <div className="max-w-md mx-auto">
-        <div className="text-rose-400 text-6xl mb-4">⚠</div>
-        <h3 className="text-2xl font-light mb-2 text-amber-100">Something went wrong</h3>
-        <p className="text-rose-400">{error}</p>
-      </div>
-    </div>
-  );
-}
-
-export default function Main({ posts: initialPosts = [] }) {
+export default function Main() {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [showStickyNav, setShowStickyNav] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [isFiltering, setIsFiltering] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   
-  const { blogPosts, loading, error } = usePosts(selectedCategory);
+  
+  const postsPerPage = 12;
+  
+  const displayPosts = selectedCategory === 'all' 
+    ? mockPosts 
+    : mockPosts.filter(p => p.category === selectedCategory);
+  
+  const totalPages = Math.ceil(displayPosts.length / postsPerPage);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const currentPosts = displayPosts.slice(startIndex, startIndex + postsPerPage);
 
-  // Use server-provided posts as initial data, or blogPosts if available
-  const displayPosts = blogPosts.length > 0 ? blogPosts : initialPosts;
-
-  // Sticky nav scroll handler
   useEffect(() => {
-    const handleScroll = () => {
-      const heroHeight = 200;
-      setShowStickyNav(window.scrollY > heroHeight);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % featuredCarousel.length);
+    }, 5000);
+    return () => clearInterval(timer);
   }, []);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (showDropdown && !e.target.closest('.dropdown-container')) {
-        setShowDropdown(false);
-      }
-    };
-    
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showDropdown]);
-
-  // Reset filtering state when posts are loaded
-  useEffect(() => {
-    if (!loading && blogPosts.length > 0) {
-      setIsFiltering(false);
-    }
-  }, [loading, blogPosts.length]);
-
-  // Category click handler with loading state
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategory(categoryId);
-    setShowDropdown(false);
-    setIsFiltering(true);
-    
-    // Smooth scroll to stories
-    setTimeout(() => {
-      const storiesSection = document.getElementById('stories-section');
-      if (storiesSection) {
-        storiesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const clearCategory = () => {
-    setSelectedCategory('all');
-    setIsFiltering(true);
+  const handleReadPost = (post) => {
+    console.log('Reading:', post.title);
   };
-
-  const heroPost = displayPosts.find(p => p.featured) || displayPosts[0];
-  const remainingPosts = displayPosts.filter(p => p.id !== heroPost?.id);
-
-  
 
   return (
-    <div className="min-h-screen bg-slate-700 text-white relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full transition-all duration-1000 bg-gradient-to-br from-amber-500/25 via-orange-500/30 to-rose-500/28" />
-      </div>
-
+    <div className="min-h-screen bg-white" style={{border: '2px solid red'}}>
       <style jsx>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-          
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+        
+        
+        @keyframes fadeUp {
+          from { 
+            opacity: 0; 
+            transform: translateY(20px);
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0);
+          }
         }
         
-        @keyframes scale-in {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
         
-        @keyframes slide-down {
-          from { transform: translateY(-100%); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
+        @keyframes slideIn {
+          from { 
+            opacity: 0;
+            transform: translateX(40px);
+          }
+          to { 
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
         
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          50% { transform: translateX(400%); }
-          100% { transform: translateX(-100%); }
+        .fade-up { 
+          animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         
-        @keyframes dropdown {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
+        .fade-in {
+          animation: fadeIn 1s ease-out forwards;
         }
-
-        .animate-fade-in { animation: fade-in 0.8s ease-out; }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-scale-in { animation: scale-in 0.6s ease-out; }
-        .animate-slide-down { animation: slide-down 0.3s ease-out; }
-        .animate-dropdown { animation: dropdown 0.2s ease-out; }
-
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+        
+        .slide-in {
+          animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+        
+        
+        
+        
+        
+        
       `}</style>
 
-      <div className="relative z-10">
-        <Hero />
+      <Hero />
 
-        {/* Sticky Navigation */}
-        {showStickyNav && (
-          <div className="fixed top-0 left-0 right-0 z-50 animate-slide-down">
-            <div className="bg-slate-900/95 backdrop-blur-xl border-b border-white/10 shadow-2xl">
-              <div className="max-w-7xl mx-auto px-6 py-3">
-                <div className="flex items-center gap-3">
-                  {/* All Stories button */}
-                  <button
-                    onClick={() => handleCategoryClick('all')}
-                    className={`flex-shrink-0 px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap text-sm font-light flex items-center gap-2 ${
-                      selectedCategory === 'all'
-                        ? 'bg-white text-slate-900 shadow-lg scale-105'
-                        : 'bg-white/10 text-white/70 hover:bg-white/20'
-                    }`}
-                  >
-                    <span className="text-base">✨</span>
-                    <span className="hidden sm:inline">All Stories</span>
-                  </button>
 
-                  {/* First 4 categories */}
-                  {categories.slice(0, 4).map((category) => (
-                    <button
-                      key={category.uuid}
-                      onClick={() => handleCategoryClick(category.uuid)}
-                      className={`flex-shrink-0 px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap text-sm font-light flex items-center gap-2 ${
-                        selectedCategory === category.uuid
-                          ? 'bg-white text-slate-900 shadow-lg scale-105'
-                          : 'bg-white/10 text-white/70 hover:bg-white/20'
-                      }`}
-                    >
-                      <span className="text-base">{category.icon}</span>
-                      <span className="hidden sm:inline">{category.name}</span>
-                    </button>
-                  ))}
 
-                  {/* More dropdown */}
-                  <div className="relative dropdown-container">
-                    <button
-                      onClick={() => setShowDropdown(!showDropdown)}
-                      className={`flex-shrink-0 px-4 py-2 rounded-full transition-all duration-300 whitespace-nowrap text-sm font-light flex items-center gap-2 ${
-                        showDropdown || (selectedCategory !== 'all' && !categories.slice(0, 4).find(c => c.uuid === selectedCategory))
-                          ? 'bg-white text-slate-900 shadow-lg'
-                          : 'bg-white/10 text-white/70 hover:bg-white/20'
-                      }`}
-                    >
-                      <span>More</span>
-                      <svg 
-                        className={`w-4 h-4 transition-transform ${showDropdown ? 'rotate-180' : ''}`}
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-
-                    {showDropdown && (
-                      <div className="absolute top-full right-0 mt-2 w-64 bg-slate-900/98 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-dropdown">
-                        <div className="py-2">
-                          {categories.slice(4).map((category) => (
-                            <button
-                              key={category.uuid}
-                              onClick={() => handleCategoryClick(category.uuid)}
-                              className={`w-full px-4 py-3 text-left text-sm font-light flex items-center gap-3 transition-colors ${
-                                selectedCategory === category.uuid
-                                  ? 'bg-white/20 text-white'
-                                  : 'text-white/70 hover:bg-white/10 hover:text-white'
-                              }`}
-                            >
-                              <span className="text-xl">{category.icon}</span>
-                              <span>{category.name}</span>
-                              {selectedCategory === category.uuid && (
-                                <svg className="w-4 h-4 ml-auto" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Stories Section */}
-        <div id="stories-section" className="relative py-12 px-6 animate-scale-in" style={{ paddingTop: '3rem' }}>
-          <div className="relative z-10 max-w-7xl mx-auto">
-            {/* Active Category Badge */}
-            {selectedCategory !== 'all' && categoryMap[selectedCategory] && (
-              <div className="mb-12 md:mb-16 text-center">
-                <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-4 md:px-6 py-3 border border-white/20">
-                  <span className="text-2xl md:text-3xl">{categoryMap[selectedCategory].emoji}</span>
-                  <div className="text-left">
-                    <p className="text-xs font-light text-white/60">Reading</p>
-                    <p className="text-sm md:text-base font-light text-white">{categoryMap[selectedCategory].name}</p>
-                  </div>
-                  <button 
-                    onClick={clearCategory}
-                    className="ml-2 text-white/50 hover:text-white transition-colors p-1"
-                  >
-                    <X className="w-4 h-4 md:w-5 md:h-5" />
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Show loader ONLY during client-side filtering */}
-            {isFiltering && loading ? (
-              <PostsLoader />
-            ) : error ? (
-              <PostsError error={error} />
-            ) : displayPosts.length === 0 ? (
-              <div className="col-span-2 text-center py-20">
-                <div className="text-7xl mb-8 opacity-50">🌱</div>
-                <h3 className="text-3xl font-extralight text-white mb-4">
-                  No stories in {categoryMap[selectedCategory]?.name || 'this category'} yet
-                </h3>
-                <p className="text-white/60 font-light mb-10 text-lg">
-                  Try viewing all stories or choose a different category
-                </p>
-                <button 
-                  onClick={clearCategory}
-                  className="px-10 py-4 bg-white text-slate-900 rounded-full hover:bg-white/90 transition-all font-light shadow-xl"
-                >
-                  Show all stories
-                </button>
-              </div>
-            ) : (
-              <>
-               {/* Hero Story */}
-              {heroPost && (
-                <article className="mb-16 md:mb-24 group cursor-pointer">
-                  <div className="relative overflow-hidden rounded-3xl transition-all duration-700 hover:shadow-2xl hover:shadow-black/30">
-                    <div className="absolute inset-0">
-                      <img 
-                        src={heroPost.image} 
-                        alt=""
-                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[3000ms]"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/70 to-transparent" />
-                    </div>
-                    
-                    <div className="relative min-h-[500px] md:min-h-[600px] flex items-end p-8 md:p-16 lg:p-20">
-                      <div className="max-w-3xl">
-                        <div className="flex items-center gap-2 md:gap-3 text-white/60 mb-4 md:mb-6 font-light text-sm">
-                          <span className="text-xl md:text-2xl">{categoryMap[heroPost.category]?.emoji}</span>
-                          <span className="hidden sm:inline">{categoryMap[heroPost.category]?.name}</span>
-                        </div>
-                        
-                        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extralight mb-4 md:mb-6 leading-[1.1] tracking-tight text-white">
-                          {heroPost.title}
-                        </h1>
-                        
-                        <p className="text-base md:text-xl text-white/80 font-light leading-relaxed mb-6 md:mb-10 max-w-2xl">
-                          {heroPost.description} 
-                        </p>
-                        
-                        <button className="px-8 md:px-10 py-3 md:py-4 bg-white text-slate-900 rounded-full hover:bg-white/90 transition-all duration-300 font-light text-sm md:text-base inline-flex items-center gap-3 shadow-xl">
-                          Read this story
-                          <ArrowRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              )}
-
-              {/* Story Grid with Native Ads */}
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-                {remainingPosts.length > 0 ? (
-                  remainingPosts.map((post, index) => (
-                    <>
-                      {/* Native Ad Block - After 3rd post 
-                      {index === 2 && (
-                        <div 
-                          key="ad-block"
-                          className="md:col-span-2"
-                          style={{
-                            opacity: 0,
-                            animation: `fade-in 0.6s ease-out ${index * 0.1}s forwards`
-                          }}
-                        >
-                          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-600 hover:shadow-2xl transition-all duration-500 group cursor-pointer">
-                            <div className="p-8 md:p-12 lg:p-16 text-center">
-                              <div className="mb-6">
-                                <span className="text-5xl">📚</span>
-                              </div>
-                              
-                              <div className="max-w-2xl mx-auto">
-                                <p className="text-white/70 text-sm font-light mb-3 uppercase tracking-wider">
-                                  Pause here for a moment
-                                </p>
-                                
-                                <h3 className="text-3xl md:text-4xl font-extralight mb-4 text-white leading-tight">
-                                  Learn to Speak Your Emotions
-                                </h3>
-                                
-                                <p className="text-lg text-white/80 font-light leading-relaxed mb-8">
-                                  A 5-week course on emotional literacy. Not therapy. Not self-help. Just tools that actually work.
-                                </p>
-                                
-                                <button className="px-8 py-4 bg-white text-purple-900 rounded-full hover:bg-white/90 transition-all duration-300 font-light shadow-xl group-hover:scale-105">
-                                  Learn more
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}*/}
-                      
-                      {/* Regular Post */}
-                    <article 
-                      key={post.id}
-                      className="group cursor-pointer"
-                      style={{
-                        opacity: 0,
-                        animation: `fade-in 0.6s ease-out ${index * 0.1}s forwards`
-                      }}
-                    >
-                      <div className="relative overflow-hidden rounded-3xl bg-white hover:shadow-2xl transition-all duration-500">
-                        <div className="aspect-[16/10] relative overflow-hidden">
-                          <img 
-                            src={post.image} 
-                            alt=""
-                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[3000ms]"
-                          />
-                        </div>
-                        
-                        <div className="p-6 md:p-8">
-                          <div className="flex items-center gap-2 text-slate-500 mb-3 text-sm">
-                            <span className="text-xl">{categoryMap[post.category]?.emoji}</span>
-                            <span className="font-light">{categoryMap[post.category]?.name}</span>
-                          </div>
-                          
-                          <h3 className="text-xl md:text-2xl font-light leading-tight text-slate-900 mb-3 group-hover:text-slate-600 transition-colors">
-                            {post.title}
-                          </h3>
-                          
-                          <p className="text-slate-600 leading-relaxed font-light mb-4 line-clamp-3 text-sm md:text-base">
-                            {post.description}
-                          </p>
-                          
-                          <div className="flex items-center text-slate-400 group-hover:text-slate-700 transition-colors font-light text-sm">
-                            <span>Read story</span>
-                            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                    </>
-                  ))
-                ) : (
-                  <div className="col-span-2 text-center py-20">
-                    <div className="text-7xl mb-8 opacity-50">🌱</div>
-                    <h3 className="text-3xl font-extralight text-white mb-4">
-                      {selectedCategory 
-                        ? `No stories in ${categoryMap[selectedCategory]?.name} yet`
-                        : "We're still gathering stories for this feeling"
-                      }
-                    </h3>
-                    <p className="text-white/60 font-light mb-10 text-lg">
-                      {selectedCategory 
-                        ? "Try viewing all stories in this mood"
-                        : "Try another mood, or explore everything"
-                      }
-                    </p>
-                    {selectedCategory ? (
-                      <button 
-                        onClick={() => setSelectedCategory(null)}
-                        className="px-10 py-4 bg-white text-slate-900 rounded-full hover:bg-white/90 transition-all font-light shadow-xl"
-                      >
-                        Show all {journeyMoments.find(m => m.id === selectedMood)?.name.toLowerCase()} stories
-                      </button>
-                    ) : (
-                      <button 
-                        onClick={clearMood}
-                        className="px-10 py-4 bg-white text-slate-900 rounded-full hover:bg-white/90 transition-all font-light shadow-xl"
-                      >
-                        Choose different mood
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="relative py-24 md:py-32 px-6">
-          <div className="relative z-10 max-w-4xl mx-auto text-center">
-            <div className="mb-8 md:mb-12">
-              <Heart className="w-12 h-12 md:w-16 md:h-16 mx-auto text-rose-400/60 animate-float" />
-            </div>
-            
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-extralight mb-6 md:mb-8 tracking-tight text-white leading-[1.1]">
-              You're becoming
-            </h2>
-            
-            <p className="text-lg md:text-2xl text-white/60 font-extralight leading-relaxed mb-12 md:mb-16 max-w-2xl mx-auto">
-              Every story you read, every moment you pause—it's all part of the process
-            </p>
-            
-            <button className="px-8 md:px-12 py-4 md:py-5 bg-white text-slate-900 rounded-full hover:scale-105 transition-all duration-300 font-light text-base md:text-lg shadow-2xl">
-              Get weekly reflections
+      {/* Categories - Always Visible with Color */}
+      <div className="bg-gray-100 border-y border-gray-200 sticky top-[73px] z-40">
+        <div className="container mx-auto px-6 max-w-[1400px]">
+          <div className="flex items-center gap-3 overflow-x-auto py-5 scrollbar-hide">
+            <button
+              onClick={() => handleCategoryClick('all')}
+              className={`px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                selectedCategory === 'all'
+                  ? 'bg-black text-white shadow-lg'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+              }`}
+            >
+              All Stories
             </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.uuid}
+                onClick={() => handleCategoryClick(cat.uuid)}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                  selectedCategory === cat.uuid
+                    ? `${cat.color} text-white shadow-lg`
+                    : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* Main Content - Better Contrast */}
+      <div className="bg-gray-50">
+        <div className="container mx-auto px-6 py-20 max-w-[1400px]">
+          <div className="grid grid-cols-12 gap-12">
+            {/* Main Content */}
+            <div className="col-span-12 lg:col-span-8">
+              {/* Course Promotion with Soul */}
+              <div className="mb-16 p-12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white rounded-3xl relative overflow-hidden shadow-2xl">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                    <Sparkles className="w-4 h-4" />
+                    <span>New Course Available</span>
+                  </div>
+                  <h3 className="text-4xl font-bold mb-4">Emotional Wellbeing 101</h3>
+                  <p className="text-xl text-white/90 mb-8 leading-relaxed max-w-2xl">
+                    Think of your emotions like a garden. This course teaches you how to tend to it—what to water, what to prune, and how to let things grow naturally.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-6 mb-8 text-white/80 text-sm">
+                    <span className="flex items-center gap-2">
+                      <Coffee className="w-4 h-4" />
+                      6 weeks
+                    </span>
+                    <span>Self-paced</span>
+                    <span>Certificate included</span>
+                  </div>
+                  <button className="px-8 py-4 bg-white text-purple-600 rounded-full font-semibold hover:bg-gray-100 transition-all hover:scale-105 shadow-xl">
+                    Start Your Journey
+                  </button>
+                </div>
+              </div>
+
+              {/* Posts Grid */}
+              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-200">
+                <h2 className="text-3xl font-bold tracking-tight text-black mb-8">
+                  {selectedCategory === 'all' ? 'Latest Stories' : categoryMap[selectedCategory]?.name}
+                </h2>
+                
+                <div className="grid md:grid-cols-2 gap-6 mb-12">
+                  {currentPosts.map((post, idx) => (
+                    <div 
+                      key={post.id}
+                      className="post-card fade-up cursor-pointer"
+                      style={{ animationDelay: `${idx * 0.05}s` }}
+                      onClick={() => handleReadPost(post)}
+                    >
+                      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                        <img 
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className={`absolute top-4 left-4 px-3 py-1.5 ${categoryMap[post.category]?.color} text-white rounded-full text-xs font-semibold`}>
+                          {categoryMap[post.category]?.name}
+                        </div>
+                      </div>
+                      
+                      <div className="p-6">
+                        <div className="flex items-center gap-2 mb-3 text-xs text-gray-500">
+                          <span>{post.date}</span>
+                          <span>·</span>
+                          <span>{post.readTime}</span>
+                        </div>
+                        
+                        <h3 className="text-xl font-bold text-black leading-tight mb-3 hover:text-gray-600 transition-colors">
+                          {post.title}
+                        </h3>
+                        
+                        <p className="text-gray-600 leading-relaxed mb-5 text-sm">
+                          {post.description}
+                        </p>
+                        
+                        <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                          <img 
+                            src={post.author.avatar}
+                            alt={post.author.name}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                          <span className="text-sm font-medium text-gray-900">{post.author.name}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Pagination */}
+                <div className="flex justify-center pt-8">
+                  <nav className="inline-flex items-center gap-2 bg-gray-50 px-2 py-2 rounded-2xl border border-gray-200">
+                    <button
+                      onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                      disabled={currentPage === 1}
+                      className="p-2.5 rounded-xl hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    
+                    {[...Array(Math.min(3, totalPages))].map((_, idx) => {
+                      const pageNum = idx + 1;
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => setCurrentPage(pageNum)}
+                          className={`min-w-[44px] h-11 rounded-xl font-semibold transition-all text-sm ${
+                            currentPage === pageNum
+                              ? 'bg-black text-white shadow-lg'
+                              : 'text-gray-600 hover:bg-white'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                    
+                    <button
+                      onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                      disabled={currentPage === totalPages}
+                      className="p-2.5 rounded-xl hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="col-span-12 lg:col-span-4 space-y-6">
+              {/* Welcome Home Card */}
+              <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-8 rounded-3xl border border-rose-100 shadow-sm">
+                <div className="w-14 h-14 bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl mb-6 flex items-center justify-center shadow-lg">
+                  <Heart className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-3">Welcome Home</h3>
+                <p className="text-gray-700 mb-6 leading-relaxed">
+                  This is your space. A place where your thoughts matter, your stories connect, and your voice creates ripples.
+                </p>
+                <button className="w-full px-6 py-3.5 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-2xl font-semibold hover:shadow-xl transition-all hover:scale-105">
+                  Join Community
+                </button>
+              </div>
+
+              {/* Newsletter */}
+              <div className="bg-black text-white p-8 rounded-3xl shadow-xl">
+                <h3 className="text-2xl font-bold mb-2">Sunday Letters</h3>
+                <p className="text-gray-400 mb-6 leading-relaxed">
+                  A weekly dose of perspective. Delivered with care, every Sunday morning.
+                </p>
+                <input 
+                  type="email"
+                  placeholder="your@email.com"
+                  className="w-full px-5 py-3.5 rounded-2xl mb-3 bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/40 transition-all"
+                />
+                <button className="w-full px-6 py-3.5 bg-white text-black rounded-2xl font-semibold hover:bg-gray-100 transition-all hover:scale-105">
+                  Subscribe
+                </button>
+              </div>
+
+              {/* Featured Mini Posts */}
+              <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
+                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6">Must Read</h3>
+                
+                <div className="space-y-6">
+                  {mockPosts.slice(0, 3).map((post) => (
+                    <div key={post.id} className="group cursor-pointer" onClick={() => handleReadPost(post)}>
+                      <div className="flex gap-4">
+                        <div className="relative w-24 h-24 flex-shrink-0 rounded-2xl overflow-hidden bg-gray-100">
+                          <img 
+                            src={post.image}
+                            alt={post.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className={`inline-block px-2 py-1 ${categoryMap[post.category]?.color} text-white rounded-lg text-xs font-semibold mb-2`}>
+                            {categoryMap[post.category]?.name}
+                          </div>
+                          <h4 className="text-sm font-bold text-black leading-snug line-clamp-2 group-hover:text-gray-600 transition-colors">
+                            {post.title}
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-300 bg-gray-100 py-16">
+        <div className="container mx-auto px-6 max-w-[1400px]">
+          <div className="text-center">
+            <div className="text-2xl font-bold mb-3">Stories</div>
+            <p className="text-gray-600 mb-6">Where thoughts become words, and words become connections.</p>
+            <p className="text-sm text-gray-500">© 2025 Stories. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

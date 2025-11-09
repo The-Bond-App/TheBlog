@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
 
 @import "tailwindcss";
 
@@ -11,12 +12,53 @@
   --font-mono: var(--font-geist-mono);
 }
 
-
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
 }
 
-.font-title { font-family: 'Albert Sans', serif; }
-.font-geist { font-family: 'Geist';}
+.font-title { font-family: 'Albert Sans', serif !important; }
+.font-geist { font-family: 'Geist', serif !important;}
+
+
+        
+       
+.post-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: white;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+
+.post-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.12);
+  border-color: rgba(0,0,0,0.12);
+}
+
+.post-card img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.post-card:hover img {
+  transform: scale(1.08);
+}
+
+.carousel-transition {
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #000 0%, #444 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
