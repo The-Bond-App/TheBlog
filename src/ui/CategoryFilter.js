@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, SquareArrowOutUpRight } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { categories } from '../constants/categories';
 
 export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
@@ -32,46 +32,48 @@ export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
   const moreCategories = categories.slice(4);
 
   return (
-    <div className="bg-white/[0.04] border-b border-white/[0.08] shadow-[0_1px_0_0_rgba(255,255,255,0.03)]">
-      <div className="w-full mx-auto px-6 pt-8 pb-4">
-        {/* Filter label */}
+    <div className="bg-gray-200 border-y border-gray-200 z-40">
+      <div className="w-full mx-auto px-6 py-4">
+        {/* Filter label 
         <div className="flex items-center justify-center text-xs gap-6 mb-6">
-          <div className="uppercase tracking-[0.15em] text-white/70 font-semibold">
+          <div className="uppercase tracking-[0.05em] text-slate-800/70 font-semibold">
             Explore Topics
           </div>
-          <div className="h-3 w-px bg-white/[0.12]"></div>
+          <div className="h-3 w-px bg-slate-800/20"></div>
           <a
             href="/sitemap"
-            className="flex items-center gap-1.5 uppercase tracking-tight text-white/40 hover:text-white/70 transition-colors duration-200 font-semibold"
+            className="flex items-center gap-1.5 uppercase tracking-tight text-slate-800/50 hover:text-slate-800/70 transition-colors duration-200 font-semibold"
           >
             Site Map <SquareArrowOutUpRight size={12} strokeWidth={1.75} />
           </a>
-        </div>
+        </div>*/}
 
         {/* Category buttons */}
-        <div className="flex flex-wrap gap-2 justify-center items-center pb-1">
+        <div className="flex flex-wrap gap-3 justify-center items-center">
           {/* Top categories always visible */}
           {topCategories.map((cat) => (
             <button
               key={cat.id || cat.uuid}
               onClick={() => onCategoryChange(cat.id || cat.uuid)}
-              className={`cursor-pointer flex-shrink-0 px-4 py-2.5 rounded-lg text-base font-light tracking-normal transition-all duration-300 relative ${
+              className={`cursor-pointer flex-shrink-0 px-2 py-2.5 rounded-lg text-base font-normal tracking-normal transition-all duration-300 relative ${
                 selectedCategory === (cat.id || cat.uuid)
-                  ? 'text-white bg-white/[0.08]'
-                  : 'text-white/70 hover:text-white/90 hover:bg-white/[0.04]'
+                  ? 'text-stone-800 bg-white/[0.08]'
+                  : 'bg-white text-stone-800 hover:bg-gray-50 border border-stone-200'
               }`}
             >
               <span className="mr-2">{cat.icon}</span>
               {cat.name}
             </button>
           ))}
+          
+          <div className="h-5 w-px bg-stone-800/20 mx-2"></div>
 
           {/* More dropdown */}
           {moreCategories.length > 0 && (
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
-                className={`cursor-pointer flex-shrink-0 px-4 py-2.5 rounded-lg text-sm tracking-normal transition-all duration-300 flex items-center gap-2 relative text-white font-semibold bg-white/[0.08]
+                className={`cursor-pointer flex-shrink-0 px-4 py-2.5 rounded-lg text-sm tracking-normal transition-all duration-300 flex items-center gap-2 relative text-slate-800/70 font-medium hover:bg-white/50
                 
                 }`}
               >

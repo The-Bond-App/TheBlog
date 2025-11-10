@@ -32,18 +32,18 @@ export default function Hero() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   return (
     <section className='bg-gradient-to-b from-gray-50 to-white'>
-    {/* Navigation */}
+    {/* Navigation 
       
-      <Navigation />
+      <Navigation />*/}
       
     
       {/* Hero Carousel - Split Layout with Overlay Content */}
       <div className="relative overflow-hidden lg:mx-20 mx-2" >
-        <div className="px-10 py-12 lg:py-18" >
+        <div className="px-16 py-12">
           <div className="grid md:grid-cols-2 gap-12 items-center ">
             {/* Left Side - Your Message */}
             <div className="space-y-6 max-w-4xl -mt-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-full">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 shadow-md rounded-full">
                 <img src="/assets/logo.png" className="w-5 h-5" alt="Logo" />
                 <span className="text-base font-medium">The Bond Blog</span>
               </div>
@@ -60,13 +60,13 @@ export default function Hero() {
             </div>
 
             {/* Right Side - Carousel with Side Dots */}
-            <div className="relative">
+            <div className="relative py-8">
               {featuredCarousel.map((item, idx) => (
                 <div
                   key={item.id}
                   className={`carousel-transition ${idx === carouselIndex ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none shadow-md'}`}
                 >
-                  <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl group">
+                  <div className="relative aspect-[4/3] h-[400px] rounded-3xl overflow-hidden shadow-2xl group">
                     <img 
                       src={item.image}
                       alt={item.title}

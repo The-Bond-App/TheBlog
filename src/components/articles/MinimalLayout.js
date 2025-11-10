@@ -1,418 +1,220 @@
-"use client"
+'use client'
 import { useState } from 'react';
-import { Heart, ArrowLeft, Clock, Share2, Bookmark, ChevronRight } from 'lucide-react';
+import { Heart, BookOpen, Wrench, Users, ArrowLeft, Sparkles, ChevronRight } from 'lucide-react';
 
-const categoryMap = {
-  feelings: { 
-    name: 'Feelings I Didn\'t Ask For', 
-    emoji: '😵‍💫',
-    description: 'Emotional surprises, internal chaos'
-  },
-  identitycrisis: { 
-    name: 'Identity in Crisis', 
-    emoji: '🫠',
-    description: 'Life purpose, identity loss'
-  },
-  science: { 
-    name: 'The Science of Feeling', 
-    emoji: '🧠',
-    description: 'Psychology & neuroscience'
-  },
-  questionsthatstick: { 
-    name: 'Questions That Stick', 
-    emoji: '🌀',
-    description: 'question, idea, or provocation'
-  },
-  habits: { 
-    name: 'Habits in Action', 
-    emoji: '🌱',
-    description: 'Practical rituals, grounding actions'
-  },
-  whenitshard: { 
-    name: 'When It\'s Hard', 
-    emoji: '😤',
-    description: 'Deeper support, bridge between blog and nudge'
-  },
-  lifeunfiltered: { 
-    name: 'Life, Unfiltered', 
-    emoji: '🌅',
-    description: 'Late epiphanies, emotional clarity'
-  },
-  virtualyou: { 
-    name: 'Performing Online', 
-    emoji: '🧑‍💻',
-    description: 'Digital overwhelm, online identity'
-  },
-  notyoueveryone: { 
-    name: 'We\'re All Struggling', 
-    emoji: '🌍',
-    description: 'Human connection, relational chaos'
-  },
-  boundaries: { 
-    name: 'Boundaries & Burnout', 
-    emoji: '✋',
-    description: 'Emotional labor, people-pleasing'
-  }
+// Mock data
+const categories = {
+  feelings: { icon: '😵‍💫', name: 'Feelings I Didn\'t Ask For' },
+  identitycrisis: { icon: '🫠', name: 'Identity in Crisis' },
+  science: { icon: '🧠', name: 'The Science of Feeling' },
+  questionsthatstick: { icon: '🌀', name: 'Questions That Stick' },
+  habits: { icon: '🌱', name: 'Habits in Action' },
+  whenitshard: { icon: '😤', name: 'When It\'s Hard' },
+  lifeunfiltered: { icon: '🌅', name: 'Life, Unfiltered' },
+  virtualyou: { icon: '🧑‍💻', name: 'Performing Online' },
+  notyoueveryone: { icon: '🌍', name: 'We\'re All Struggling' },
+  boundaries: { icon: '✋', name: 'Boundaries & Burnout' }
 };
 
-// Mock post data
-const post = {
+const mockPost = {
   id: 1,
-  title: "You're Not Falling Behind, You're Just On Your Own Timeline",
-  excerpt: "Every Instagram post makes it seem like everyone's got it together except you. Here's why that's complete bullshit.",
-  category: 'notyoueveryone',
-  image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
-  readTime: '8 min read',
-  publishedDate: 'November 5, 2025',
-  content: `
-It's 2am and you're scrolling. Again.
+  title: "The Weight of Being 'Fine'",
+  category: 'feelings',
+  path: 'understand',
+  readTime: '8 min',
+  date: 'Nov 5, 2025',
+  author: {
+    name: 'Sarah Chen',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
+  },
+  content: `You know that feeling when someone asks "How are you?" and you automatically say "I'm fine" even though you're not?
 
-Your college roommate just got promoted. Your high school friend bought a house. Someone you barely remember from freshman orientation is getting married. And you? You're eating cereal in bed wondering if you'll ever figure out what you're doing with your life.
+That's what this is about. The invisible weight of performing okayness when everything inside feels like a tornado.
 
-## The Comparison Trap is Real
+## The Fine Facade
 
-Here's what nobody tells you: everyone is on a different timeline, and that's not just okay—it's the whole point.
+We've all been there. Standing in line at the coffee shop, smile plastered on, saying "I'm good, thanks" when really, we're barely holding it together. It's become such a reflex that we don't even notice we're doing it anymore.
 
-Your brain wasn't designed for this. For all of human history, we compared ourselves to maybe 150 people in our immediate vicinity. Now we're comparing ourselves to millions of carefully curated highlight reels. No wonder you feel behind.
+But here's the thing: that weight? It accumulates. Every "I'm fine" when you're not adds another brick to an invisible backpack you're carrying around.
 
-### The Science of "Falling Behind"
+## Why We Do It
 
-Research from Stanford shows that we consistently overestimate others' happiness and underestimate their struggles. We see their wins. We don't see:
+There are a million reasons. We don't want to burden people. We think our feelings aren't "valid enough." We're afraid of being seen as weak, or dramatic, or too much.
 
-- The rejection emails they don't post about
-- The therapy appointments between the vacation photos
-- The credit card debt behind the new car
-- The anxiety attacks that nobody mentions
+Society has trained us beautifully to package our feelings into neat, digestible responses. Anything more feels like oversharing.
 
-You're not seeing the full picture. You're never seeing the full picture.
+## The Cost
 
-## What "On Time" Even Means
+But what does it cost us? That constant performance takes energy. Energy we could use for, you know, actually dealing with what we're feeling.
 
-Society has this weird checklist:
-- Graduate by 22
-- Career by 25
-- Partner by 28
-- House by 30
-- Kids by 32
+And the weird paradox? The more we say "I'm fine," the more isolated we feel. Because we're convinced everyone else actually IS fine, and we're the only ones struggling.
 
-But walk into any room of successful, happy people and ask them if they followed that timeline. Spoiler: most didn't.
+## What Actually Helps
 
-Some people:
-- Started their dream career at 40
-- Found their person at 45
-- Had kids at 25 or never
-- Bought a house at 50 or decided not to
+I'm not saying you need to trauma-dump on the barista. But maybe, with someone safe, try saying "Actually, I'm having a rough day."
 
-All of them are living full, meaningful lives.
+Watch what happens. Usually? They get it. Because they've been there too.
 
-## Your Timeline is Yours
-
-What if instead of "falling behind," you're just:
-- Taking time to figure out what you actually want
-- Healing from things that needed healing
-- Building foundations that will matter later
-- Learning lessons that required this exact timing
-
-The race you think you're losing? It doesn't exist. There's no finish line where everyone collectively wins at life.
-
-## What To Do With This Information
-
-1. **Unfollow ruthlessly.** If someone's posts consistently make you feel like shit, unfollow. It's not personal. It's self-preservation.
-
-2. **Remember the iceberg principle.** You see 10% of someone's reality. That's it. The other 90% is underwater, messy, complicated, and very human.
-
-3. **Define your own metrics.** What does "success" mean to you? Not your parents. Not Instagram. You.
-
-4. **Zoom out.** Five years from now, will it matter that you hit some arbitrary milestone at 27 instead of 25? Ten years from now?
-
-## The Real Truth
-
-You're not falling behind. You're exactly where you need to be to become who you're meant to be.
-
-And that person? They're going to be pretty fucking amazing.
-
-*Take your time. There's no rush. The only timeline that matters is yours.*
-  `
+The weight doesn't disappear overnight. But acknowledging it? That's the first step to putting it down.`
 };
 
-// Related posts
 const relatedPosts = [
-  {
-    id: 2,
-    title: "The Science Behind Why You Feel Like Shit for No Reason",
-    category: 'science',
-    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80'
-  },
-  {
-    id: 3,
-    title: "When 'Self-Care' Feels Like Another Chore",
-    category: 'boundaries',
-    image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&q=80'
-  },
-  {
-    id: 4,
-    title: "Your Online Self vs. Your Real Self",
-    category: 'virtualyou',
-    image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=80'
-  }
+  { id: 2, title: "When 'Self-Care' Feels Like Another Chore", category: 'habits', path: 'practice' },
+  { id: 3, title: "My Therapist Fired Me (And It Was the Best Thing)", category: 'lifeunfiltered', path: 'yourenotalone' },
+  { id: 4, title: "The Neuroscience of Emotional Numbness", category: 'science', path: 'understand' }
 ];
 
-const Navigation = () => (
-  <nav className="flex justify-between items-center mb-8 py-4">
-    <a href="/" className="text-2xl font-light text-white hover:opacity-80 transition-opacity">
-      <span className="bg-gradient-to-r from-amber-400 to-rose-400 bg-clip-text text-transparent">
-        Soul Notes
-      </span>
-    </a>
-    <div className="flex gap-6 text-white/60 text-sm font-light">
-      <a href="/about" className="hover:text-white transition-colors">About</a>
-      <a href="/archive" className="hover:text-white transition-colors">Archive</a>
-    </div>
-  </nav>
-);
+  const pathConfig = {
+    understand: {
+      icon: BookOpen,
+      title: 'Understand It',
+      subtitle: 'Psychology, science, why you feel this way',
+      color: 'from-[#667eea] to-[#764ba2]',
+      badge: '🧠 Understanding',
+      categories: ['feelings', 'identitycrisis', 'science', 'questionsthatstick', 'lifeunfiltered', 'virtualyou', 'notyoueveryone']
+    },
+    practice: {
+      icon: Wrench,
+      title: 'Practice It',
+      subtitle: 'Habits, boundaries, what to do about it',
+      color: 'from-[#f093fb] to-[#f5576c]',
+      badge: '🌱 Practicing',
+      categories: ['habits', 'whenitshard', 'boundaries']
+    },
+    yourenotalone: {
+      icon: Users,
+      title: "You're Not Alone",
+      subtitle: 'Real stories from real people',
+      color: 'from-[#4facfe] to-[#00f2fe]',
+      badge: '💙 Connected',
+      categories: ['notyoueveryone', 'lifeunfiltered', 'whenitshard']
+    }
+  };
 
-export default function SinglePost() {
-  const [saved, setSaved] = useState(false);
 
-  return (
-    <div className="min-h-screen bg-slate-700 text-white relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-500/20 via-orange-500/25 to-rose-500/23" />
-      </div>
+export default function MinimalLayout() {
+    const currentPath = pathConfig[mockPost.path];
+    const currentCategory = categories[mockPost.category];
+     const [view, setView] = useState('home'); // 'home' or 'single'
+    const [selectedPath, setSelectedPath] = useState(null);
 
-      <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in { animation: fade-in 0.6s ease-out; }
-        
-        /* Custom prose styles */
-        .prose h2 {
-          font-size: 2rem;
-          font-weight: 300;
-          margin-top: 3rem;
-          margin-bottom: 1.5rem;
-          line-height: 1.2;
-        }
-        .prose h3 {
-          font-size: 1.5rem;
-          font-weight: 300;
-          margin-top: 2.5rem;
-          margin-bottom: 1rem;
-        }
-        .prose p {
-          margin-bottom: 1.5rem;
-          line-height: 1.8;
-          font-weight: 300;
-        }
-        .prose ul, .prose ol {
-          margin: 1.5rem 0;
-          padding-left: 1.5rem;
-        }
-        .prose li {
-          margin-bottom: 0.75rem;
-          line-height: 1.7;
-          font-weight: 300;
-        }
-        .prose strong {
-          font-weight: 400;
-        }
-        .prose em {
-          font-style: italic;
-          color: rgba(255, 255, 255, 0.7);
-        }
-      `}</style>
+   
 
-      <div className="relative z-10">
+
+    return (
+      <div className="min-h-screen bg-white">
         {/* Header */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-          <Navigation />
-          
-          {/* Back button */}
-          <a 
-            href="/"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors font-light text-sm mb-8 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to all stories
-          </a>
-        </div>
-
-        {/* Hero Image */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="relative aspect-[21/9] rounded-3xl overflow-hidden animate-fade-in">
-            <img 
-              src={post.image}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+        <nav className="border-b border-black/5 sticky top-0 bg-white/80 backdrop-blur-xl z-50">
+          <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+            <button 
+              onClick={() => setView('home')}
+              className="flex items-center gap-2 text-black/70 hover:text-black transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-sm font-medium">Back</span>
+            </button>
+            
+            <a href="/" className="flex items-center gap-2 text-[17px] font-semibold text-black tracking-tight">
+              <Heart className="w-5 h-5 opacity-90" />
+              Stories
+            </a>
+            
+            <div className="w-20" /> {/* Spacer for centering */}
           </div>
-        </div>
+        </nav>
 
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-          <div className="grid lg:grid-cols-[1fr_380px] gap-12">
-            {/* Article */}
-            <article className="animate-fade-in">
-              {/* Meta */}
-              <div className="flex items-center gap-3 text-white/60 mb-6 font-light text-sm">
-                <span className="text-2xl">{categoryMap[post.category]?.emoji}</span>
-                <span>{categoryMap[post.category]?.name}</span>
-                <span>•</span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  {post.readTime}
-                </span>
+        {/* Article */}
+        <article className="max-w-3xl mx-auto px-6 py-16">
+          {/* Path Badge */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${currentPath.color} rounded-full`}>
+              <span className="text-sm font-medium text-white">{currentPath.badge}</span>
+            </div>
+            
+            <div className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full">
+              <span className="text-base">{currentCategory.icon}</span>
+              <span className="text-sm font-medium text-black/70">{currentCategory.name}</span>
+            </div>
+          </div>
+
+          {/* Title & Meta */}
+          <h1 className="text-5xl font-semibold tracking-tight text-black leading-tight mb-6">
+            {mockPost.title}
+          </h1>
+          
+          <div className="flex items-center gap-4 mb-12 pb-8 border-b border-black/10">
+            <img 
+              src={mockPost.author.avatar}
+              alt={mockPost.author.name}
+              className="w-12 h-12 rounded-full object-cover"
+            />
+            <div>
+              <div className="text-base font-medium text-black">{mockPost.author.name}</div>
+              <div className="text-sm text-black/50">
+                {mockPost.date} · {mockPost.readTime}
               </div>
+            </div>
+          </div>
 
-              {/* Title */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight mb-6 leading-[1.1] tracking-tight">
-                {post.title}
-              </h1>
+          {/* Content */}
+          <div className="prose prose-lg max-w-none">
+            {mockPost.content.split('\n\n').map((paragraph, idx) => {
+              if (paragraph.startsWith('## ')) {
+                return (
+                  <h2 key={idx} className="text-2xl font-semibold tracking-tight text-black mt-12 mb-4">
+                    {paragraph.replace('## ', '')}
+                  </h2>
+                );
+              }
+              return (
+                <p key={idx} className="text-lg text-black/70 leading-relaxed mb-6">
+                  {paragraph}
+                </p>
+              );
+            })}
+          </div>
 
-              {/* Excerpt */}
-              <p className="text-xl md:text-2xl text-white/70 font-light leading-relaxed mb-8 border-l-2 border-white/20 pl-6">
-                {post.excerpt}
-              </p>
+          {/* Continue Your Journey */}
+          <div className="mt-16 pt-12 border-t border-black/10">
+            <h3 className="text-2xl font-semibold tracking-tight text-black mb-8">
+              Continue your journey
+            </h3>
+            
+            <div className="grid gap-4 mb-8">
+              <button className="group p-6 bg-gradient-to-br from-black/5 to-black/10 hover:from-black/10 hover:to-black/15 rounded-2xl text-left transition-all">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{currentCategory.icon}</span>
+                    <span className="text-base font-medium text-black">Explore the Category: <em>{currentCategory.name}</em></span>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-black/40 group-hover:text-black/70 transition-colors" />
+                </div>
+                <p className="text-sm text-black/60">
+                  Explore similar topics and deepen your understanding
+                </p>
+              </button>
 
-              {/* Actions */}
-              <div className="flex items-center gap-4 mb-12 pb-8 border-b border-white/10">
-                <button 
-                  onClick={() => setSaved(!saved)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-light transition-all ${
-                    saved 
-                      ? 'bg-white text-slate-900' 
-                      : 'bg-white/10 text-white/70 hover:bg-white/20'
-                  }`}
-                >
-                  <Bookmark className="w-4 h-4" fill={saved ? "currentColor" : "none"} />
-                  {saved ? 'Saved' : 'Save'}
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/70 hover:bg-white/20 text-sm font-light transition-all">
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="prose prose-lg prose-invert max-w-none text-white/90">
-                {post.content.split('\n').map((paragraph, i) => {
-                  if (paragraph.startsWith('## ')) {
-                    return <h2 key={i}>{paragraph.replace('## ', '')}</h2>;
-                  } else if (paragraph.startsWith('### ')) {
-                    return <h3 key={i}>{paragraph.replace('### ', '')}</h3>;
-                  } else if (paragraph.startsWith('- ')) {
-                    return <li key={i}>{paragraph.replace('- ', '')}</li>;
-                  } else if (paragraph.trim()) {
-                    return <p key={i}>{paragraph}</p>;
-                  }
-                  return null;
+              <div className="grid md:grid-cols-2 gap-4">
+                {Object.entries(pathConfig).filter(([key]) => key !== mockPost.path).map(([key, config]) => {
+                  const Icon = config.icon;
+                  return (
+                    <button 
+                      key={key}
+                      onClick={() => handlePathSelect(key)}
+                      className="group p-6 bg-white border border-black/10 hover:border-black/20 rounded-2xl text-left transition-all"
+                    >
+                      <Icon className="w-6 h-6 text-black/60 mb-3 group-hover:text-black transition-colors" />
+                      <div className="font-medium text-black mb-1">{config.title}</div>
+                      <p className="text-sm text-black/60">{config.subtitle}</p>
+                    </button>
+                  );
                 })}
               </div>
+            </div>
 
-              {/* End of Article CTA */}
-              <div className="mt-16 pt-12 border-t border-white/10">
-                <div className="bg-gradient-to-br from-rose-600/20 to-pink-600/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10">
-                  <div className="text-center max-w-2xl mx-auto">
-                    <div className="mb-6">
-                      <Heart className="w-12 h-12 mx-auto text-rose-400/80" />
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-extralight mb-4 text-white">
-                      This resonated with you?
-                    </h3>
-                    <p className="text-white/70 font-light mb-8 leading-relaxed">
-                      Get stories like this in your inbox every week. No fluff, no toxic positivity, just real talk about being human.
-                    </p>
-                    <button className="px-8 py-4 bg-white text-slate-900 rounded-full hover:scale-105 transition-all duration-300 font-light shadow-xl">
-                      Subscribe to Soul Notes
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            {/* Sidebar */}
-            <aside className="space-y-8">
-              {/* Sticky container */}
-              <div className="lg:sticky lg:top-8 space-y-8">
-                {/* Native Ad - Course */}
-                <div className="bg-gradient-to-br from-violet-600 to-purple-600 rounded-3xl p-8 text-center animate-fade-in">
-                  <div className="mb-4">
-                    <span className="text-4xl">📚</span>
-                  </div>
-                  <p className="text-white/70 text-xs font-light mb-2 uppercase tracking-wider">
-                    For when you're ready
-                  </p>
-                  <h3 className="text-xl font-light mb-3 text-white">
-                    Emotional Literacy Course
-                  </h3>
-                  <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
-                    5 weeks. No bullshit. Just practical tools for understanding your feelings.
-                  </p>
-                  <button className="w-full px-6 py-3 bg-white text-purple-900 rounded-full hover:bg-white/90 transition-all font-light text-sm shadow-lg">
-                    Learn more
-                  </button>
-                </div>
-
-                {/* Native Ad - Product */}
-                <div className="bg-gradient-to-br from-amber-600 to-orange-600 rounded-3xl p-8 text-center">
-                  <div className="mb-4">
-                    <span className="text-4xl">🧘</span>
-                  </div>
-                  <p className="text-white/70 text-xs font-light mb-2 uppercase tracking-wider">
-                    Self-care that works
-                  </p>
-                  <h3 className="text-xl font-light mb-3 text-white">
-                    The Grounding Kit
-                  </h3>
-                  <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
-                    Physical tools for when your brain won't shut up. Weighted stones, breathing guide, journal prompts.
-                  </p>
-                  <button className="w-full px-6 py-3 bg-white text-orange-900 rounded-full hover:bg-white/90 transition-all font-light text-sm shadow-lg">
-                    Shop now
-                  </button>
-                </div>
-
-                {/* Related Posts */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10">
-                  <h3 className="text-lg font-light mb-6 text-white">Keep reading</h3>
-                  <div className="space-y-4">
-                    {relatedPosts.map((related) => (
-                      <a 
-                        key={related.id}
-                        href={`/post/${related.id}`}
-                        className="group block"
-                      >
-                        <div className="flex gap-4 items-start">
-                          <div className="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden">
-                            <img 
-                              src={related.image}
-                              alt=""
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-xs text-white/50 mb-1 flex items-center gap-1">
-                              <span>{categoryMap[related.category]?.emoji}</span>
-                              <span className="truncate">{categoryMap[related.category]?.name}</span>
-                            </div>
-                            <h4 className="text-sm font-light text-white/90 group-hover:text-white transition-colors leading-snug line-clamp-2">
-                              {related.title}
-                            </h4>
-                          </div>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </aside>
           </div>
-        </div>
+        </article>
       </div>
-    </div>
-  );
+    )
 }
+

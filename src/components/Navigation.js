@@ -11,15 +11,15 @@ export default function Navigation() {
 
   return (
     <nav className="relative">
-      <div className="w-full mx-auto border-b border-gray-200 py-2 bg-slate-900 backdrop-blur-2xl sticky top-0 z-50">
+      <div className="w-full mx-auto border-b border-gray-200 py-2 bg-stone-800 backdrop-blur-2xl sticky top-0 z-50">
         <div className="flex items-center justify-center">
-          <div className="hidden md:flex items-center gap-x-3">
+          <div className="hidden md:flex items-center gap-x-2">
             {[
               { icon: Home, label: 'Home', href: '/' },
               { icon: null, img: '/assets/logo.png', label: 'The Bond Company', href: 'https://thebond.company' },
               { icon: ShoppingBag, label: 'Shop', href: 'https://shop.thebond.company' },
-              { icon: MicVocal, label: 'Your Story', href: '#', onClick: () => setIsStoryModalOpen(true) },
-              { icon: Map, label: 'Sitemap', href: '/sitemap'},
+              //{ icon: MicVocal, label: 'Your Story', href: '#', onClick: () => setIsStoryModalOpen(true) },
+              //{ icon: Map, label: 'Sitemap', href: '/sitemap'},
               { icon: PersonStanding, label: 'Join Community', href: '/sitemap'},
             ].map((item) => (
               <a
@@ -31,7 +31,7 @@ export default function Navigation() {
                     item.onClick();
                   }
                 }}
-                className={`font-geist px-4 py-2 text-white opacity-80 hover:opacity-100 hover:bg-white/10 rounded-lg transition-all flex items-center gap-2 text-base !tracking-normal font-normal`}
+                className={` px-4 py-2 text-white opacity-90 hover:opacity-100  rounded-lg transition-all flex items-center gap-2 text-[16px] hover:bg-white/[0.08] !tracking-normal font-medium`}
               >
                 {item.img ? (
                   <img src={item.img} alt={item.label} className="w-5 h-5 object-contain" />
@@ -58,8 +58,8 @@ export default function Navigation() {
               { icon: Home, label: 'Home', href: '/' },
               { icon: null, img: '/assets/logo.png', label: 'The Bond Company', href: 'https://thebond.company' },
               { icon: ShoppingBag, label: 'Shop', href: 'https://shop.thebond.company' },
-              { icon: MicVocal, label: 'Your Story', href: '#', onClick: () => setIsStoryModalOpen(true) },
-              { icon: Map, label: 'Sitemap', href: '/sitemap'},
+              //{ icon: MicVocal, label: 'Your Story', href: '#', onClick: () => setIsStoryModalOpen(true) },
+              //{ icon: Map, label: 'Sitemap', href: '/sitemap'},
               { icon: PersonStanding, label: 'Join Community', href: '/sitemap'},
             ].map((item, idx) => (
               <a
