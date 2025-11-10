@@ -65,6 +65,7 @@ const DynamicResult = () => {
 export default function Footer() {
   return (
     <>
+    {/** Dynamic Shenanigans */}
     <div className="w-full flex flex-col items-center justify-center py-4">
       <div className="inline-flex items-center justify-center gap-4 px-4 py-4 group/formula shrink-0">
       {/* Logo */}
@@ -101,7 +102,8 @@ export default function Footer() {
         </div>
       </div>
     </div>
-    <footer className="text-amber-50 relative bg-[#3d3238]">
+
+    <footer className="text-amber-50 relative bg-slate-900">
       <div className="border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 py-12">
           <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-8 md:gap-x-8">
@@ -109,12 +111,12 @@ export default function Footer() {
             {/* Brand */}
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <img src="/assets/logo.png" className="w-8 h-8" alt="Logo" />
+                <img src="/assets/logo.png" className="w-6 h-6" alt="Logo" />
                 <span className="font-light text-xl tracking-tight">
                   The Bond Blog
                 </span>
               </div>
-              <p className="text-base font-light opacity-40 leading-relaxed max-w-xs">
+              <p className="text-base font-medium text-amber-50/70 leading-relaxed max-w-xs">
                 Sticky notes for your soul&apos;s refrigerator.
               </p>
               
@@ -173,7 +175,7 @@ export default function Footer() {
             {/* Footer sections */}
             {['explore', 'getInvolved', 'popular'].map((section) => (
               <div key={section}>
-                <h3 className="text-sm font-medium uppercase tracking-wide mb-4 opacity-30">
+                <h3 className="text-sm font-medium uppercase tracking-normal mb-4 text-amber-50 opacity-50">
                   {section === 'getInvolved'
                     ? 'Get Involved'
                     : section.charAt(0).toUpperCase() + section.slice(1)}
@@ -183,7 +185,7 @@ export default function Footer() {
                     <li key={item.label}>
                       <a
                         href={item.url}
-                        className="text-base font-light opacity-60 hover:opacity-100 transition-opacity"
+                        className="text-base font-normal text-amber-50 tracking-wide hover:opacity-100 transition-opacity"
                       >
                         {item.label}
                       </a>

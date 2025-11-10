@@ -4,6 +4,8 @@ import { Mic, ChevronDown, ChevronRight, ChevronLeft, Heart, Sparkles, Coffee, H
 
 import CourseAd from '../../src/ui/CourseAd';
 import Footer from '../../src/components/Footer';
+import Hero from '../../src/components/Hero';
+import Navigation from '../../src/components/Navigation';
 
 
  const categoryMap = [
@@ -114,26 +116,7 @@ const mockPosts = [
   }
 ];
 
-const featuredCarousel = [
-  {
-    id: 1,
-    title: "The Art of Letting Go",
-    subtitle: "What happens when you finally release what no longer serves you",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-  },
-  {
-    id: 2,
-    title: "Finding Your Voice",
-    subtitle: "Every story you tell makes the world a little more honest",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
-  },
-  {
-    id: 3,
-    title: "The Power of Pause",
-    subtitle: "Sometimes the bravest thing you can do is rest",
-    image: "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1200",
-  }
-];
+
 
 const moodEmojis = [
   { id: 'happy', icon: Laugh, label: 'Happy', color: 'from-[#667eea] to-[#764ba2]' },
@@ -189,8 +172,8 @@ export default function Main() {
   const topCategories = [allCategory, ...categories.slice(0, 4)];
   const moreCategories = categories.slice(4);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  
+  
   
   const postsPerPage = 12;
   
@@ -202,261 +185,18 @@ export default function Main() {
   const startIndex = (currentPage - 1) * postsPerPage;
   const currentPosts = displayPosts.slice(startIndex, startIndex + postsPerPage);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCarouselIndex((prev) => (prev + 1) % featuredCarousel.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  
 
   const handleReadPost = (post) => {
     console.log('Reading:', post.title);
   };
 
-  const handlePollAnswer = (answer) => {
-    setPollAnswer(answer);
-    if (answer === 'yes') {
-      setShowCourseForm(true);
-    }
-  };
 
-  const handleCourseSubmit = (e) => {
-    e.preventDefault();
-    setCourseSubmitted(true);
-    console.log('Course interest:', courseEmail);
-  };
-
-  const handleNewsletterSubmit = (e) => {
-    e.preventDefault();
-    setNewsletterSubmitted(true);
-    console.log('Newsletter signup:', newsletterEmail);
-  };
 
   return (
     <>
-      <nav className="relative">
-        <div className="w-full mx-auto bg-white/80 backdrop-blur-xl sticky top-0 z-50 border-b border-black/5">
-          <div className="max-w-[1400px] mx-auto px-6">
-            <div className="flex items-center justify-between h-11">
-             <a
-                href="https://thebond.company"
-                className="flex items-center gap-2 text-[14px] text-black/70 hover:text-black transition-colors font-normal"
-              >
-                {/*<House className='w-3 h-3'/>*/}
-                The Bond Company
-              </a>
-
-
-              <div className="hidden md:flex items-center gap-8">
-                {[
-                  { label: 'Home', href: '/' },
-                  { label: 'Shop', href: '#' },
-                  { label: 'Community', href: '#' },
-                ].map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    className="text-[14px] text-black/70 hover:text-black transition-colors font-normal"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-4">
-               <button
-                  onClick={() => setIsStoryModalOpen(true)}
-                  className="hidden md:flex items-center text-[14px] text-black/70 hover:text-black transition-colors hover:cursor-pointer"
-                >
-                  <Mic className="mr-2 w-4 h-4" /> Your Story 
-                </button>
-
-                
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="md:hidden p-1 text-black/70 hover:text-black transition-colors"
-                  aria-label="Menu"
-                >
-                  <Menu className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {isMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-[60] bg-white" style={{ top: '44px' }}>
-            <div className="p-6 space-y-1">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'Shop', href: '#' },
-                { label: 'Community', href: '#' },
-                { label: 'Your Voice', href: '#' },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block px-4 py-3 text-[17px] text-black/80 hover:text-black hover:bg-black/5 rounded-lg transition-all"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Story Modal */}
-        {isStoryModalOpen && (
-          <div 
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 animate-in fade-in duration-300" 
-            onClick={() => setIsStoryModalOpen(false)}
-          >
-            <div 
-              className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl animate-in zoom-in-95 duration-300" 
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setIsStoryModalOpen(false)}
-                className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center text-stone-800 hover:text-stone-600 hover:bg-stone-100  hover:cursor-pointer rounded-full transition-all duration-200 z-10"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" strokeWidth={2} />
-              </button>
-
-              <div className="px-8 py-12 md:px-12 md:py-16">
-                {/* Header */}
-                <div className="mb-10">
-                  <h2 className="text-4xl md:text-5xl font-semibold text-stone-800 tracking-tight mb-1">
-                    Your Story Matters
-                  </h2>
-                </div>
-
-                {/* Content */}
-                <div className="space-y-6 mb-6 text-stone-700 text-lg leading-relaxed">
-                  <p>
-                    The hardest moments in your life might be the light someone else needs to find their way.
-                  </p>
-                  
-                  <p>
-                    That raw, honest breakthrough, the time you faced pain, found clarity, or simply made it through, carries more power than you realize.
-                  </p>
-
-                  <p>
-                    When you share your truth, you help others find theirs. When you share your light, you guide someone still searching.
-                  </p>
-
-                  {/* Quote Box */}
-                  <div className="bg-stone-100/80 rounded-2xl px-6 py-4 my-8 shadow-md border border-stone-200/50">
-                    <blockquote className="space-y-3">
-                      <p className="text-stone-700 font-medium leading-relaxed">
-                        "In the depths of winter, I finally learned that within me there lay an invincible summer"
-                      </p>
-                      <footer className="text-sm text-stone-500">
-                        — Albert Camus
-                      </footer>
-                    </blockquote>
-                  </div>
-
-                  <p className="text-stone-600">
-                    Have a story or lesson to share? <strong>We'd love to help amplify your voice</strong>. You can be featured on our blog or social channels, or stay anonymous if you prefer.
-                  </p>
-
-                  <p className="text-stone-500 text-sm">
-                    Click below to share your story idea, and we'll be in touch.
-                  </p>
-                </div>
-                
-                {/* CTA Button */}
-                <a
-                  href="https://support.thebond.company/?section=blog"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-stone-900 hover:bg-stone-800 text-white font-medium rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
-                >
-                  <Send className="w-4 h-4" />
-                  Share Your Story
-                </a>
-
-                <p className="text-sm text-center text-stone-400 mt-4">
-                  Opens in a new tab
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      <section className='bg-white'>
-        <div className="relative overflow-hidden">
-          <div className="px-6 py-12 max-w-[1400px] mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="space-y-8 max-w-2xl -mt-8">
-             
-                
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-slate-700 leading-[1.05]">
-                  Sticky notes for your <span className='gradient-text'>soul's fridge</span>
-                </h1>
-
-                <p className="text-[21px] text-black/60 leading-relaxed max-w-xl">
-                  To quiet the ruminating-before-sleep moments and fuel the trying-to-grow-on-purpose ones. Emotional fundamentals nobody taught us, explained through analogies.
-                </p>
-                
-              </div>
-
-              <div className="relative">
-                {featuredCarousel.map((item, idx) => (
-                  <div
-                    key={item.id}
-                    className={`carousel-transition ${idx === carouselIndex ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
-                  >
-                    <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
-                      <img 
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      
-                      <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <div className="text-[13px] font-medium mb-3 text-white/80 tracking-wide">
-                          FEATURED
-                        </div>
-                        
-                        <h3 className="text-[28px] font-semibold mb-2 leading-tight tracking-tight">
-                          {item.title}
-                        </h3>
-                        
-                        <p className="text-[15px] text-white/90 leading-relaxed mb-5">
-                          {item.subtitle}
-                        </p>
-                        
-                        <button className="px-5 py-2.5 bg-white text-black rounded-full text-[14px] font-medium hover:bg-white/90 transition-all">
-                          Read Story
-                        </button>
-                      </div>
-
-                      <div className="absolute right-6 top-1/2 -translate-y-1/2 flex flex-col gap-2">
-                        {featuredCarousel.map((_, i) => (
-                          <button
-                            key={i}
-                            onClick={() => setCarouselIndex(i)}
-                            className={`w-1.5 rounded-full transition-all ${
-                              i === carouselIndex ? 'h-8 bg-white' : 'h-1.5 bg-white/40 hover:bg-white/60'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>    
-            </div>
-          </div>
-        </div>
-      </section>
+     <Navigation />
+     <Hero />
       
       {/* Hierarchical Category Navigation */}
       <div className="bg-gradient-to-br from-purple-50 via-white to-rose-50">
