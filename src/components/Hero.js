@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react'
 
+import DynamicShenanigans from '../ui/DynamicShenanigans';
 
 const featuredCarousel = [
   {
@@ -34,18 +35,20 @@ export default function Hero() {
   }, []);
 
   return(
-   <section className='bg-white'>
+   <section className='bg-gradient-to-r from-stone-50/50 to-white pt-20'>
         <div className="relative overflow-hidden">
-          <div className="px-12 py-16 max-w-[1400px] mx-auto">
+          <div className="px-12 py-22 max-w-[1300px] mx-auto">
             <div className="grid md:grid-cols-2 gap-20 items-center">
-              <div className="space-y-8 max-w-2xl -mt-8">
-             
+              <div className="space-y-8 max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 shadow-sm rounded-full">
+                <span className="text-sm font-medium">🌱 Emotional Growth • Explained Simply</span>
+              </div>
                 
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-slate-700 leading-[1.05]">
-                  Sticky notes for your <span className='gradient-text'>soul's fridge</span>
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight gradient-text pb-2 leading-[1.05]">
+                  Sticky notes for your soul's fridge
                 </h1>
 
-                <p className="text-[21px] text-black/60 leading-relaxed max-w-xl">
+                <p className="text-lg md:text-xl text-stone-500 leading-relaxed max-w-xl">
                   To quiet the ruminating-before-sleep moments and fuel the trying-to-grow-on-purpose ones. Emotional fundamentals nobody taught us, explained through analogies.
                 </p>
                 
@@ -102,6 +105,6 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </section>
+    </section>
  )
 }

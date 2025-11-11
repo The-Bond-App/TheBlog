@@ -88,7 +88,7 @@ export default function BlogCategoryMenu() {
               className="px-4 py-2 rounded-lg hover:cursor-pointer bg-stone-50 hover:bg-stone-100 transition-colors flex items-center gap-2 justify-center mx-auto"
             >
               <Map className="w-4 h-4 text-stone-400" />
-              <span className="text-sm text-stone-600">View all categories</span>
+              <span className="text-sm text-stone-600">Sitemap</span>
             </button>
 
           </div>
@@ -249,7 +249,7 @@ export default function BlogCategoryMenu() {
               <h2 className="text-2xl font-semibold text-stone-900">All Categories</h2>
               <button
                 onClick={() => setShowSitemap(false)}
-                className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+                className="p-2 hover:bg-stone-100 hover:cursor-pointer rounded-full transition-colors"
               >
                 <X className="w-5 h-5 text-stone-500" />
               </button>
@@ -327,29 +327,35 @@ export default function BlogCategoryMenu() {
                   Resources
                 </h3>
                 <div className="grid md:grid-cols-2 gap-3">
-                  <a href="#about" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
-                    <div className="text-sm font-medium text-stone-900">About</div>
-                    <div className="text-xs text-stone-500 mt-0.5">Who we are and why we exist</div>
-                  </a>
-                  <a href="#newsletter" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                  <a
+                    href="#subscribe"
+                    className="block p-3 rounded-lg hover:bg-stone-50 transition-colors"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent the default jump
+                      const element = document.querySelector('#subscribe');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                  >
                     <div className="text-sm font-medium text-stone-900">Newsletter</div>
-                    <div className="text-xs text-stone-500 mt-0.5">Weekly insights in your inbox</div>
+                    <div className="text-xs text-stone-500 mt-0.5">
+                      Weekly insights in your inbox
+                    </div>
                   </a>
-                  <a href="#submit" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
-                    <div className="text-sm font-medium text-stone-900">Share Your Story</div>
-                    <div className="text-xs text-stone-500 mt-0.5">Contribute to our community</div>
+
+                  <a href="https://instagram.com/thebondcompany"  target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                    <div className="text-sm font-medium text-stone-900">Community</div>
+                    <div className="text-xs text-stone-500 mt-0.5">Join the bond community</div>
                   </a>
-                  <a href="#resources" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
-                    <div className="text-sm font-medium text-stone-900">Crisis Support</div>
-                    <div className="text-xs text-stone-500 mt-0.5">When you need immediate help</div>
-                  </a>
+                 
                 </div>
               </div>
 
               {/* Footer Note */}
               <div className="mt-8 pt-8 border-t border-stone-200">
                 <p className="text-sm text-stone-500 text-center">
-                  Pick a path. Start somewhere. Stay human.
+                  Pick a path. Stay with intention.
                 </p>
               </div>
             </div>

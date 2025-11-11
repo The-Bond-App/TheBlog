@@ -11,7 +11,7 @@ export default function Navigation() {
 
   return (
      <nav className="relative">
-        <div className="w-full mx-auto bg-white/80 backdrop-blur-xl sticky top-0 z-50 border-b border-black/50">
+        <div className="w-full mx-auto bg-white/80 backdrop-blur-xl sticky top-0 z-50 border-b border-black/5">
           <div className="max-w-[1400px] mx-auto px-6">
             <div className="flex items-center justify-between h-11">
              <a
