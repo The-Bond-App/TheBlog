@@ -180,7 +180,7 @@ export default function Navigation() {
                   href="https://support.thebond.company/?section=blog"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-stone-900 hover:bg-stone-800 text-white font-medium rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
+                  className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-stone-900 hover:bg-stone-800 text-white font-medium rounded-full transition-all duration-200 shadow-md hover:shadow-lg hover:cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   Share Your Story

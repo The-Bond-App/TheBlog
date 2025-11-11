@@ -60,10 +60,10 @@ export default function SubscribeBanner() {
   };
 
   return (
-    <div id="subscribe" className="mt-16 sm:mt-24 lg:mt-32 mb-12 sm:mb-16 lg:mb-20 px-4 sm:px-6">
-      <div className="max-w-4xl  mx-auto relative">
+    <section id="subscribe">
+      <div className="w-full  mx-auto relative">
         
-        <div className="relative overflow-hidden text-center p-8 sm:p-12 lg:p-16 rounded-2xl sm:rounded-3xl backdrop-blur-xl bg-slate-900/60 border border-white/10 shadow-2xl">
+        <div className="relative overflow-hidden text-center p-8 sm:p-12 lg:p-12 rounded-2xl sm:rounded-3xl backdrop-blur-xl bg-slate-900/60 border border-white/10 shadow-2xl">
           {/* Gradient border effect */}
           <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500/20 via-orange-500/20 to-rose-500/20 opacity-50" />
           
@@ -130,6 +130,6 @@ export default function SubscribeBanner() {
           to { opacity: 1; transform: scale(1); }
         }
       `}</style>
-    </div>
+    </section>
   );
 }

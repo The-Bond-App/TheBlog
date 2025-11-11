@@ -73,22 +73,22 @@ export default function BlogCategoryMenu() {
   return (
     <>
       {/* Compact Blog Category Menu */}
-      <div className="bg-white border-b border-stone-200 mt-8">
+      <div className="bg-white mt-8">
         <div className="max-w-7xl mx-auto px-6 py-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-semibold text-stone-900 mb-2">
-              What do you need right now?
+            <h2 className="text-5xl font-semibold text-gray-900 mb-2">
+               What do you need today?
             </h2>
             <button
               onClick={() => {
                 setShowMoreDropdown(false);
                 setShowSitemap(true);
               }}
-              className="px-4 py-2 rounded-lg hover:cursor-pointer bg-stone-50 hover:bg-stone-100 transition-colors flex items-center gap-2 justify-center mx-auto"
+              className="hover:cursor-pointer text-stone-500 hover:text-stone-400 flex items-center gap-2 justify-center mx-auto mb-4"
             >
-              <Map className="w-4 h-4 text-stone-400" />
-              <span className="text-sm text-stone-600">Sitemap</span>
+              <Map className="w-5 h-5" />
+              <span className="text-xl ">Sitemap</span>
             </button>
 
           </div>
@@ -133,7 +133,7 @@ export default function BlogCategoryMenu() {
             <div className="relative">
               <button
                 onClick={() => setShowMoreDropdown(!showMoreDropdown)}
-                className="px-5 py-3 rounded-full hover:cursor-pointer text-sm font-medium text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-2"
+                className="px-5 py-3 rounded-full hover:cursor-pointer text-sm font-semibold text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-2"
               >
                 More
                 <ChevronDown className={`w-4 h-4 transition-transform ${showMoreDropdown ? 'rotate-180' : ''}`} />
@@ -180,65 +180,8 @@ export default function BlogCategoryMenu() {
         </div>
       </div>
 
-      {/* Alternative Design 2: Grid View */}
-      <div className="bg-stone-50 border-b border-stone-200 hidden">
-        <div className="max-w-6xl mx-auto px-6 py-12">
-          <h2 className="text-2xl font-semibold text-stone-900 text-center mb-8">
-            What do you need today?
-          </h2>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {allCategories.map((cat) => (
-              <button
-                key={cat.uuid}
-                onClick={() => setSelectedCategory(cat.uuid)}
-                className={`p-4 rounded-2xl text-left transition-all ${
-                  selectedCategory === cat.uuid
-                    ? 'bg-stone-900 text-white shadow-lg'
-                    : 'bg-white hover:bg-stone-100'
-                }`}
-              >
-                <div className="text-3xl mb-2">{cat.icon}</div>
-                <div className={`text-sm font-medium ${
-                  selectedCategory === cat.uuid ? 'text-white' : 'text-stone-900'
-                }`}>
-                  {cat.name}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+    
 
-      {/* Alternative Design 3: Minimal Dropdown Style */}
-      <div className="bg-white border-b border-stone-200 hidden">
-        <div className="max-w-4xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-sm text-stone-500">Explore:</span>
-            {primaryCategories.slice(0, 4).map((cat) => (
-              <button
-                key={cat.uuid}
-                onClick={() => setSelectedCategory(cat.uuid)}
-                className={`px-4 py-2 rounded-full text-sm transition-all ${
-                  selectedCategory === cat.uuid
-                    ? 'bg-stone-900 text-white'
-                    : 'text-stone-700 hover:bg-stone-100'
-                }`}
-              >
-                <span className="mr-1">{cat.icon}</span>
-                {cat.name}
-              </button>
-            ))}
-            <button
-              onClick={() => setShowSitemap(true)}
-              className="px-4 py-2 rounded-full text-sm text-stone-700 hover:bg-stone-100 transition-all flex items-center gap-1"
-            >
-              More
-              <ChevronDown className="w-3 h-3" />
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* Sitemap Modal */}
       {showSitemap && (
