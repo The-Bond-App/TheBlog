@@ -1,113 +1,361 @@
-"use client"
-import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { categories } from '../constants/categories';
+import { useState } from 'react';
+import { X, Map, ChevronDown } from 'lucide-react';
 
-export default function CategoryFilter({ selectedCategory, onCategoryChange }) {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
+// Primary categories (shown in main menu)
+const primaryCategories = [
+  { 
+    uuid: 'feelings', 
+    icon: '🤯', 
+    name: 'Emotions 101',
+    description: 'Figure out what you\'re actually feeling'
+  },
+  { 
+    uuid: 'science', 
+    icon: '🧠', 
+    name: 'Science Says',
+    description: 'The psychology behind why you feel what you feel'
+  },
+  { 
+    uuid: 'habits', 
+    icon: '🌱', 
+    name: 'Habits That Work',
+    description: 'Small rituals that actually change things'
+  },
+  { 
+    uuid: 'questionsworthasking', 
+    icon: '🤔', 
+    name: 'Questions Worth Asking',
+    description: 'Big questions you can\'t Google'
+  }, 
+  { 
+    uuid: 'boundaries', 
+    icon: '✋', 
+    name: 'Protecting Your Peace',
+    description: 'Learning to say no without guilt'
+  }
+];
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowDropdown(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+// Secondary categories (shown in modal)
+const secondaryCategories = [
+  { 
+    uuid: 'notjustyou', 
+    icon: '🤝', 
+    name: 'You\'re Not Alone',
+    description: 'Real stories from real people'
+  },
+  {
+    uuid: 'modernlife',
+    icon:'📱',
+    name: 'Modern Life',
+    description: 'When the internet makes you feel worse'
+  },
+  {
+    uuid: 'lettinggo',
+    icon: '🍂',
+    name: 'Letting Go',
+    description: 'When things end and you need to move forward'
+  },
+  {
+    uuid: 'permissiontofeelgood',
+    icon: '🌻',
+    name: 'Permission to Feel Good',
+    description: 'It\'s okay to be happy—seriously'
+  }
+];
 
-  // "All Articles" category
-  const allCategory = { 
-    id: 'all', 
-    icon: '✨', 
-    name: 'All Articles'
-  };
+const allCategories = [...primaryCategories, ...secondaryCategories];
 
-  // Get first 4 categories for top display
-  const topCategories = [allCategory, ...categories.slice(0, 4)];
-  
-  // Get remaining categories for dropdown
-  const moreCategories = categories.slice(4);
+export default function BlogCategoryMenu() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showSitemap, setShowSitemap] = useState(false);
+  const [showMoreDropdown, setShowMoreDropdown] = useState(false);
 
   return (
-    <div className="bg-gray-200 border-y border-gray-200 z-40">
-      <div className="w-full mx-auto px-6 py-4">
-        {/* Filter label 
-        <div className="flex items-center justify-center text-xs gap-6 mb-6">
-          <div className="uppercase tracking-[0.05em] text-slate-800/70 font-semibold">
-            Explore Topics
-          </div>
-          <div className="h-3 w-px bg-slate-800/20"></div>
-          <a
-            href="/sitemap"
-            className="flex items-center gap-1.5 uppercase tracking-tight text-slate-800/50 hover:text-slate-800/70 transition-colors duration-200 font-semibold"
-          >
-            Site Map <SquareArrowOutUpRight size={12} strokeWidth={1.75} />
-          </a>
-        </div>*/}
-
-        {/* Category buttons */}
-        <div className="flex flex-wrap gap-3 justify-center items-center">
-          {/* Top categories always visible */}
-          {topCategories.map((cat) => (
+    <>
+      {/* Compact Blog Category Menu */}
+      <div className="bg-white border-b border-stone-200 mt-8">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-semibold text-stone-900 mb-2">
+              What do you need right now?
+            </h2>
             <button
-              key={cat.id || cat.uuid}
-              onClick={() => onCategoryChange(cat.id || cat.uuid)}
-              className={`cursor-pointer flex-shrink-0 px-2 py-2.5 rounded-lg text-base font-normal tracking-normal transition-all duration-300 relative ${
-                selectedCategory === (cat.id || cat.uuid)
-                  ? 'text-stone-800 bg-white/[0.08]'
-                  : 'bg-white text-stone-800 hover:bg-gray-50 border border-stone-200'
+              onClick={() => {
+                setShowMoreDropdown(false);
+                setShowSitemap(true);
+              }}
+              className="px-4 py-2 rounded-lg hover:cursor-pointer bg-stone-50 hover:bg-stone-100 transition-colors flex items-center gap-2 justify-center mx-auto"
+            >
+              <Map className="w-4 h-4 text-stone-400" />
+              <span className="text-sm text-stone-600">View all categories</span>
+            </button>
+
+          </div>
+
+          {/* Category Pills - Horizontal */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {/* All Articles */}
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-5 py-3 rounded-full text-sm font-medium transition-all ${
+                selectedCategory === 'all'
+                  ? 'bg-stone-900 text-white'
+                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
               }`}
             >
-              <span className="mr-2">{cat.icon}</span>
-              {cat.name}
+              All Articles
             </button>
-          ))}
-          
-          <div className="h-5 w-px bg-stone-800/20 mx-2"></div>
 
-          {/* More dropdown */}
-          {moreCategories.length > 0 && (
-            <div className="relative" ref={dropdownRef}>
+            {/* Primary Categories Only */}
+            {primaryCategories.map((cat) => (
               <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className={`cursor-pointer flex-shrink-0 px-4 py-2.5 rounded-lg text-sm tracking-normal transition-all duration-300 flex items-center gap-2 relative text-slate-800/70 font-medium hover:bg-white/50
-                
+                key={cat.uuid}
+                onClick={() => setSelectedCategory(cat.uuid)}
+                className={`group hover:cursor-pointer relative px-5 py-3 rounded-full text-sm font-medium transition-all ${
+                  selectedCategory === cat.uuid
+                    ? 'bg-stone-900 text-white'
+                    : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
                 }`}
               >
-                <span>More</span>
-                <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${showDropdown ? 'rotate-180' : ''}`} />
+                <span className="mr-2">{cat.icon}</span>
+                {cat.name}
+                
+                {/* Tooltip on hover */}
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-stone-900 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10">
+                  {cat.description}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-stone-900"></div>
+                </div>
+              </button>
+            ))}
+
+            {/* More Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowMoreDropdown(!showMoreDropdown)}
+                className="px-5 py-3 rounded-full hover:cursor-pointer text-sm font-medium text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-2"
+              >
+                More
+                <ChevronDown className={`w-4 h-4 transition-transform ${showMoreDropdown ? 'rotate-180' : ''}`} />
               </button>
 
-              {showDropdown && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-2xl shadow-2xl z-50 min-w-[220px]">
-                  <div className="p-2">
-                    {moreCategories.map((cat) => (
+              {/* Dropdown Content */}
+              {showMoreDropdown && (
+                <>
+                  {/* Backdrop to close dropdown */}
+                  <div 
+                    className="fixed inset-0 z-10" 
+                    onClick={() => setShowMoreDropdown(false)}
+                  />
+                  
+                  {/* Dropdown Menu */}
+                  <div className="absolute top-full right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200 py-3 z-20">
+                    {secondaryCategories.map((cat) => (
                       <button
                         key={cat.uuid}
                         onClick={() => {
-                          onCategoryChange(cat.uuid);
-                          setShowDropdown(false);
+                          setSelectedCategory(cat.uuid);
+                          setShowMoreDropdown(false);
                         }}
-                        className={`cursor-pointer w-full flex items-center gap-2 px-2 py-2.5 rounded-xl text-sm transition-all duration-200 ${
-                          selectedCategory === cat.uuid
-                            ? 'bg-slate-200 text-slate-900 font-medium'
-                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                        }`}
+                        className="w-full hover:cursor-pointer text-left px-4 py-3 hover:bg-stone-100 transition-colors flex items-start gap-3"
                       >
-                        <span className="text-base">{cat.icon}</span>
-                        <span className="flex-1 text-left">{cat.name}</span>
+                        <span className="text-xl">{cat.icon}</span>
+                        <div>
+                          <div className="text-sm font-medium text-stone-900">
+                            {cat.name}
+                          </div>
+                          <div className="text-sm text-stone-600 mt-0.5">
+                            {cat.description}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                    
+                   
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Alternative Design 2: Grid View */}
+      <div className="bg-stone-50 border-b border-stone-200 hidden">
+        <div className="max-w-6xl mx-auto px-6 py-12">
+          <h2 className="text-2xl font-semibold text-stone-900 text-center mb-8">
+            What do you need today?
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {allCategories.map((cat) => (
+              <button
+                key={cat.uuid}
+                onClick={() => setSelectedCategory(cat.uuid)}
+                className={`p-4 rounded-2xl text-left transition-all ${
+                  selectedCategory === cat.uuid
+                    ? 'bg-stone-900 text-white shadow-lg'
+                    : 'bg-white hover:bg-stone-100'
+                }`}
+              >
+                <div className="text-3xl mb-2">{cat.icon}</div>
+                <div className={`text-sm font-medium ${
+                  selectedCategory === cat.uuid ? 'text-white' : 'text-stone-900'
+                }`}>
+                  {cat.name}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Alternative Design 3: Minimal Dropdown Style */}
+      <div className="bg-white border-b border-stone-200 hidden">
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <div className="flex items-center justify-center gap-3">
+            <span className="text-sm text-stone-500">Explore:</span>
+            {primaryCategories.slice(0, 4).map((cat) => (
+              <button
+                key={cat.uuid}
+                onClick={() => setSelectedCategory(cat.uuid)}
+                className={`px-4 py-2 rounded-full text-sm transition-all ${
+                  selectedCategory === cat.uuid
+                    ? 'bg-stone-900 text-white'
+                    : 'text-stone-700 hover:bg-stone-100'
+                }`}
+              >
+                <span className="mr-1">{cat.icon}</span>
+                {cat.name}
+              </button>
+            ))}
+            <button
+              onClick={() => setShowSitemap(true)}
+              className="px-4 py-2 rounded-full text-sm text-stone-700 hover:bg-stone-100 transition-all flex items-center gap-1"
+            >
+              More
+              <ChevronDown className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Sitemap Modal */}
+      {showSitemap && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-6">
+          <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-stone-200 px-8 py-6 flex items-center justify-between rounded-t-3xl">
+              <h2 className="text-2xl font-semibold text-stone-900">All Categories</h2>
+              <button
+                onClick={() => setShowSitemap(false)}
+                className="p-2 hover:bg-stone-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-stone-500" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-8">
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Primary Categories */}
+                <div>
+                  <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-4">
+                    Main Topics
+                  </h3>
+                  <div className="space-y-3">
+                    {primaryCategories.map((cat) => (
+                      <button
+                        key={cat.uuid}
+                        onClick={() => {
+                          setSelectedCategory(cat.uuid);
+                          setShowSitemap(false);
+                        }}
+                        className="w-full text-left group"
+                      >
+                        <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                          <span className="text-2xl">{cat.icon}</span>
+                          <div>
+                            <div className="text-sm font-medium text-stone-900 group-hover:text-black">
+                              {cat.name}
+                            </div>
+                            <div className="text-xs text-stone-500 mt-1">
+                              {cat.description}
+                            </div>
+                          </div>
+                        </div>
                       </button>
                     ))}
                   </div>
                 </div>
-              )}
+
+                {/* Secondary Categories */}
+                <div>
+                  <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-4">
+                    More Topics
+                  </h3>
+                  <div className="space-y-3">
+                    {secondaryCategories.map((cat) => (
+                      <button
+                        key={cat.uuid}
+                        onClick={() => {
+                          setSelectedCategory(cat.uuid);
+                          setShowSitemap(false);
+                        }}
+                        className="w-full text-left group"
+                      >
+                        <div className="flex items-start gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                          <span className="text-2xl">{cat.icon}</span>
+                          <div>
+                            <div className="text-sm font-medium text-stone-900 group-hover:text-black">
+                              {cat.name}
+                            </div>
+                            <div className="text-xs text-stone-500 mt-1">
+                              {cat.description}
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Pages Section */}
+              <div className="mt-8 pt-8 border-t border-stone-200">
+                <h3 className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-4">
+                  Resources
+                </h3>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <a href="#about" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                    <div className="text-sm font-medium text-stone-900">About</div>
+                    <div className="text-xs text-stone-500 mt-0.5">Who we are and why we exist</div>
+                  </a>
+                  <a href="#newsletter" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                    <div className="text-sm font-medium text-stone-900">Newsletter</div>
+                    <div className="text-xs text-stone-500 mt-0.5">Weekly insights in your inbox</div>
+                  </a>
+                  <a href="#submit" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                    <div className="text-sm font-medium text-stone-900">Share Your Story</div>
+                    <div className="text-xs text-stone-500 mt-0.5">Contribute to our community</div>
+                  </a>
+                  <a href="#resources" className="block p-3 rounded-lg hover:bg-stone-50 transition-colors">
+                    <div className="text-sm font-medium text-stone-900">Crisis Support</div>
+                    <div className="text-xs text-stone-500 mt-0.5">When you need immediate help</div>
+                  </a>
+                </div>
+              </div>
+
+              {/* Footer Note */}
+              <div className="mt-8 pt-8 border-t border-stone-200">
+                <p className="text-sm text-stone-500 text-center">
+                  Pick a path. Start somewhere. Stay human.
+                </p>
+              </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }

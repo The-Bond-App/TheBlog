@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mic, X, Menu, ShoppingBag,PersonStanding, Home, Map, Send } from 'lucide-react';
+import { Mic, X, Menu, ShoppingBag,PersonStanding, MicVocal, Map, Send } from 'lucide-react';
 
 
 
@@ -11,81 +11,54 @@ export default function Navigation() {
 
   return (
      <nav className="relative">
-         <div className="w-full mx-auto border-b border-gray-200 py-2 bg-stone-800 backdrop-blur-2xl sticky top-0 z-50">
-        <div className="flex items-center justify-center">
-          <div className="hidden md:flex items-center gap-x-2">
-            {[
-              { icon: Home, label: 'Home', href: '/' },
-              { icon: null, img: '/assets/logo.png', label: 'The Bond Company', href: 'https://thebond.company' },
-              { icon: ShoppingBag, label: 'Shop', href: 'https://shop.thebond.company' },
-              //{ icon: MicVocal, label: 'Your Story', href: '#', onClick: () => setIsStoryModalOpen(true) },
-              //{ icon: Map, label: 'Sitemap', href: '/sitemap'},
-              { icon: PersonStanding, label: 'Community', href: '/sitemap'},
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  if (item.onClick) {
-                    e.preventDefault();
-                    item.onClick();
-                  }
-                }}
-                className={` px-4 py-2 text-white opacity-90 hover:opacity-100  rounded-lg transition-all flex items-center gap-2 text-[16px] hover:bg-white/[0.08] !tracking-normal font-medium`}
+        <div className="w-full mx-auto bg-white/80 backdrop-blur-xl sticky top-0 z-50 border-b border-black/50">
+          <div className="max-w-[1400px] mx-auto px-6">
+            <div className="flex items-center justify-between h-11">
+             <a
+                href="https://thebond.company"
+                className="flex items-center gap-2 text-[16px] text-black/70 hover:text-black transition-colors font-normal"
               >
-                {item.img ? (
-                  <img src={item.img} alt={item.label} className="w-5 h-5 object-contain" />
-                ) : (
-                  <item.icon className="w-5 h-5" />
-                )}
-                <span>{item.label}</span>
+                {/*<House className='w-3 h-3'/>*/}
+                The Bond Company
               </a>
-            ))}
-          </div>
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-white opacity-70 hover:opacity-100 hover:bg-white/10 rounded-lg transition-all"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+
+              <div className="hidden md:flex items-center gap-8">
+                {[
+                  { label: 'Home', href: '/' },
+                  { label: 'Shop', href: '#' },
+                  { label: 'Community', href: '#' },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-[16px] text-black/70 hover:text-black transition-colors font-normal"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-4">
+               <button
+                  onClick={() => setIsStoryModalOpen(true)}
+                  className="hidden md:flex items-center text-[16px] text-black/70 hover:text-black transition-colors hover:cursor-pointer"
+                >
+                  <Mic className="mr-2 w-4 h-4" /> Your Story 
+                </button>
+
+                
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="md:hidden p-1 text-black/70 hover:text-black transition-colors"
+                  aria-label="Menu"
+                >
+                  <Menu className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-
-        {isMenuOpen && (
-          <div className="md:hidden my-4 rounded-2xl border overflow-hidden bg-white/5 border-white/10">
-            {[
-              { icon: Home, label: 'Home', href: '/' },
-              { icon: null, img: '/assets/logo.png', label: 'The Bond Company', href: 'https://thebond.company' },
-              { icon: ShoppingBag, label: 'Shop', href: 'https://shop.thebond.company' },
-              //{ icon: MicVocal, label: 'Your Story', href: '#', onClick: () => setIsStoryModalOpen(true) },
-              //{ icon: Map, label: 'Sitemap', href: '/sitemap'},
-              { icon: PersonStanding, label: 'Community', href: '/sitemap'},
-            ].map((item, idx) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  if (item.onClick) {
-                    e.preventDefault();
-                    item.onClick();
-                  } else {
-                    setIsMenuOpen(false);
-                  }
-                }}
-                className={`flex items-center gap-3 px-6 py-4 text-white opacity-70 hover:opacity-100 hover:bg-white/10 transition-all border-b border-white/20`}
-              >
-                {item.img ? (
-                  <img src={item.img} alt={item.label} className="w-5 h-5 object-contain" />
-                ) : (
-                  <item.icon className="w-5 h-5" />
-                )}
-                <span className="font-light">{item.label}</span>
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
 
         {isMenuOpen && (
           <div className="md:hidden fixed inset-0 z-[60] bg-white" style={{ top: '44px' }}>

@@ -36,12 +36,12 @@ export default function Hero() {
   return(
    <section className='bg-white'>
         <div className="relative overflow-hidden">
-          <div className="px-6 py-12 max-w-[1400px] mx-auto">
+          <div className="px-12 py-16 max-w-[1400px] mx-auto">
             <div className="grid md:grid-cols-2 gap-20 items-center">
               <div className="space-y-8 max-w-2xl -mt-8">
              
                 
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal tracking-tight text-slate-700 leading-[1.05]">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-slate-700 leading-[1.05]">
                   Sticky notes for your <span className='gradient-text'>soul's fridge</span>
                 </h1>
 
