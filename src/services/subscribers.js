@@ -13,6 +13,8 @@ export const addSubscriber = async (email, subscribed = true) => {
     await addDoc(collection(db, "subscribers"), subscriberData);
     return true
   } catch (error) {
+    console.log('catch de error to add doc')
+    console.log(error)
     return false
   }
 };

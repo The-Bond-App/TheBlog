@@ -4,6 +4,7 @@ import {
   orderBy, 
   startAfter, 
   limit, 
+  where,
   getDocs 
 } from "firebase/firestore";
 import { db } from "../firebaseConfig"

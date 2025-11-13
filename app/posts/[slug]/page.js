@@ -1,6 +1,6 @@
 // app/posts/[slug]/page.js
 import MinimalLayout from '../../../src/components/articles/MinimalLayout';
-import { fetchSinglePostBySlug, fetchAllPostSlugs } from '../../../src/services/fetchPosts';
+import { fetchSinglePostBySlug } from '../../../src/services/fetchPosts';
 
 // ISR - wont revalidate, single post content wont change
 {/*export const revalidate = false;
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }) {
 
 export default async function PostPage({ params }) {
   // Await the params promise first!
-  {/*const { slug } = await params;
+  const { slug } = await params;
   
   // Add validation
   if (!slug || slug === 'undefined') {
@@ -65,7 +65,5 @@ export default async function PostPage({ params }) {
     return <div>Post not found for slug: {slug}</div>;
   }
   return <MinimalLayout post={post} />;  
-  */}
-  
-  return <MinimalLayout />;
+ 
 }

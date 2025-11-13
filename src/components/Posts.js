@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { ChevronRight, ChevronLeft, Clock, ArrowRight, Mail, Sparkles } from 'lucide-react';
-
-import SubscribeBanner from '../ui/SubscribeBanner'
+import { ArrowRight } from 'lucide-react';
+import DynamicShenanigans from '../ui/DynamicShenanigans';
+import NewsletterBanner from '../ui/NewsletterBanner'
 
 const mockPosts = [
   {
@@ -114,82 +114,12 @@ const mockPosts = [
   },
 ];
 
-const categories = [
-  { id: 'all', name: 'All Stories', count: 12 },
-  { id: 'healing', name: 'Healing', count: 2 },
-  { id: 'growth', name: 'Growth', count: 2 },
-  { id: 'mindfulness', name: 'Mindfulness', count: 2 },
-  { id: 'connection', name: 'Connection', count: 2 },
-  { id: 'creativity', name: 'Creativity', count: 2 },
-  { id: 'journey', name: 'Journey', count: 2 },
-];
-
-// Newsletter Banner Component
-function NewsletterBanner() {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setEmail('');
-        setSubscribed(false);
-      }, 3000);
-    }
-  };
-
-  return (
-    <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl overflow-hidden shadow-2xl">
-      <div className="px-8 py-12 md:px-12 md:py-16 text-center">
-        <div className="flex justify-center mb-4">
-          <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm">
-            <Mail className="w-8 h-8 text-white" />
-          </div>
-        </div>
-        <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          Stories Worth Your Time
-        </h3>
-        <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-          Join thousands of readers. Get thoughtful stories delivered to your inbox every week.
-        </p>
-        
-        {subscribed ? (
-          <div className="flex items-center justify-center gap-2 text-white text-lg">
-            <Sparkles className="w-5 h-5" />
-            <span>Welcome aboard! Check your inbox.</span>
-          </div>
-        ) : (
-          <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
-            <div className="flex gap-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-4 focus:ring-white/50 transition-all"
-                required
-              />
-              <button
-                type="submit"
-                className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition-all hover:scale-105 shadow-lg"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
-    </div>
-  );
-}
 
 
 
-// Main Component with Tabs
-export default function BlogLayoutOptions() {
-const [selectedCategory, setSelectedCategory] = useState('all');
+
+export default function PostsLayout() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [displayCount, setDisplayCount] = useState(9);
 
   const filteredPosts = selectedCategory === 'all' 
@@ -200,130 +130,112 @@ const [selectedCategory, setSelectedCategory] = useState('all');
   const hasMore = displayCount < filteredPosts.length;
 
   return (
-    <section>
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="space-y-8">
-          {/* Full Width Feature */}
-          {visiblePosts[0] && (
-            <div className="bg-white border border-stone-100 rounded-3xl overflow-hidden shadow-xl group cursor-pointer">
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div className="relative h-96 overflow-hidden order-2 lg:order-1">
-                  <img
-                    src={visiblePosts[0].image}
-                    alt={visiblePosts[0].title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                  />
+    <div className="bg-gradient-to-br from-white to-stone-100/70 min-h-screen">
+      {/* Minimal Header */}
+  
+
+      {/* Hero Feature - Full Width with Card */}
+      {visiblePosts[0] && (
+        <div className="py-16">
+          <div className="max-w-7xl mx-auto px-6">
+            <article className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                <div className="lg:col-span-7">
+                  <div className="relative overflow-hidden h-full min-h-[400px] lg:min-h-[600px]">
+                    <img
+                      src={visiblePosts[0].image}
+                      alt={visiblePosts[0].title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
                 </div>
-                <div className="p-12 flex flex-col justify-center order-1 lg:order-2">
-                  <span className="px-3 py-1 bg-stone-100 text-sm font-medium text-gray-800 rounded-full inline-block mb-4 w-fit capitalize">
+                <div className="lg:col-span-5 p-12 flex flex-col justify-center">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
                     {visiblePosts[0].category}
                   </span>
-                  <h3 className="text-4xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                  <h2 className="text-4xl lg:text-5xl font-semibold text-gray-900 mb-6 leading-tight">
                     {visiblePosts[0].title}
-                  </h3>
-                  <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                     {visiblePosts[0].description}
                   </p>
-                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
-                    <Clock className="w-4 h-4" />
-                    <span>{visiblePosts[0].readTime}</span>
-                    <span>·</span>
+                  <div className="flex items-center gap-4 text-sm text-gray-500 mb-8">
                     <span>{visiblePosts[0].date}</span>
+                    <span>·</span>
+                    <span>{visiblePosts[0].readTime}</span>
                   </div>
-                  <button className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
-                    Continue reading
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
+                  <div>
+                    <button className="text-blue-600 font-semibold group inline-flex items-center gap-2 hover:gap-3 transition-all">
+                      Read story
+                      <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            </article>
+          </div>
+        </div>
+      )}
 
-          {/* Two Column */}
-          {visiblePosts.length > 1 && (
+      {/* Two Column Section - Cards */}
+      {visiblePosts.length > 1 && (
+        <section className="py-16">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {visiblePosts.slice(1, 3).map((post) => (
-                <div
-                  key={post.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer group"
-                >
-                  <div className="relative h-64 overflow-hidden">
+                <article key={post.id} className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer group">
+                  <div className="relative overflow-hidden h-80">
                     <img
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-medium text-gray-800 rounded-full capitalize">
-                        {post.category}
-                      </span>
-                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                  <div className="p-8">
+                    <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      {post.category}
+                    </span>
+                    <h3 className="text-2xl lg:text-3xl font-semibold text-gray-900 mt-3 mb-4 group-hover:text-gray-700 transition-colors">
                       {post.title}
                     </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">{post.description}</p>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
-                      <Clock className="w-4 h-4" />
+                    <p className="text-gray-600 leading-relaxed mb-6">
+                      {post.description}
+                    </p>
+                    <div className="flex items-center gap-3 text-sm text-gray-500">
+                      <span>{post.date}</span>
+                      <span>·</span>
                       <span>{post.readTime}</span>
                     </div>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
-          )}
+          </div>
+        </section>
+      )}
 
-          {/* Newsletter Banner - After first 3 posts */}
-          {visiblePosts.length >= 3 && displayCount === 9 && (
-            <div className="my-4">
-              <SubscribeBanner />
-            </div>
-          )}
+     
 
-          {/* Three Column */}
-          {visiblePosts.length > 3 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {visiblePosts.slice(3, 9).map((post) => (
-                <div
-                  key={post.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <span className="text-xs font-medium text-gray-500 capitalize">{post.category}</span>
-                    <h4 className="text-lg font-semibold text-gray-900 mt-2 mb-2 group-hover:text-blue-600 transition-colors">
-                      {post.title}
-                    </h4>
-                    <p className="text-sm text-gray-600 line-clamp-2">{post.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      
+      {/* Load More */}
+      <div className="text-center py-6">
+        {hasMore && (
+          <button
+            onClick={() => setDisplayCount(prev => prev + 6)}
+            className="px-8 py-3 bg-gray-900 hover:cursor-pointer text-white font-semibold rounded-full hover:bg-gray-800 transition-all shadow-md hover:shadow-lg"
+          >
+            Load more stories
+          </button>
+        )}
 
-          {/* Load More */}
-          {hasMore && (
-            <div className="text-center mt-16">
-              <button
-                onClick={() => setDisplayCount(prev => prev + 6)}
-                className="px-12 py-4 bg-gray-900 text-white font-semibold rounded-full hover:bg-gray-800 transition-all hover:scale-105 shadow-lg"
-              >
-                Load More Stories
-              </button>
-              <p className="text-sm text-gray-500 mt-4">
-                Showing {visiblePosts.length} of {filteredPosts.length} stories
-              </p>
-            </div>
-          )}
-        </div>
+        <p className="text-sm text-gray-500 mt-4 mb-12">
+          Showing {visiblePosts.length} of {filteredPosts.length} 
+        </p> 
       </div>
-    </section>
+
+      {/* Newsletter Banner */}
+      <NewsletterBanner />
+     
+    </div>
   );
 }

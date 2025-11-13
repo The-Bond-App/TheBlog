@@ -1,39 +1,29 @@
 'use client';
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation';
+import { getFeaturedPosts } from '../data/highlightedPosts'
 
-import DynamicShenanigans from '../ui/DynamicShenanigans';
 
-const featuredCarousel = [
-  {
-    id: 1,
-    title: "The Art of Letting Go",
-    subtitle: "What happens when you finally release what no longer serves you",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
-  },
-  {
-    id: 2,
-    title: "Finding Your Voice",
-    subtitle: "Every story you tell makes the world a little more honest",
-    image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200",
-  },
-  {
-    id: 3,
-    title: "The Power of Pause",
-    subtitle: "Sometimes the bravest thing you can do is rest",
-    image: "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1200",
-  }
-];
 
 export default function Hero() {
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const router = useRouter()
 
-  useEffect(() => {
+  const featuredCarousel = getFeaturedPosts();
+
+   useEffect(() => {
     const timer = setInterval(() => {
       setCarouselIndex((prev) => (prev + 1) % featuredCarousel.length);
-    }, 3000);
+    }, 5000); // Changed to 5 seconds for better UX
     return () => clearInterval(timer);
-  }, []);
+  }, [featuredCarousel.length]);
 
+  const handleReadStory = (slug) => {
+    // For Next.js App Router:
+    router.push(`/highlights/${slug}`);
+  };
+
+ 
   return(
    <section className='bg-gradient-to-r from-stone-50/50 to-white pt-20'>
         <div className="relative overflow-hidden">
@@ -70,8 +60,8 @@ export default function Hero() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       
                       <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <div className="text-[13px] font-medium mb-3 text-white/80 tracking-wide">
-                          FEATURED
+                        <div className="text-[14px] font-bold mb-3 text-white/80 tracking-wide">
+                          Must Read
                         </div>
                         
                         <h3 className="text-[28px] font-semibold mb-2 leading-tight tracking-tight">
@@ -82,7 +72,7 @@ export default function Hero() {
                           {item.subtitle}
                         </p>
                         
-                        <button className="px-5 py-2.5 bg-white text-black rounded-full text-[14px] font-medium hover:bg-white/90 transition-all">
+                        <button onClick={() => handleReadStory(item.slug)} className="px-5 py-2.5 bg-white text-black hover:cursor-pointer rounded-full text-[14px] font-medium hover:bg-white/90 transition-all">
                           Read Story
                         </button>
                       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Menu, ShoppingBag, Home, Users, Send } from 'lucide-react';
+import { X, Menu, ShoppingBag, Home, Users, Send, Mail } from 'lucide-react';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +15,7 @@ export default function Navigation() {
   }, []);
 
   const navItems = [
-    { icon: Home, label: 'Read', href: '/' },
+    { icon: Mail, label: 'Newsletter', href: '#subscribe' },
     { icon: ShoppingBag, label: 'Shop', href: 'https://shop.thebond.company' },
     { icon: Users, label: 'Community', href: 'https://instagram.com/thebondcompany' },
   ];
@@ -56,8 +56,8 @@ export default function Navigation() {
                 <a
                   key={item.label}
                   href={item.href}
-                  target={item.label === 'Read' ? undefined : '_blank'}
-                  rel={item.label === 'Read' ? undefined : 'noopener noreferrer'}
+                  target={item.label === 'Newsletter' ? undefined : '_blank'}
+                  rel={item.label === 'Newsletter' ? undefined : 'noopener noreferrer'}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     isScrolled 
                       ? 'text-stone-700 hover:text-stone-900 hover:bg-stone-100' 

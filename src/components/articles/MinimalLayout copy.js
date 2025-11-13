@@ -1,418 +1,316 @@
-"use client"
-import { useState } from 'react';
-import { Heart, ArrowLeft, Clock, Share2, Bookmark, ChevronRight } from 'lucide-react';
+'use client'
+import { useState, useEffect } from 'react';
+import { ArrowRight, ArrowLeft, Share2, Facebook, Twitter, Linkedin, Link2, Instagram, MessageCircle } from 'lucide-react';
 
-const categoryMap = {
-  feelings: { 
-    name: 'Feelings I Didn\'t Ask For', 
-    emoji: '😵‍💫',
-    description: 'Emotional surprises, internal chaos'
-  },
-  identitycrisis: { 
-    name: 'Identity in Crisis', 
-    emoji: '🫠',
-    description: 'Life purpose, identity loss'
-  },
-  science: { 
-    name: 'The Science of Feeling', 
-    emoji: '🧠',
-    description: 'Psychology & neuroscience'
-  },
-  questionsthatstick: { 
-    name: 'Questions That Stick', 
-    emoji: '🌀',
-    description: 'question, idea, or provocation'
-  },
-  habits: { 
-    name: 'Habits in Action', 
-    emoji: '🌱',
-    description: 'Practical rituals, grounding actions'
-  },
-  whenitshard: { 
-    name: 'When It\'s Hard', 
-    emoji: '😤',
-    description: 'Deeper support, bridge between blog and nudge'
-  },
-  lifeunfiltered: { 
-    name: 'Life, Unfiltered', 
-    emoji: '🌅',
-    description: 'Late epiphanies, emotional clarity'
-  },
-  virtualyou: { 
-    name: 'Performing Online', 
-    emoji: '🧑‍💻',
-    description: 'Digital overwhelm, online identity'
-  },
-  notyoueveryone: { 
-    name: 'We\'re All Struggling', 
-    emoji: '🌍',
-    description: 'Human connection, relational chaos'
-  },
-  boundaries: { 
-    name: 'Boundaries & Burnout', 
-    emoji: '✋',
-    description: 'Emotional labor, people-pleasing'
-  }
-};
-
-// Mock post data
-const post = {
+const samplePost = {
   id: 1,
-  title: "You're Not Falling Behind, You're Just On Your Own Timeline",
-  excerpt: "Every Instagram post makes it seem like everyone's got it together except you. Here's why that's complete bullshit.",
-  category: 'notyoueveryone',
-  image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80',
-  readTime: '8 min read',
-  publishedDate: 'November 5, 2025',
-  content: `
-It's 2am and you're scrolling. Again.
+  title: "The Art of Letting Go",
+  description: "Sometimes the hardest thing and the right thing are the same. Learning to release what no longer serves us.",
+  image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+  category: 'healing',
+  readTime: '8 min',
+  date: 'Nov 5, 2025',
+  instagramPostUrl: 'https://www.instagram.com/p/DOpSbxVjmE6/?igsh=MWg3YXI4OGZmeWk2bA==', // Replace with your actual IG post URL
+  content: `Learning to let go is one of life's most paradoxical challenges. We hold onto things—relationships, beliefs, possessions, grudges—because they once served us. They gave us comfort, identity, or purpose. But as we evolve, not everything can come with us on the journey.
 
-Your college roommate just got promoted. Your high school friend bought a house. Someone you barely remember from freshman orientation is getting married. And you? You're eating cereal in bed wondering if you'll ever figure out what you're doing with your life.
+The act of letting go isn't about giving up or admitting defeat. It's about making space. Space for new experiences, new relationships, new versions of ourselves. When we cling too tightly to the past, we close our hands to the future.
 
-## The Comparison Trap is Real
+I've learned that letting go often hurts before it heals. There's grief in the release, even when we know it's right. We mourn what was, what could have been, the story we told ourselves. And that's okay. That grief is proof we were brave enough to care deeply.
 
-Here's what nobody tells you: everyone is on a different timeline, and that's not just okay—it's the whole point.
+But on the other side of that release is lightness. Freedom. The ability to move through the world unburdened by weights we were never meant to carry forever. Letting go is an act of trust—trust in ourselves, trust in the universe, trust that better things are waiting.
 
-Your brain wasn't designed for this. For all of human history, we compared ourselves to maybe 150 people in our immediate vicinity. Now we're comparing ourselves to millions of carefully curated highlight reels. No wonder you feel behind.
+Start small. Let go of one thing today. A belief that no longer serves you. A grudge you've been carrying. A habit that dims your light. Notice how it feels to open your hand and watch it drift away.
 
-### The Science of "Falling Behind"
-
-Research from Stanford shows that we consistently overestimate others' happiness and underestimate their struggles. We see their wins. We don't see:
-
-- The rejection emails they don't post about
-- The therapy appointments between the vacation photos
-- The credit card debt behind the new car
-- The anxiety attacks that nobody mentions
-
-You're not seeing the full picture. You're never seeing the full picture.
-
-## What "On Time" Even Means
-
-Society has this weird checklist:
-- Graduate by 22
-- Career by 25
-- Partner by 28
-- House by 30
-- Kids by 32
-
-But walk into any room of successful, happy people and ask them if they followed that timeline. Spoiler: most didn't.
-
-Some people:
-- Started their dream career at 40
-- Found their person at 45
-- Had kids at 25 or never
-- Bought a house at 50 or decided not to
-
-All of them are living full, meaningful lives.
-
-## Your Timeline is Yours
-
-What if instead of "falling behind," you're just:
-- Taking time to figure out what you actually want
-- Healing from things that needed healing
-- Building foundations that will matter later
-- Learning lessons that required this exact timing
-
-The race you think you're losing? It doesn't exist. There's no finish line where everyone collectively wins at life.
-
-## What To Do With This Information
-
-1. **Unfollow ruthlessly.** If someone's posts consistently make you feel like shit, unfollow. It's not personal. It's self-preservation.
-
-2. **Remember the iceberg principle.** You see 10% of someone's reality. That's it. The other 90% is underwater, messy, complicated, and very human.
-
-3. **Define your own metrics.** What does "success" mean to you? Not your parents. Not Instagram. You.
-
-4. **Zoom out.** Five years from now, will it matter that you hit some arbitrary milestone at 27 instead of 25? Ten years from now?
-
-## The Real Truth
-
-You're not falling behind. You're exactly where you need to be to become who you're meant to be.
-
-And that person? They're going to be pretty fucking amazing.
-
-*Take your time. There's no rush. The only timeline that matters is yours.*
-  `
+Sometimes the hardest thing and the right thing are the same. And when we're brave enough to let go, we discover that we were never losing anything—we were making room for everything we're meant to become.`,
 };
 
-// Related posts
-const relatedPosts = [
-  {
-    id: 2,
-    title: "The Science Behind Why You Feel Like Shit for No Reason",
-    category: 'science',
-    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80'
-  },
-  {
-    id: 3,
-    title: "When 'Self-Care' Feels Like Another Chore",
-    category: 'boundaries',
-    image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=800&q=80'
-  },
-  {
-    id: 4,
-    title: "Your Online Self vs. Your Real Self",
-    category: 'virtualyou',
-    image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=80'
+const nextPost = {
+  id: 7,
+  title: "Embracing Imperfection",
+  description: "The beauty of being human lies in our flaws, not despite them.",
+  image: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800",
+  category: 'healing',
+  readTime: '6 min',
+  date: 'Oct 30, 2025',
+};
+
+const author = {
+  name: "Sarah Chen",
+  bio: "Writer, mindfulness teacher, and believer in the power of honest storytelling.",
+  image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400",
+  social: {
+    twitter: "@sarahchen",
+    instagram: "@sarahchen",
+    linkedin: "sarahchen"
   }
-];
+};
 
-const Navigation = () => (
-  <nav className="flex justify-between items-center mb-8 py-4">
-    <a href="/" className="text-2xl font-light text-white hover:opacity-80 transition-opacity">
-      <span className="bg-gradient-to-r from-amber-400 to-rose-400 bg-clip-text text-transparent">
-        Soul Notes
-      </span>
-    </a>
-    <div className="flex gap-6 text-white/60 text-sm font-light">
-      <a href="/about" className="hover:text-white transition-colors">About</a>
-      <a href="/archive" className="hover:text-white transition-colors">Archive</a>
-    </div>
-  </nav>
-);
+export default function SinglePostView() {
+  const [copied, setCopied] = useState(false);
+  const [embedLoaded, setEmbedLoaded] = useState(false);
 
-export default function SinglePost() {
-  const [saved, setSaved] = useState(false);
+  // Load Instagram embed script
+  useEffect(() => {
+    if (samplePost.instagramPostUrl && !embedLoaded) {
+      const script = document.createElement('script');
+      script.src = '//www.instagram.com/embed.js';
+      script.async = true;
+      document.body.appendChild(script);
+      setEmbedLoaded(true);
+      
+      script.onload = () => {
+        if (window.instgrm) {
+          window.instgrm.Embeds.process();
+        }
+      };
+    }
+  }, [embedLoaded]);
+
+  const handleShare = (platform) => {
+    const url = window.location.href;
+    const text = samplePost.title;
+    
+    const urls = {
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`
+    };
+    
+    if (platform === 'copy') {
+      navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } else {
+      window.open(urls[platform], '_blank', 'width=600,height=400');
+    }
+  };
+
+  const handleBack = () => {
+    console.log('Navigate back to stories');
+  };
+
+  const handleNextPost = () => {
+    console.log('Navigate to next post:', nextPost.title);
+  };
+
+  const handleExploreMore = () => {
+    console.log('Navigate to all stories');
+  };
 
   return (
-    <div className="min-h-screen bg-slate-700 text-white relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-amber-500/20 via-orange-500/25 to-rose-500/23" />
-      </div>
-
-      <style>{`
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in { animation: fade-in 0.6s ease-out; }
-        
-        /* Custom prose styles */
-        .prose h2 {
-          font-size: 2rem;
-          font-weight: 300;
-          margin-top: 3rem;
-          margin-bottom: 1.5rem;
-          line-height: 1.2;
-        }
-        .prose h3 {
-          font-size: 1.5rem;
-          font-weight: 300;
-          margin-top: 2.5rem;
-          margin-bottom: 1rem;
-        }
-        .prose p {
-          margin-bottom: 1.5rem;
-          line-height: 1.8;
-          font-weight: 300;
-        }
-        .prose ul, .prose ol {
-          margin: 1.5rem 0;
-          padding-left: 1.5rem;
-        }
-        .prose li {
-          margin-bottom: 0.75rem;
-          line-height: 1.7;
-          font-weight: 300;
-        }
-        .prose strong {
-          font-weight: 400;
-        }
-        .prose em {
-          font-style: italic;
-          color: rgba(255, 255, 255, 0.7);
-        }
-      `}</style>
-
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-          <Navigation />
-          
-          {/* Back button */}
-          <a 
-            href="/"
-            className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors font-light text-sm mb-8 group"
+    <div className="bg-white min-h-screen">
+      {/* Header with Back Button */}
+      <header className="border-b border-gray-200 sticky top-0 bg-white z-10">
+        <div className="max-w-5xl mx-auto px-6 py-6">
+          <button 
+            onClick={handleBack}
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back to all stories
-          </a>
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Back to stories</span>
+          </button>
         </div>
+      </header>
 
-        {/* Hero Image */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="relative aspect-[21/9] rounded-3xl overflow-hidden animate-fade-in">
-            <img 
-              src={post.image}
-              alt=""
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-          <div className="grid lg:grid-cols-[1fr_380px] gap-12">
-            {/* Article */}
-            <article className="animate-fade-in">
-              {/* Meta */}
-              <div className="flex items-center gap-3 text-white/60 mb-6 font-light text-sm">
-                <span className="text-2xl">{categoryMap[post.category]?.emoji}</span>
-                <span>{categoryMap[post.category]?.name}</span>
-                <span>•</span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  {post.readTime}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extralight mb-6 leading-[1.1] tracking-tight">
-                {post.title}
-              </h1>
-
-              {/* Excerpt */}
-              <p className="text-xl md:text-2xl text-white/70 font-light leading-relaxed mb-8 border-l-2 border-white/20 pl-6">
-                {post.excerpt}
-              </p>
-
-              {/* Actions */}
-              <div className="flex items-center gap-4 mb-12 pb-8 border-b border-white/10">
-                <button 
-                  onClick={() => setSaved(!saved)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-light transition-all ${
-                    saved 
-                      ? 'bg-white text-slate-900' 
-                      : 'bg-white/10 text-white/70 hover:bg-white/20'
-                  }`}
-                >
-                  <Bookmark className="w-4 h-4" fill={saved ? "currentColor" : "none"} />
-                  {saved ? 'Saved' : 'Save'}
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/70 hover:bg-white/20 text-sm font-light transition-all">
-                  <Share2 className="w-4 h-4" />
-                  Share
-                </button>
-              </div>
-
-              {/* Content */}
-              <div className="prose prose-lg prose-invert max-w-none text-white/90">
-                {post.content.split('\n').map((paragraph, i) => {
-                  if (paragraph.startsWith('## ')) {
-                    return <h2 key={i}>{paragraph.replace('## ', '')}</h2>;
-                  } else if (paragraph.startsWith('### ')) {
-                    return <h3 key={i}>{paragraph.replace('### ', '')}</h3>;
-                  } else if (paragraph.startsWith('- ')) {
-                    return <li key={i}>{paragraph.replace('- ', '')}</li>;
-                  } else if (paragraph.trim()) {
-                    return <p key={i}>{paragraph}</p>;
-                  }
-                  return null;
-                })}
-              </div>
-
-              {/* End of Article CTA */}
-              <div className="mt-16 pt-12 border-t border-white/10">
-                <div className="bg-gradient-to-br from-rose-600/20 to-pink-600/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/10">
-                  <div className="text-center max-w-2xl mx-auto">
-                    <div className="mb-6">
-                      <Heart className="w-12 h-12 mx-auto text-rose-400/80" />
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-extralight mb-4 text-white">
-                      This resonated with you?
-                    </h3>
-                    <p className="text-white/70 font-light mb-8 leading-relaxed">
-                      Get stories like this in your inbox every week. No fluff, no toxic positivity, just real talk about being human.
-                    </p>
-                    <button className="px-8 py-4 bg-white text-slate-900 rounded-full hover:scale-105 transition-all duration-300 font-light shadow-xl">
-                      Subscribe to Soul Notes
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            {/* Sidebar */}
-            <aside className="space-y-8">
-              {/* Sticky container */}
-              <div className="lg:sticky lg:top-8 space-y-8">
-                {/* Native Ad - Course */}
-                <div className="bg-gradient-to-br from-violet-600 to-purple-600 rounded-3xl p-8 text-center animate-fade-in">
-                  <div className="mb-4">
-                    <span className="text-4xl">📚</span>
-                  </div>
-                  <p className="text-white/70 text-xs font-light mb-2 uppercase tracking-wider">
-                    For when you're ready
-                  </p>
-                  <h3 className="text-xl font-light mb-3 text-white">
-                    Emotional Literacy Course
-                  </h3>
-                  <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
-                    5 weeks. No bullshit. Just practical tools for understanding your feelings.
-                  </p>
-                  <button className="w-full px-6 py-3 bg-white text-purple-900 rounded-full hover:bg-white/90 transition-all font-light text-sm shadow-lg">
-                    Learn more
-                  </button>
-                </div>
-
-                {/* Native Ad - Product */}
-                <div className="bg-gradient-to-br from-amber-600 to-orange-600 rounded-3xl p-8 text-center">
-                  <div className="mb-4">
-                    <span className="text-4xl">🧘</span>
-                  </div>
-                  <p className="text-white/70 text-xs font-light mb-2 uppercase tracking-wider">
-                    Self-care that works
-                  </p>
-                  <h3 className="text-xl font-light mb-3 text-white">
-                    The Grounding Kit
-                  </h3>
-                  <p className="text-sm text-white/80 font-light leading-relaxed mb-6">
-                    Physical tools for when your brain won't shut up. Weighted stones, breathing guide, journal prompts.
-                  </p>
-                  <button className="w-full px-6 py-3 bg-white text-orange-900 rounded-full hover:bg-white/90 transition-all font-light text-sm shadow-lg">
-                    Shop now
-                  </button>
-                </div>
-
-                {/* Related Posts */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10">
-                  <h3 className="text-lg font-light mb-6 text-white">Keep reading</h3>
-                  <div className="space-y-4">
-                    {relatedPosts.map((related) => (
-                      <a 
-                        key={related.id}
-                        href={`/post/${related.id}`}
-                        className="group block"
-                      >
-                        <div className="flex gap-4 items-start">
-                          <div className="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden">
-                            <img 
-                              src={related.image}
-                              alt=""
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-xs text-white/50 mb-1 flex items-center gap-1">
-                              <span>{categoryMap[related.category]?.emoji}</span>
-                              <span className="truncate">{categoryMap[related.category]?.name}</span>
-                            </div>
-                            <h4 className="text-sm font-light text-white/90 group-hover:text-white transition-colors leading-snug line-clamp-2">
-                              {related.title}
-                            </h4>
-                          </div>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </aside>
-          </div>
-        </div>
+      {/* Hero Image */}
+      <div className="relative h-[60vh] min-h-[500px] overflow-hidden">
+        <img 
+          src={samplePost.image} 
+          alt={samplePost.title}
+          className="w-full h-full object-cover"
+        />
       </div>
+
+      {/* Article Content */}
+      <article className="max-w-3xl mx-auto px-6 py-16">
+        {/* Meta */}
+        <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
+          <span className="text-xs font-semibold uppercase tracking-wider text-gray-600">
+            {samplePost.category}
+          </span>
+          <span>·</span>
+          <span>{samplePost.date}</span>
+          <span>·</span>
+          <span>{samplePost.readTime} read</span>
+        </div>
+
+        {/* Title */}
+        <h1 className="text-5xl lg:text-6xl font-semibold text-gray-900 mb-8 leading-tight">
+          {samplePost.title}
+        </h1>
+
+        {/* Description */}
+        <p className="text-2xl text-gray-600 mb-12 leading-relaxed font-light">
+          {samplePost.description}
+        </p>
+
+        {/* Content */}
+        <div className="prose prose-lg max-w-none">
+          {samplePost.content.split('\n\n').map((paragraph, index) => (
+            <p key={index} className="text-gray-700 leading-relaxed mb-6 text-lg">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        {/* Share Buttons */}
+        <div className="mt-16 pt-8 border-t border-gray-200">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4">Share this story</h3>
+          <div className="flex gap-3">
+            <button
+              onClick={() => handleShare('twitter')}
+              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              aria-label="Share on Twitter"
+            >
+              <Twitter className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
+              onClick={() => handleShare('facebook')}
+              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              aria-label="Share on Facebook"
+            >
+              <Facebook className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
+              onClick={() => handleShare('linkedin')}
+              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              aria-label="Share on LinkedIn"
+            >
+              <Linkedin className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
+              onClick={() => handleShare('copy')}
+              className="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors relative"
+              aria-label="Copy link"
+            >
+              <Link2 className="w-5 h-5 text-gray-700" />
+              {copied && (
+                <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs bg-gray-900 text-white px-2 py-1 rounded whitespace-nowrap">
+                  Copied!
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Author Box */}
+        <div className="mt-16 p-8 bg-gray-50 rounded-3xl">
+          <div className="flex gap-6 items-start">
+            <img 
+              src={author.image} 
+              alt={author.name}
+              className="w-20 h-20 rounded-full object-cover flex-shrink-0"
+            />
+            <div className="flex-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {author.name}
+              </h3>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                {author.bio}
+              </p>
+              <div className="flex gap-4 text-sm">
+                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
+                  Twitter
+                </a>
+                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
+                  Instagram
+                </a>
+                <a href="#" className="text-gray-500 hover:text-gray-900 transition-colors">
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Instagram Conversation Section */}
+        {samplePost.instagramPostUrl && (
+          <div className="mt-16 pt-12 border-t border-gray-200">
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl">
+                  <MessageCircle className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900">
+                  Join the conversation
+                </h3>
+              </div>
+              <p className="text-gray-600">
+                Share your thoughts and connect with our community on Instagram
+              </p>
+            </div>
+
+            {/* Compact Instagram Embed */}
+            <div className="bg-gray-50 rounded-2xl p-6 overflow-hidden">
+              <style>{`
+                .instagram-media {
+                  max-width: 50% !important;
+                  min-width: 10% !important;
+                  margin: 0 auto !important;
+                }
+                .instagram-media iframe {
+                  max-height: 200px !important;
+                }
+              `}</style>
+              
+              <blockquote 
+                className="instagram-media" 
+                data-instgrm-captioned 
+                data-instgrm-permalink={samplePost.instagramPostUrl}
+                data-instgrm-version="14"
+                style={{
+                  background: '#FFF',
+                  border: 0,
+                  borderRadius: '12px',
+                  boxShadow: '0 1px 3px 0 rgba(0,0,0,0.1)',
+                  margin: '0 auto',
+                  maxWidth: '540px',
+                  padding: 0,
+                  width: '100%'
+                }}
+              >
+                <div style={{ padding: '16px' }}>
+                  <a 
+                    href={samplePost.instagramPostUrl}
+                    style={{
+                      background: '#FFFFFF',
+                      lineHeight: 0,
+                      padding: '0 0',
+                      textAlign: 'center',
+                      textDecoration: 'none',
+                      width: '100%',
+                      display: 'block'
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div style={{ padding: '40px 0', textAlign: 'center' }}>
+                      <Instagram className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                      <div style={{ color: '#3897f0', fontSize: '14px', fontWeight: '600' }}>
+                        View comments on Ins2tagram
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </blockquote>
+            </div>
+          </div>
+        )}
+      </article>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200 mt-20">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-500">
+            <p>© 2025 Wellbeing. All rights reserved.</p>
+            <div className="flex gap-8">
+              <a href="#" className="hover:text-gray-900 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Terms</a>
+              <a href="#" className="hover:text-gray-900 transition-colors">Contact</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

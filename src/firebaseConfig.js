@@ -1,7 +1,20 @@
 // src/firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getAuth, signInAnonymously } from "firebase/auth";
 
+import { 
+  
+  collection, 
+  addDoc, 
+  serverTimestamp, 
+  getDocs,
+  initializeFirestore,
+  persistentLocalCache,
+  enableNetwork,
+  disableNetwork
+} from "firebase/firestore";
+
+// Your Firebase config
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -12,8 +25,29 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// SIMPLE INITIALIZATION - NO PERSISTENCE
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Initialize Firestore with persistence
+const db = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    cacheSizeBytes: 40 * 1024 * 1024, // No eviction based on size
+    settings: { gc: "auto" }             // Disable automatic cache cleanup
+  })
+});
 
-export { db };
+const auth = getAuth(app);
+
+signInAnonymously(auth)
+  /*.then((userCredential) => {
+    console.log("Signed");
+  })*/
+  .catch((error) => {
+    console.error("Auth error:", error);
+  });
+
+// Network status utilities (optional)
+const setNetworkStatus = async (enabled) => {
+  return enabled ? await enableNetwork(db) : await disableNetwork(db);
+};
+
+export { db, collection, addDoc, serverTimestamp, getDocs,setNetworkStatus };

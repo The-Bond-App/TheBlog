@@ -22,7 +22,7 @@ const DynamicResult = () => {
   
   return (
     <div className="flex items-center gap-2">
-      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-stone-100 border border-stone-50 shadow-sm">
+      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-200 shadow-sm">
         <span 
           key={index}
           className="text-2xl animate-[fadeIn_0.5s_ease-in-out]"
