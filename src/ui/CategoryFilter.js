@@ -4,6 +4,12 @@ import { X, Map, ChevronDown } from 'lucide-react';
 // Primary categories (shown in main menu)
 const primaryCategories = [
   { 
+    uuid: 'all', 
+    icon: '🤯', 
+    name: 'All',
+    description: ''
+  },
+  { 
     uuid: 'feelings', 
     icon: '🤯', 
     name: 'Emotions 101',
@@ -85,40 +91,29 @@ export default function BlogCategoryMenu() {
                 setShowMoreDropdown(false);
                 setShowSitemap(true);
               }}
-              className="hover:cursor-pointer text-stone-500 hover:text-stone-400 flex items-center gap-2 justify-center mx-auto mb-4"
+              className="hover:cursor-pointer uppercase text-stone-500 hover:text-stone-400 flex items-center gap-2 justify-center mx-auto mb-4"
             >
-              <Map className="w-5 h-5" />
-              <span className="text-xl ">Sitemap</span>
+              <Map className="w-4 h-4" />
+              <span className="text-sm ">Sitemap</span>
             </button>
 
           </div>
 
           {/* Category Pills - Horizontal */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {/* All Articles */}
-            <button
-              onClick={() => setSelectedCategory('all')}
-              className={`px-5 py-3 rounded-full text-sm font-medium transition-all ${
-                selectedCategory === 'all'
-                  ? 'bg-stone-900 text-white'
-                  : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
-              }`}
-            >
-              All Articles
-            </button>
-
+          <div className="flex flex-wrap items-center justify-center gap-7">
+      
             {/* Primary Categories Only */}
             {primaryCategories.map((cat) => (
               <button
                 key={cat.uuid}
                 onClick={() => setSelectedCategory(cat.uuid)}
-                className={`group hover:cursor-pointer relative px-5 py-3 rounded-full text-sm font-medium transition-all ${
+                className={`text-sm tracking-wider uppercase hover:cursor-pointer font-medium whitespace-nowrap transition-colors pb-1 ${
                   selectedCategory === cat.uuid
-                    ? 'bg-stone-900 text-white'
-                    : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                    ? 'text-stone-500 border-b-2 border-stone-500'
+                    : 'text-stone-400 hover:text-stone-600'
                 }`}
               >
-                <span className="mr-2">{cat.icon}</span>
+                {/*<span className="mr-2">{cat.icon}</span>*/}
                 {cat.name}
                 
                 {/* Tooltip on hover */}
@@ -133,7 +128,7 @@ export default function BlogCategoryMenu() {
             <div className="relative">
               <button
                 onClick={() => setShowMoreDropdown(!showMoreDropdown)}
-                className="px-5 py-3 rounded-full hover:cursor-pointer text-sm font-semibold text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all flex items-center gap-2"
+                className="text-sm tracking-wider text-stone-500 uppercase hover:cursor-pointer  font-medium whitespace-nowrap transition-colors pb-1 transition-all flex items-center gap-2"
               >
                 More
                 <ChevronDown className={`w-4 h-4 transition-transform ${showMoreDropdown ? 'rotate-180' : ''}`} />
@@ -161,10 +156,10 @@ export default function BlogCategoryMenu() {
                       >
                         <span className="text-xl">{cat.icon}</span>
                         <div>
-                          <div className="text-sm font-medium text-stone-900">
+                          <div className="text-sm font-semibold text-stone-500">
                             {cat.name}
                           </div>
-                          <div className="text-sm text-stone-600 mt-0.5">
+                          <div className="text-sm text-stone-500 mt-0.5">
                             {cat.description}
                           </div>
                         </div>

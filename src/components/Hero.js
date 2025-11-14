@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
-import { getFeaturedPosts } from '../data/highlightedPosts'
+import { getFeaturedPosts } from '../services/fetchHighlightedPosts'
 
 
 
@@ -25,20 +25,20 @@ export default function Hero() {
 
  
   return(
-   <section className='bg-gradient-to-r from-stone-50/50 to-white pt-20'>
+   <section className='min-h-screen bg-gradient-to-r from-stone-50/50 to-white pt-20'>
         <div className="relative overflow-hidden">
           <div className="px-12 py-22 max-w-[1300px] mx-auto">
-            <div className="grid md:grid-cols-2 gap-20 items-center">
-              <div className="space-y-8 max-w-2xl">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 shadow-sm rounded-full">
-                <span className="text-sm font-medium">🌱 Emotional Growth • Explained Simply</span>
-              </div>
+            <div className="grid md:grid-cols-2 gap-10 items-center">
+              <div className="space-y-4 max-w-2xl">
+                <div className="mb-8 inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 border border-stone-200 shadow-sm rounded-full">
+                  <span className="text-sm font-medium">🌱 Emotional Growth • Explained Simply</span>
+                </div>
                 
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight gradient-text pb-2 leading-[1.05]">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-light  gradient-text  pb-1 tracking-tight leading-[1.05]">
                   Sticky notes for your soul's fridge
                 </h1>
 
-                <p className="text-lg md:text-xl text-stone-500 leading-relaxed max-w-xl">
+                <p className="text-lg md:text-xl text-stone-500 leading-relaxed max-w-xl" >
                   To quiet the ruminating-before-sleep moments and fuel the trying-to-grow-on-purpose ones. Emotional fundamentals nobody taught us, explained through analogies.
                 </p>
                 
@@ -47,7 +47,7 @@ export default function Hero() {
               <div className="relative">
                 {featuredCarousel.map((item, idx) => (
                   <div
-                    key={item.id}
+                    key={idx}
                     className={`carousel-transition ${idx === carouselIndex ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}
                   >
                     <div className="relative aspect-[4/3] rounded-3xl overflow-hidden group">
@@ -60,16 +60,17 @@ export default function Hero() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       
                       <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                        <div className="text-[14px] font-bold mb-3 text-white/80 tracking-wide">
+                        <div className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm font-medium mb-3">
                           Must Read
                         </div>
+                        
                         
                         <h3 className="text-[28px] font-semibold mb-2 leading-tight tracking-tight">
                           {item.title}
                         </h3>
                         
                         <p className="text-[15px] text-white/90 leading-relaxed mb-5">
-                          {item.subtitle}
+                          {item.description}
                         </p>
                         
                         <button onClick={() => handleReadStory(item.slug)} className="px-5 py-2.5 bg-white text-black hover:cursor-pointer rounded-full text-[14px] font-medium hover:bg-white/90 transition-all">

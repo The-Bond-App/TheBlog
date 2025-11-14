@@ -33,8 +33,8 @@ export default function Footer() {
     
     <footer className="text-amber-50 relative bg-slate-900">
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-10 lg:gap-8">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 lg:gap-8">
             
             {/* Brand */}
             <div className="space-y-3 lg:pr-8">
@@ -44,7 +44,7 @@ export default function Footer() {
                   The Bond Blog
                 </span>
               </div>
-              <p className="text-sm font-light text-amber-50/65 leading-relaxed max-w-sm">
+              <p className="text-base font-medium text-amber-50/65 leading-relaxed max-w-sm">
                 Sticky notes for your soul's refrigerator.
               </p>
               
@@ -101,7 +101,7 @@ export default function Footer() {
             </div>
 
             {/* Footer sections */}
-            {['explore', 'getInvolved', 'popular', 'resources'].map((section) => (
+            {['explore', 'getInvolved', 'resources'].map((section) => (
               <div key={section}>
                 <h3 className="text-xs font-semibold uppercase tracking-widest mb-4 text-amber-50/50">
                   {section === 'getInvolved'
@@ -113,7 +113,7 @@ export default function Footer() {
                     <li key={item.label}>
                       <a
                         href={item.url}
-                        className="text-sm font-light text-amber-50/70 hover:text-amber-50 transition-colors duration-200 block"
+                        className="text-sm font-medium text-amber-50/60 hover:text-amber-50 transition-colors duration-200 block"
                       >
                         {item.label}
                       </a>
@@ -126,8 +126,8 @@ export default function Footer() {
 
           {/* Bottom bar */}
           <div className="mt-10 pt-3 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs font-light text-amber-50/55 tracking-wide">
-              © 2025{' '}
+            <p className="text-sm font-medium text-amber-50/55 tracking-wide">
+               {new Date().getFullYear()}{' '}©{' '}
               <a href="https://thebond.company" className="hover:text-amber-50/80 transition-colors duration-200">
                 The Bond Company.
               </a>
@@ -135,7 +135,7 @@ export default function Footer() {
             </p>
             <a
               href="https://support.thebond.company/?section=general"
-              className="text-xs font-light text-amber-50/55 hover:text-amber-50/80 transition-colors duration-200 tracking-wide"
+              className="text-sm font-medium text-amber-50/55 hover:text-amber-50/80 transition-colors duration-200 tracking-wide"
             >
               Contact Us
             </a>

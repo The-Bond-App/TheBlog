@@ -5,9 +5,11 @@ import { categoryMap, categories } from '../constants/categories'
 
 import Navigation from './Navigation'
 import Hero from './Hero'
-import CategoryFilter from '../ui/CategoryFilter'
+
 import Posts from './Posts'
 import Footer from './Footer'
+
+import NewsletterBanner from '../ui/NewsletterBanner'
 
 
 
@@ -97,39 +99,17 @@ const mockPosts = [
 
 
 export default function Main() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1);
-  
-  
-  const postsPerPage = 12;
-  
-  const displayPosts = selectedCategory === 'all' 
-    ? mockPosts 
-    : mockPosts.filter(p => p.category === selectedCategory);
-  
-  const totalPages = Math.ceil(displayPosts.length / postsPerPage);
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const currentPosts = displayPosts.slice(startIndex, startIndex + postsPerPage);
-
-
-  const handleReadPost = (post) => {
-    console.log('Reading:', post.title);
-  };
-
   return (
     <>
-    
-
       <Navigation />
       <Hero />
       
-      <CategoryFilter />
-
+      {/*<CategoryFilter />*/}
 
       {/* Main Content - Better Contrast */}
       <Posts />
       
-
+      <NewsletterBanner />
       {/* Footer */}
       <Footer />
 

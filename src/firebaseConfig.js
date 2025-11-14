@@ -38,9 +38,9 @@ const db = initializeFirestore(app, {
 const auth = getAuth(app);
 
 signInAnonymously(auth)
-  /*.then((userCredential) => {
+  .then((userCredential) => {
     console.log("Signed");
-  })*/
+  })
   .catch((error) => {
     console.error("Auth error:", error);
   });

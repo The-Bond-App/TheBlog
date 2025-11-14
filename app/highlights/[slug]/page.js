@@ -1,6 +1,6 @@
 // app/featured/[slug]/page.js
 import MinimalLayout from '../../../src/components/articles/MinimalLayout';
-import { getHighlightedPostMetadata, HIGHLIGHTED_SLUGS } from '../../../src/data/highlightedPosts';
+import { getHighlightedPostMetadata, HIGHLIGHTED_SLUGS } from '../../../src/services/fetchHighlightedPosts';
 import { loadMarkdownPost } from '../../../src/services/loadMarkdownPost';
 
 // ISR configuration
