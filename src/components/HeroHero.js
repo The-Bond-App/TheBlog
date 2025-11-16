@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import { Layers, ChevronDown, Sticker } from 'lucide-react';
+import { Layers, ChevronDown, Sticker, LayoutDashboard } from 'lucide-react';
 import {categories, categoryMap} from '../constants/categories'
 
 export default function WellbeingHero() {
@@ -12,9 +12,9 @@ export default function WellbeingHero() {
    
 
   return (
-    <div className="bg-white py-36 min-h-screen" >
-      <div className="w-full ps-24 pe-8" >
-        <div className="max-w-[1400px] mx-auto">
+    <div className="pt-36 pb-12" style={{border: '3px solid'}}>
+      <div className="w-full mx-auto ps-24 pe-8" >
+        
           {/* grid: left = 2fr, middle = 1fr, right = 1fr */}
           <div className="grid grid-cols-[2fr_1.5fr_1.5fr] gap-6 items-stretch">
             
@@ -36,11 +36,11 @@ export default function WellbeingHero() {
             <div className="relative">
             <button 
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full bg-white rounded-lg pl-4 pr-10 py-3.5 text-base text-gray-900 border border-gray-200 outline-none hover:bg-gray-50 transition-colors text-left flex items-center gap-3 shadow-sm"
+                className="w-full bg-white hover:cursor-pointer rounded-lg pl-4 pr-10 py-3.5 text-base text-stone-600 border border-gray-200 outline-none hover:bg-gray-50 transition-colors text-left flex items-center gap-3 shadow-sm"
             >
-                <Layers className="w-5 h-5 text-gray-400" />
+                <LayoutDashboard className="w-5 h-5 text-stone-400" />
                 <span>
-                {selectedCat ? selectedCat.name : 'All Categories'}
+                {selectedCat ? selectedCat.name : 'Explore'}
                 </span>
             </button>
             
@@ -57,43 +57,29 @@ export default function WellbeingHero() {
                 />
                 
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50 max-h-96 overflow-y-auto">
-                    <button
-                    onClick={() => {
-                        setSelectedCategory(null);
-                        setIsOpen(false);
-                    }}
-                    className="w-full hover:cursor-pointer text-left px-4 py-3 hover:bg-stone-100 transition-colors flex items-start gap-3 border-b border-gray-100 sticky top-0 bg-white z-10"
-                    >
-                    <span className="text-xl">📋</span>
-                    <div>
-                        <div className="text-sm font-semibold text-stone-700">
-                        All Categories
-                        </div>
-                        <div className="text-sm text-stone-500 mt-0.5">
-                        View all available categories
-                        </div>
-                    </div>
-                    </button>
+                   
 
                     {categories.map((cat) => (
                     <button
                         key={cat.uuid}
                         onClick={() => {
-                        setSelectedCategory(cat.uuid);
-                        setIsOpen(false);
+                            setSelectedCategory(cat.uuid);
+                            setIsOpen(false);
                         }}
-                        className={`w-full hover:cursor-pointer text-left px-4 py-3 hover:bg-stone-100 transition-colors flex items-start gap-3 ${
-                        selectedCategory === cat.uuid ? 'bg-stone-50' : ''
+                        className={`w-full hover:cursor-pointer text-left px-4 py-3 hover:bg-stone-100 transition-colors flex items-center gap-4 ${
+                            selectedCategory === cat.uuid ? 'bg-stone-50' : ''
                         }`}
                     >
-                        <span className="text-xl">{cat.icon}</span>
+                        <span className="w-4 h-4 flex items-center justify-center">
+                            {cat.icon}
+                        </span>
                         <div>
-                        <div className="text-sm font-semibold text-stone-700">
+                            <div className="text-sm font-semibold text-stone-700">
                             {cat.name}
-                        </div>
-                        <div className="text-sm text-stone-500 mt-0.5">
+                            </div>
+                            <div className="text-sm text-stone-500 mt-0.5">
                             {cat.description}
-                        </div>
+                            </div>
                         </div>
                     </button>
                     ))}
@@ -194,7 +180,7 @@ export default function WellbeingHero() {
             </div>
 
           </div>
-        </div>
+        
       </div>
     </div>
   );

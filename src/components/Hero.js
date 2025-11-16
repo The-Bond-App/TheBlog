@@ -111,41 +111,14 @@ export default function EmotionalWellbeingBlog() {
   const filtered = activeCategory === 'Featured' ? posts : posts.filter(p => p.cat === activeCategory);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white px-16" style={{border: '3px solid pink'}}>
       {/* Hero */}
       
         
-          <HeroHero />
-
-          
-      
-           {/* FEATURED STORY - IMMERSIVE */}
-     MISSIGN HERE A CATEGORY WITH FULL IMMERSIVE POSTS
-
-      {/* Categories */}
-      <section className="sticky top-0 bg-white z-40 border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
-            {cats.map(c => (
-              <button
-                key={c}
-                onClick={() => setActiveCategory(c)}
-                className={`px-4 py-2 text-sm whitespace-nowrap transition-colors ${
-                  activeCategory === c 
-                    ? 'text-black' 
-                    : 'text-stone-500 hover:text-black'
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HeroHero />
 
       {/* Masonry Grid */}
-      <main className="py-8 px-6">
-        <div className="max-w-7xl mx-auto">
+      <main className="w-full mx-auto">
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-5">
             {filtered.map((post, i) => (
               <div
@@ -187,7 +160,7 @@ export default function EmotionalWellbeingBlog() {
               </div>
             ))}
           </div>
-        </div>
+        
       </main>
 
       <style jsx>{`

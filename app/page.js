@@ -9,10 +9,8 @@ export default async function Home() {
   return (
     <>
       <Navigation />
-      <Hero />
-      
       <main>
-        <Posts />
+        <Hero />
         <NewsletterBanner />
       </main>
       <Footer />
