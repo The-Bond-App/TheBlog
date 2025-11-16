@@ -7,7 +7,7 @@ import { getHighlightedPostMetadata } from './fetchHighlightedPosts';
 export async function loadMarkdownPost(slug) {
   try {
     // Path to your markdown files in public folder
-    const postsDirectory = path.join(process.cwd(), 'public', 'posts');
+    const postsDirectory = path.join(process.cwd(), process.env.CONTENT_POSTS_PATH)
     const fullPath = path.join(postsDirectory, `${slug}.md`);
     
     // Check if file exists

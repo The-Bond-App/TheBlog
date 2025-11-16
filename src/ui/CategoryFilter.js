@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Map, ChevronDown } from 'lucide-react';
+import { X, Map, ChevronDown, Brain } from 'lucide-react';
 
 // Primary categories (shown in main menu)
 const primaryCategories = [
@@ -10,9 +10,9 @@ const primaryCategories = [
     description: ''
   },
   { 
-    uuid: 'feelings', 
-    icon: '🤯', 
-    name: 'Emotions 101',
+    uuid: 'emotions', 
+    icon: <Brain />, 
+    name: 'Emotions Explained',
     description: 'Figure out what you\'re actually feeling'
   },
   { 

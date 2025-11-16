@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+
 import { ArrowLeft, Twitter, Facebook, Linkedin, Link2, Instagram } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
@@ -37,6 +39,7 @@ const author = {
 
 export default function MinimalLayout({ post = mockPost }) {
   const [copied, setCopied] = useState(false);
+  const router = useRouter();
   
   const heroRef = useRef(null);
 const { scrollYProgress } = useScroll({
@@ -69,8 +72,9 @@ const imageOpacity = useTransform(scrollYProgress, [0, 0.5], [0.6, 0]);
   };
 
   const handleBack = () => {
-    console.log('Back to stories');
+    router.push('/');
   };
+
 
   return (
     <div className="bg-white min-h-screen" ref={heroRef}>
@@ -86,7 +90,7 @@ const imageOpacity = useTransform(scrollYProgress, [0, 0.5], [0.6, 0]);
             onClick={handleBack}
             whileHover={{ x: -5 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
+            className="inline-flex items-center hover:cursor-pointer gap-2 text-gray-600 hover:text-gray-900 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back to stories</span>

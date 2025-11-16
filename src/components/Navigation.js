@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react';
 import { X, Menu, ShoppingBag, Map, Users, Send, Mail } from 'lucide-react';
 import Sitemap from '../ui/Sitemap';
