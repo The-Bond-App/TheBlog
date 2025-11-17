@@ -111,7 +111,7 @@ export default function EmotionalWellbeingBlog() {
   const filtered = activeCategory === 'Featured' ? posts : posts.filter(p => p.cat === activeCategory);
 
   return (
-    <div className="bg-white px-16" style={{border: '3px solid pink'}}>
+    <div className="bg-white px-16">
       {/* Hero */}
       
         

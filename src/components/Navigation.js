@@ -1,14 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { X, Menu, ShoppingBag, Map, Users, Send, Mail } from 'lucide-react';
-import Sitemap from '../ui/Sitemap';
+import { X, Menu, ShoppingBag, Users, Send, Mail, HandMetal } from 'lucide-react';
+
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isStoryModalOpen, setIsStoryModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showSitemap, setShowSitemap] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -65,22 +64,16 @@ export default function Navigation() {
               </a>
 
               {/* Sitemap only visible on md+ */}
-              <button
-                onClick={() => setShowSitemap(true)}
-                className="hidden md:flex hover:cursor-pointer items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all"
-              >
-                <Map className="w-4 h-4" />
-                Sitemap
-              </button>
+              
 
               <a
-                href="https://instagram.com/thebondcompany"
+                href="https://support.thebond.company/?section=general"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all"
               >
                 <Users className="w-4 h-4" />
-                Community
+                Say Hello
               </a>
 
               <button
@@ -155,16 +148,7 @@ export default function Navigation() {
         )}
       </div>
 
-      {/* Sitemap */}
-      {showSitemap && (
-        <Sitemap
-          onClose={() => setShowSitemap(false)}
-          onSelectCategory={(uuid) => {
-            setSelectedCategory(uuid);
-            setShowSitemap(false);
-          }}
-        />
-      )}
+     
 
       {/* Story Modal */}
       {isStoryModalOpen && (
