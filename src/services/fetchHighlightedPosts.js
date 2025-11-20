@@ -38,6 +38,15 @@ export const highlightedPostsMetadata = {
     category: 'mindfulness',
     readTime: '6 min',
     date: 'Oct 28, 2025',
+  },
+  'the-power-of-pause': {
+    title: "The Power of Pause",
+    slug:   'the-power-of-pause',
+    description: "In a world that glorifies hustle, rest becomes a revolutionary act.",
+    image: "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1200",
+    category: 'mindfulness',
+    readTime: '6 min',
+    date: 'Oct 28, 2025',
   }
 };
 

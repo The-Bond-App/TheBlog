@@ -101,18 +101,17 @@ function NewsletterBanner() {
     };
 
   return (
-    <div id="subscribe" className="relative border-t border-stone-200 overflow-hidden py-12">
+    <div id="subscribe" className="relative border-t border-stone-200 overflow-hidden pt-10 pb-18">
       {/* Subtle ambient glow */}
       <div className="absolute inset-0  opacity-40"></div>
-      
-   
+    
       <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
         {/* Headline */}
-        <h1 className="text-5xl md:text-6xl font-bold text-brown-900 mb-4 tracking-tight leading-tight">
+        <h1 className="text-5xl md:text-6xl font-bold text-brown-900 mb-2 tracking-tight leading-tight">
           Newsletter
         </h1>
         
-        <p className="text-lg md:text-xl text-gray-600 mb-10 font-light max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl text-gray-600 mb-6 font-light max-w-2xl mx-auto">
           Posts that get you, weekly. Side effects may include feeling seen.
         </p>
         
@@ -160,41 +159,7 @@ function NewsletterBanner() {
         </p>
         )}
 
-        {/* Integrated DynamicShenanigans */}
-        <div className="inline-flex items-center justify-center gap-4 px-4 py-3 mt-8">
-          {/* Logo */}
-          <div className="hover:cursor-pointer relative group/logo flex items-center justify-center">
-            <img src="/assets/logo.png" className="w-9 h-9 flex items-center justify-center transition-transform duration-300 group-hover/logo:scale-110" />
-            
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover/logo:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl">
-              The Bond Company
-            </div>
-          </div>
-
-          {/* Plus */}
-          <span className="text-2xl text-stone-400 font-light">+</span>
-
-          {/* Sticky Note */}
-          <div className="hover:cursor-pointer relative group/sticky flex items-center justify-center">
-            <div className="w-10 h-10 rounded-xl  flex items-center justify-center shadow-md bg-stone-100/80 transition-all duration-300 group-hover/sticky:rotate-12">
-              <Sticker
-                className="w-6 h-6 text-gray-600"
-                strokeWidth={1.5}
-              />
-            </div>
-            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover/sticky:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl">
-              Sticky Analogies
-            </div>
-          </div>
-
-          {/* Equals */}
-          <span className="text-2xl text-stone-400 font-light">=</span>
-
-          {/* Dynamic Result */}
-          <div className="hover:cursor-pointer flex items-center justify-start min-w-[200px]">
-            <DynamicResult />
-          </div>
-        </div>
+       
 
         
       </div>

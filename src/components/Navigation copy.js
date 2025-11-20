@@ -24,7 +24,7 @@ export default function Navigation() {
             : 'bg-transparent'
         }`}
       >
-        <div className="w-full mx-auto px-8" style={{border: '2px solid yellow'}}>
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <a
@@ -33,16 +33,14 @@ export default function Navigation() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 group"
             >
-              {/* L<img
+              <img
                 src="/assets/logo.png"
                 alt="The Bond Company"
                 className="w-7 h-7 object-contain opacity-90 group-hover:opacity-100 transition-opacity"
-              />*/}
-             
-              <h1 className="text-2xl leading-none text-[#1a1a3e]">
-        <span className="font-black font-semibold font-sans">Growth</span>{' '}
-        <span className="font-normal italic font-serif">Stuff</span>
-      </h1>
+              />
+              <span className={`font-semibold text-base text-stone-900`}>
+                The Bond Company
+              </span>
             </a>
 
             {/* Desktop Navigation */}
