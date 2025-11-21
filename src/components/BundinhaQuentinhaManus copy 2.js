@@ -2,16 +2,15 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
-import { Menu, X, Mail, Compass, ShoppingBag, Users, Sticker, Facebook, Instagram, Linkedin, Youtube, Globe, MicVocal, Calendar, Clock } from 'lucide-react';
-
-
+import { Menu, X, Mail, ArrowRight, ShoppingBag, Users, Sticker, Facebook, Instagram, Linkedin, Youtube, Globe, MicVocal, Calendar, Clock } from 'lucide-react';
+import HighlightPost from '../uimanus/HighlightPost'
 
 
 //import Navigation from './Navigation';
 const blogPosts = [
   {
     id: 1,
-    title: "The Power of Singular Focus: Make One Idea Your Life but this is title",
+    title: "The Power of Singular Focus: Make One Idea Your Life",
     category: "Exercise",
     date: "Dec 22, 2023",
     author: "Anna Joe",
@@ -82,12 +81,10 @@ function Navbar() {
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <div className='hidden md:flex items-center gap-1'>
-              <h1 className="text-2xl leading-none text-[#464169]">
-                <span className=" font-bold font-inter">Enjoyable</span>{' '}
-                <span className="font-normal italic font-serif">Notes</span>
-              </h1>
-            </div>
+           <a href="/" className="flex items-center">
+            <span className="text-2xl font-semibold text-gray-900">TheBond</span>
+            <span className="text-xl font-serif font-light text-rose-600"> &nbsp;Company </span>
+          </a>
 
 
             {/* Hamburger Menu Button */}
@@ -212,12 +209,12 @@ function Navigation() {
             : 'bg-transparent'
         }`}
       >
-        <div className="w-full mx-auto px-8" >
+        <div className="w-full mx-auto px-20" >
           <div className="grid grid-cols-3 items-center h-16">
 
             <div className='hidden md:flex items-center gap-1'>
               <h1 className="text-2xl leading-none text-[#464169]">
-                <span className=" font-bold font-inter">Enjoyable</span>{' '}
+                <span className=" font-semibold font-inter">Growth</span>{' '}
                 <span className="font-normal italic font-serif">Notes</span>
               </h1>
             </div>
@@ -254,7 +251,7 @@ function Navigation() {
                 <motion.img
                   src="/assets/logo.png"
                   alt="The Bond Company"
-                  className="w-12 h-12 object-contain"
+                  className="w-10 h-10 object-contain"
                   initial={{ filter: "blur(10px)" }}
                   animate={{ filter: "blur(0px)" }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -262,38 +259,38 @@ function Navigation() {
               </motion.a>
             </div>
 
-          
+           
             {/* Desktop Navigation */}
-            <div className="hidden md:flex justify-end items-center">
-              <a
-                href="#subscribe"
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium font-inter transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
-              >
-                <Mail className="w-4 h-4" />
-                Newsletter
-              </a>
+           <div className="hidden md:flex justify-end items-center gap-1">
+  <a
+    href="#subscribe"
+    className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium font-inter transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
+  >
+    <Mail className="w-4 h-4" />
+    Newsletter
+  </a>
 
-              <a
-                href="https://shop.thebond.company"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium font-inter transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                Shop
-              </a>
+  <a
+    href="https://shop.thebond.company"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium font-inter transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
+  >
+    <ShoppingBag className="w-4 h-4" />
+    Shop
+  </a>
 
-              {/* Sitemap only visible on md+ */}
-              <a
-                href="https://shop.thebond.company"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium font-inter transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
-              >
-                <MicVocal className="w-4 h-4" />
-                Share
-              </a>
-            </div>
+  {/* Sitemap only visible on md+ */}
+  <a
+    href="https://shop.thebond.company"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium font-inter transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
+  >
+    <MicVocal className="w-4 h-4" />
+    Share Your Story
+  </a>
+</div>
 
             {/* Mobile Menu Button */}
             <button
@@ -437,7 +434,6 @@ function Navigation() {
   );
 }
 
-
 export default function BlogGrid() {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
@@ -445,44 +441,17 @@ export default function BlogGrid() {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(blogPosts.length / postsPerPage);
 
- const [showRitualsButton, setShowRitualsButton] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      setShowRitualsButton(scrollPercentage > 30);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToRituals = () => {
-    const ritualsSection = document.getElementById('rituals');
-    if (ritualsSection) {
-      ritualsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-  };
-  
   return (
     <main className='bg-[#f2f2f7]'>
-      <button
-  className={`fixed bottom-8 right-8 z-50 bg-slate-900/95 backdrop-blur-sm text-white/90 px-5 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-700 flex items-center gap-2.5 group border border-white/10 ${
-    showRitualsButton ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0 pointer-events-none'
-  }`}
-  onClick={scrollToRituals}
->
-  <Compass size={18} className="group-hover:rotate-90 transition-transform duration-500" strokeWidth={1.5} />
-  <span className="font-medium text-sm tracking-wide">Find your ritual</span>
-</button>
     <Navigation />
     <div className="min-h-screen  py-12 px-4 sm:px-6 lg:px-8">
       <div  className="relative min-h-[40vh] flex items-center justify-center  overflow-hidden">
         {/* Gradient overlay at bottom */}
         <div className="absolute bottom-0 left-0 right-0 h-32  to-transparent"></div>
         
-        <section className="px-4 py-8 max-w-4xl mx-auto">
+        <section className="px-4 py-12 md:pt-20 pb-8 max-w-4xl mx-auto">
           <motion.div
             className="relative text-center space-y-8"
             initial={{ opacity: 0, y: 20 }}
@@ -496,25 +465,26 @@ export default function BlogGrid() {
               transition={{ delay: 0.3 }}
               className="space-y-3"
             >
-              <h1 className="font-serif tracking-tight text-5xl md:text-8xl text-[#464169] mb-6">
+              <h1 className="font-serif tracking-tight text-5xl md:text-6xl text-[#464169]/80">
                 Sticky notes for your <span className="block italic gradient-text pb-2"> soul's fridge</span> 
               </h1>
-              {/*<p className="text-[20px] font-normal tracking-tight font-inter text-[#464169]/60">
+              <p className="text-[20px] font-normal tracking-tight font-inter text-[#464169]/60">
                 Emotional truths that don't fade. Explained through analogies you'll actually remember.
-              </p>*/}
+              </p>
               
             </motion.div>
           </motion.div>
         </section>
       </div>
       <div className="max-w-6xl mx-auto">
-        
+        <HighlightPost />
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-24  mb-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {currentPosts.map((post, index) => (
-            <motion.article
+            <>
+             <motion.article
               key={post.id}
-              className="group bg-white overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer"
+              className="group bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer "
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -530,29 +500,38 @@ export default function BlogGrid() {
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
                 />
+                
                 {/* Subtle gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                
                 {/* Category and Date - Refined positioning */}
-               <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col items-start gap-2">
-                <span className="text-white/95 text-sm font-semibold tracking-wide bg-black/30 backdrop-blur-xl px-4 py-2 rounded-md">
-                  # {post.category}
-                </span>
-                <span className="text-white/95 text-sm font-medium flex items-center gap-2 bg-black/30 backdrop-blur-xl px-4 py-2 rounded-md">
-                  <Clock size={14} strokeWidth={2.5} />
-                  {post.date}
-                </span>
+                <div className="absolute bottom-0 left-0 right-0 p-5 flex items-center justify-between">
+                  <span className="text-white text-sm font-semibold tracking-wide bg-white/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/30">
+                    #{post.category}
+                  </span>
+                  <span className="text-white/95 text-sm font-medium flex items-center gap-2 bg-black/30 backdrop-blur-md px-4 py-2 rounded-full">
+                    <Clock size={14} strokeWidth={2.5} />
+                    {post.date}
+                  </span>
+                </div>
               </div>
-              </div>
+
               {/* Content - Typography First */}
-              <div className="p-9">
-                <h2 className="font-inter text-5xl font-extrabold text-[#5a5187] mb-6 leading-tighter group-hover:text-slate-700 transition-colors duration-300">
+              <div className="p-7">
+                <h2 className="font-inter text-5xl font-extrabold text-[#464169] mb-3 leading-tighter group-hover:text-[#5a5187] transition-colors duration-300">
                   {post.title}
                 </h2>
-                <p className="font-lora text-[#464169] text-medium text-xl leading-relaxed mb-5 line-clamp-3">
+                
+                <p className="font-lora text-[#464169] text-medium text-lg leading-relaxed mb-5 line-clamp-3">
                   {post.excerpt}
                 </p>
+
+               
               </div>
+
+             
             </motion.article>
+            </>
           ))}
         </div>
       </div>

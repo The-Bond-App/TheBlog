@@ -4,7 +4,7 @@ import Hero from '../src/components/Hero'
 import EmotionalWellbeingBlog from '../src/components/EmotionalWellbeingBlog'
 import Footer from '../src/components/Footer'
 import NewsletterBanner from '../src/components/NewsletterBanner'
-import NewFullPage from '../src/components/NewFullPage'
+import Rituals from '../src/uimanus/Rituals'
 import BundinhaQuentinha from '../src/components/BundinhaQuentinhaManus'
 
 export default async function Home() {
@@ -12,7 +12,7 @@ export default async function Home() {
     <>
       {/*<Navigation />*/}
       <BundinhaQuentinha />
-      
+      <Rituals />
       {/*<main className='mb-8'>
         <Hero />
         <EmotionalWellbeingBlog />
