@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { X, Menu, ShoppingBag, Users, Send, Mail, HandMetal } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { X, Menu, ShoppingBag, Users, Send, Mail, Sticker, MicVocal } from 'lucide-react';
 
 
 export default function Navigation() {
@@ -20,36 +21,73 @@ export default function Navigation() {
       <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-[#f2f2f7]/60 backdrop-blur-2xl'
+            ? 'bg-[#f2f2f7]/20 backdrop-blur-2xl'
             : 'bg-transparent'
         }`}
       >
-        <div className="w-full mx-auto px-8" style={{border: '2px solid yellow'}}>
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <a
-              href="https://thebond.company"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 group"
-            >
-              {/* L<img
-                src="/assets/logo.png"
-                alt="The Bond Company"
-                className="w-7 h-7 object-contain opacity-90 group-hover:opacity-100 transition-opacity"
-              />*/}
-             
-              <h1 className="text-2xl leading-none text-[#1a1a3e]">
-        <span className="font-black font-semibold font-sans">Growth</span>{' '}
-        <span className="font-normal italic font-serif">Stuff</span>
-      </h1>
-            </a>
+        <div className="w-full mx-auto px-8" >
+          <div className="grid grid-cols-3 items-center h-16">
 
+            <div className='hidden md:flex items-center gap-1'>
+              <h1 className="text-2xl leading-none text-[#464169]">
+                <span className=" font-bold font-inter">Inner</span>{' '}
+                <span className="font-normal italic font-serif">Fluency</span>
+              </h1>
+            </div>
+            
+            {/* Centered logo */}
+            <div className="flex justify-center">
+              <motion.a
+                href="https://thebond.company"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 group"
+                initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                animate={{ 
+                  opacity: 0.9, 
+                  scale: 1, 
+                  rotate: 0,
+                }}
+                transition={{
+                  duration: 0.8,
+                  ease: [0.34, 1.56, 0.64, 1], // Bounce easing
+                  rotate: {
+                    duration: 1,
+                    ease: "easeOut"
+                  }
+                }}
+                whileHover={{ 
+                  scale: 1.1, 
+                  opacity: 1,
+                  rotate: [0, -5, 5, 0],
+                  transition: { duration: 0.4 }
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <motion.img
+                  src="/assets/logo.png"
+                  alt="The Bond Company"
+                  className="w-12 h-12 object-contain"
+                  initial={{ filter: "blur(10px)" }}
+                  animate={{ filter: "blur(0px)" }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                />
+              </motion.a>
+            </div>
+
+          
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex justify-end items-center">
+               <a
+                href="https://thebond.company/about"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
+              >
+                <Sticker className="w-4 h-4" />
+                About Us
+              </a>
               <a
                 href="#subscribe"
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
               >
                 <Mail className="w-4 h-4" />
                 Newsletter
@@ -59,31 +97,23 @@ export default function Navigation() {
                 href="https://shop.thebond.company"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-full  text-base text-[#464169] font-medium transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
               >
                 <ShoppingBag className="w-4 h-4" />
                 Shop
               </a>
 
               {/* Sitemap only visible on md+ */}
-              
-
               <a
-                href="https://support.thebond.company/?section=general"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-stone-700 hover:text-stone-900 hover:bg-stone-100 transition-all"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsStoryModalOpen(true);
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-base hover:cursor-pointer text-[#464169] font-medium transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
               >
-                <Users className="w-4 h-4" />
-                Say Hello
+                <MicVocal className="w-4 h-4" />
+                Share
               </a>
-
-              <button
-                onClick={() => setIsStoryModalOpen(true)}
-                className="ml-2 px-5 py-2 rounded-full text-sm font-semibold bg-stone-900 text-white hover:bg-stone-800 hover:cursor-pointer shadow-md transition-all"
-              >
-                Share Your Story
-              </button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -104,6 +134,14 @@ export default function Navigation() {
           <div className="md:hidden bg-white border-t border-stone-200 shadow-lg">
             <div className="px-6 py-4 space-y-1">
               <a
+                href="https://thebond.company/about"
+                className="flex items-center gap-3 px-4 py-3 text-stone-700 hover:text-stone-900 hover:bg-stone-50 rounded-lg transition-all"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Sticker className="w-5 h-5" />
+                About Us
+              </a>
+              <a
                 href="#subscribe"
                 className="flex items-center gap-3 px-4 py-3 text-stone-700 hover:text-stone-900 hover:bg-stone-50 rounded-lg transition-all"
                 onClick={() => setIsMenuOpen(false)}
@@ -121,17 +159,6 @@ export default function Navigation() {
               >
                 <ShoppingBag className="w-5 h-5" />
                 Shop
-              </a>
-
-              <a
-                href="https://instagram.com/thebondcompany"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-4 py-3 text-stone-700 hover:text-stone-900 hover:bg-stone-50 rounded-lg transition-all"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Users className="w-5 h-5" />
-                Community
               </a>
 
               {/* Share Your Story */}
@@ -155,11 +182,11 @@ export default function Navigation() {
       {/* Story Modal */}
       {isStoryModalOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm animate-in fade-in duration-200"
           onClick={() => setIsStoryModalOpen(false)}
         >
           <div
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl animate-in zoom-in-95 duration-200"
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -170,57 +197,42 @@ export default function Navigation() {
               <X className="w-5 h-5" strokeWidth={2} />
             </button>
 
-            <div className="px-8 py-12 md:px-12 md:py-16">
-              <div className="mb-8">
-                <h2 className="text-4xl md:text-5xl font-semibold text-stone-900 tracking-tight mb-3">
-                  Your Story Matters
-                </h2>
-                <p className="text-lg text-stone-600">
-                  The hardest moments in your life might be the light someone else needs.
-                </p>
-              </div>
-
-              <div className="space-y-6 mb-8 text-stone-700 text-base leading-relaxed">
-                <p>
-                  That raw, honest breakthrough, the time you faced pain, found clarity, or simply made it through—it carries more power than you realize.
-                </p>
-
-                <p>
-                  When you share your truth, you help others find theirs. When you share your light, you guide someone still searching.
-                </p>
-
-                <div className="bg-stone-50 rounded-2xl px-6 py-5 my-8 border border-stone-200">
-                  <blockquote className="space-y-3">
-                    <p className="text-stone-800 font-medium leading-relaxed">
-                      "In the depths of winter, I finally learned that within me there lay an invincible summer" 🌻
-                    </p>
-                    <footer className="text-sm text-stone-500">— Albert Camus</footer>
-                  </blockquote>
-                </div>
-
-                <p className="text-stone-700">
-                  Have a story or lesson to share? <strong>We'd love to help amplify your voice</strong>.
-                </p>
-
-                <p className="text-sm text-stone-500">
-                  Check out "Life, Unfiltered" for examples, then submit your story. Don't overthink it—we'll shape it together.
-                </p>
+            <div className="px-8 py-12 md:px-16 md:py-16">
+              
+              <h2 className="text-4xl md:text-5xl font-medium font-serif text-slate-700 tracking-tight mb-6">
+                Your Story Matters
+              </h2>
+              
+              <div className="text-lg text-slate-700 space-y-3 mb-6 ps-2">
+                  <p>The hardest moments you’ve lived through might be the light someone else is waiting for 🌻</p>
+                  <p>Your truth, the pain you felt, the clarity you found, the strength it took to keep going, holds more power than you realize.</p>
+                  <p>When you open your heart, you help others open theirs.</p>
+                  <p>Have a story or lesson to share? <strong>We would love to help lift your voice.</strong></p>
               </div>
 
               <a
                 href="https://support.thebond.company/?section=blog"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-stone-900 hover:bg-stone-800 text-white font-semibold rounded-full transition-all shadow-md hover:shadow-lg"
+                className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-slate-700 hover:scale-105 text-white font-semibold rounded-full transition-all shadow-md hover:shadow-lg"
               >
                 <Send className="w-5 h-5" />
                 Share Your Story
               </a>
 
-              <p className="text-xs text-center text-stone-400 mt-4">
+              <p className="text-sm text-center text-slate-500 mt-4">
                 Opens in a new tab
               </p>
+               <div className="bg-stone-50/80 backdrop-blur-xl rounded-2xl px-6 py-5 my-8 border border-stone-200">
+                  <blockquote className="space-y-3">
+                    <p className="text-lg text-slate-700  leading-relaxed">
+                      In the depths of winter, I finally learned that within me there lay an invincible summer 🌻
+                    </p>
+                    <footer className="text-base font-medium text-slate-700">— Albert Camus</footer>
+                  </blockquote>
+                </div>
             </div>
+            
           </div>
         </div>
       )}
