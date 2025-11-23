@@ -1,10 +1,10 @@
 ---
 title: "Finding Your Voice"
-description: "The journey to authentic self-expression and the courage it takes to speak your truth."
+description: "The journey to authentic self-expression and the courage it takes to speak your truth. But then darth vader took the power in the far far away land of oz"
 image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=1200"
 category: "growth"
 readTime: "7 min"
-date: "Nov 2, 2025"
+date: "2025-11-01"
 ---
 
 Your voice is the most authentic gift you can give the world. Not the voice you think people want to hear, but the one that emerges when you're brave enough to be honest.

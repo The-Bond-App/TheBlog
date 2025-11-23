@@ -4,7 +4,7 @@ description: "Sometimes the hardest thing and the right thing are the same. Lear
 image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200"
 category: "healing"
 readTime: "8 min"
-date: "Nov 5, 2025"
+date: "2025-10-22"
 instagramPostUrl: "https://www.instagram.com/p/DOpSbxVjmE6/?igsh=MWg3YXI4OGZmeWk2bA=="
 ---
 

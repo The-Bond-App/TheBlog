@@ -1,69 +1,77 @@
 // app/layout.tsx
 import "./globals.css";
-
+// Root metadata - applies to entire site
 export const metadata = {
+  metadataBase: new URL('https://blog.thebond.company'),
   title: {
-    default: "The Bond Blog | Sticky Notes for Your Soul’s Refrigerator",
-    template: "%s | The Bond Blog",
+    default: 'Blog Home | The Bond Company',
+    template: '%s | Blog Home', // Page titles will be "Post Title | The Bond Company"
   },
-  description:
-    "The Bond Blog is a cozy corner of the internet for your late-night thoughts and Tuesday blues. Sticky Notes for your soul’s refrigerator — honest words for when you're spiraling at 2am or just existing. We don't judge, we just get it.",
-
+  description: 'Explore mindfulness, emotional wellbeing, personal growth, and intentional living through thoughtful essays and practical guides.',
+  keywords: ['mindfulness', 'personal growth', 'meditation', 'wellness', 'self-care'],
+  authors: [{ name: 'The Bond Team', url: 'https://blog.thebond.company' }],
+  creator: 'The Bond Company',
+  publisher: 'The Bond Company',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  
+  // Open Graph (Facebook, LinkedIn)
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'blog.thebond.company',
+    siteName: 'The Bond Company',
+    title: 'The Bond Company | Mindfulness & Personal Growth',
+    description: 'Explore mindfulness, personal growth, and intentional living.',
+    images: [
+      {
+        url: '/og-image.jpg', // 1200x630px
+        width: 1200,
+        height: 630,
+        alt: 'The Bond Company',
+      },
+    ],
+  },
+  
+  // Twitter Card
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Bond Company | Mindfulness & Personal Growth',
+    description: 'Explore mindfulness, personal growth, and intentional living.',
+    creator: '@yourtwitterhandle',
+    images: ['/og-image.jpg'],
+  },
+  
+  // Verification for Google Search Console
+  verification: {
+    google: 'your-google-verification-code',
+    // yandex: 'your-yandex-verification',
+    // bing: 'your-bing-verification',
+  },
+  
+  // Alternate languages (if applicable)
   alternates: {
-    canonical: "https://blog.thebond.company",
+    canonical: 'https://blog.thebond.company',
+    languages: {
+      'en-US': 'https://blog.thebond.company',
+    },
   },
-  metadataBase: new URL("https://blog.thebond.company"),
-
-  icons: {
-    icon: "/assets/logo.png",
-    shortcut: "/assets/logo.png",
-    apple: "/assets/apple-touch-icon.png",
-  },
-
+  
+  // Robots
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      "max-snippet": -1,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
-
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://blog.thebond.company",
-    siteName: "The Bond Blog",
-    title: "The Bond Blog | Sticky Notes for Your Soul's Refrigerator",
-    description:
-      "The stuff you need to hear when you're spiraling at 2am — or just existing on a Tuesday afternoon. Honest notes for your soul, from ours.",
-    images: [
-      {
-        url: "/assets/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "The Bond Blog logo",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    site: "@thebondco",
-    creator: "@thebondco",
-    title: "The Bond Blog | Sticky Notes for Your Soul's Refrigerator",
-    description:
-      "Gentle reminders and honest words for your late-night thoughts. The Bond Blog — we get it.",
-    images: ["/assets/logo.png"],
-  },
-
-  authors: [{ name: "The Bond Blog Team", url: "https://blog.thebond.company" }],
-  creator: "The Bond Blog",
-  publisher: "The Bond Blog",
-  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }) {

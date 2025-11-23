@@ -1,10 +1,10 @@
 ---
 title: "The Power of Pause"
-description: "In a world that glorifies hustle, rest becomes a revolutionary act."
+description: "In a world that glorifies hustle, rest becomes a revolutionary act. But do we fuck with ourselves that much? There may be an explanation for that."
 image: "https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1200"
 category: "mindfulness"
 readTime: "6 min"
-date: "Oct 28, 2025"
+date: "2025-11-22"
 ---
 
 We live in a culture that measures worth by output. Productivity is praised, busyness is a badge of honor, and rest is often seen as laziness. But what if the most productive thing you could do is pause?

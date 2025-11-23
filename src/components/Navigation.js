@@ -27,13 +27,14 @@ export default function Navigation() {
       >
         <div className="w-full mx-auto px-8" >
           <div className="grid grid-cols-3 items-center h-16">
-
+            <a href='/'>
             <div className='hidden md:flex items-center gap-1'>
               <h1 className="text-2xl leading-none text-[#464169]">
                 <span className=" font-bold font-inter">Inner</span>{' '}
                 <span className="font-normal italic font-serif">Fluency</span>
               </h1>
             </div>
+            </a>
             
             {/* Centered logo */}
             <div className="flex justify-center">
@@ -79,11 +80,11 @@ export default function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex justify-end items-center">
                <a
-                href="https://thebond.company/about"
+                href="/about"
                 className="flex items-center gap-2 px-4 py-2 rounded-full text-base text-[#464169] font-medium transition-all hover:underline hover:decoration-2 hover:underline-offset-4"
               >
                 <Sticker className="w-4 h-4" />
-                About Us
+                About
               </a>
               <a
                 href="#subscribe"

@@ -9,7 +9,7 @@ export default function Hero() {
         <div className="relative text-center space-y-8">
           <div className="space-y-3">
             <motion.h1
-              className="font-serif tracking-tight text-5xl md:text-8xl text-[#464169] mb-6"
+              className="font-serif tracking-tight text-5xl md:text-7xl text-[#464169] mb-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5, ease: "easeOut" }}

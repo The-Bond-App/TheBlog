@@ -1,0 +1,32 @@
+---
+# REQUIRED FIELDS
+title: "The Power of Pause: Finding Stillness in a Busy World"
+description: "In a world that glorifies hustle, rest becomes a revolutionary act. Discover how intentional pauses can transform your daily life."
+date: 2025-11-22
+
+# RECOMMENDED FIELDS
+category: mindfulness
+tags: [mindfulness, meditation, rest, self-care, wellness]
+author: Your Name
+readTime: 6 min
+image: https://images.unsplash.com/photo-1511884642898-4c92249e20b6?w=1200
+
+# OPTIONAL (for updates)
+updatedAt: 2025-11-23
+
+# OPTIONAL (for featured posts)
+featured: true
+---
+
+Your post content starts here...
+
+Use proper heading hierarchy:
+# Never use H1 here (it's in the template)
+## Use H2 for main sections
+### Use H3 for subsections
+
+Remember:
+- Write descriptive alt text for images
+- Use internal links to other posts
+- Keep paragraphs short and readable
+- Include relevant keywords naturally
