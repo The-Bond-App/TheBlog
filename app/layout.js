@@ -1,5 +1,7 @@
 // app/layout.tsx
 import "./globals.css";
+import Script from 'next/script';
+
 // Root metadata - applies to entire site
 export const metadata = {
   metadataBase: new URL('https://blog.thebond.company'),
@@ -77,7 +79,26 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-5KPC8LQM78"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5KPC8LQM78', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </body>
     </html>
   );
 }
+
