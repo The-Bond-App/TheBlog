@@ -120,7 +120,7 @@ export default function Newsletter() {
         </h2>
 
         <p className="text-lg text-slate-700 mb-8">
-          Posts that get you, weekly. Side effects may include feeling seen.
+          Posts that hit different, delivered weekly. Side effects may include feeling seen.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
@@ -155,7 +155,7 @@ export default function Newsletter() {
                   <span style={spinnerStyle} aria-hidden="true"></span>
                 </span>
               ) : subsuc === 1 ? (
-                'All Good 🎉'
+                'Subscribed 🎉'
               ) : subsuc === 2 ? (
                 'Failed 👎'
               ) : (

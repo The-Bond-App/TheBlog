@@ -30,8 +30,8 @@ export default function Navigation() {
             <a href='/'>
             <div className='hidden md:flex items-center gap-1'>
               <h1 className="text-2xl leading-none text-[#464169]">
-                <span className=" font-bold font-inter">Inner</span>{' '}
-                <span className="font-normal italic font-serif">Fluency</span>
+                <span className=" font-bold font-inter">Gentle</span>{' '}
+                <span className="font-normal italic font-serif">Nudges</span>
               </h1>
             </div>
             </a>

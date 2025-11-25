@@ -1,16 +1,15 @@
 // app/page.jsx
-import { getAllPosts } from '../src/data/FetchStaticPosts';
 import FullPage from '../src/components/FullPage';
+import { getAllPostsMeta } from '../src/data/FetchStaticPosts.server';
 
-// This tells Next.js to generate this page at BUILD TIME
-export const dynamic = 'force-static';
+export const dynamic = 'force-static'; // force SSG (build-time)
 
-// Enhanced metadata for homepage
+// Enhanced homepage metadata (Next.js App Router)
 export const metadata = {
   title: 'Blog Home | The Bond Company',
   description: 'Explore our latest posts on mindfulness, wellness, and personal growth. Discover practical guides for intentional living.',
   openGraph: {
-    title: 'The Bond Company| Latest Articles',
+    title: 'The Bond Company | Latest Articles',
     description: 'Explore our latest posts on mindfulness, wellness, and personal growth.',
     url: 'https://blog.thebond.company',
     type: 'website',
@@ -28,10 +27,21 @@ export const metadata = {
   },
 };
 
-export default function HomePage() {
-  // This runs at BUILD TIME on the server
-  const posts = getAllPosts();
-  
-  return <FullPage initialPosts={posts} />;
-}
 
+const POSTS_PER_PAGE = 9;
+
+export default function HomePage() {
+  const all = getAllPostsMeta();
+  const totalPages = Math.max(1, Math.ceil(all.length / POSTS_PER_PAGE));
+  const posts = all.slice(0, POSTS_PER_PAGE);
+
+  return (
+    <FullPage
+      key="page-1"
+      initialPosts={posts}
+      initialPage={1}
+      totalPages={totalPages}
+      postsPerPage={POSTS_PER_PAGE}
+    />
+  );
+}

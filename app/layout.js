@@ -85,14 +85,14 @@ export default function RootLayout({ children }) {
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-5KPC8LQM78"
+          src="https://www.googletagmanager.com/gtag/js?id=G-KD07B4M6VK"
         />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-5KPC8LQM78', {
+            gtag('config', 'G-KD07B4M6VK', {
               page_path: window.location.pathname,
             });
           `}

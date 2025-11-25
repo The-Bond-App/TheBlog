@@ -1,5 +1,5 @@
 // app/sitemap.js
-import { getAllPosts } from '../src/data/FetchStaticPosts';
+import { getAllPosts } from '../src/data/FetchStaticPosts.server';
 
 export default function sitemap() {
   const baseUrl = 'https://blog.thebond.company';
